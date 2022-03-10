@@ -1,0 +1,31 @@
+.fileUploader {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-bottom: 30px;
+}
+.uploadButton {
+    display: flex;
+    background-color: #F6F7FB;
+    border-radius: 4px;
+    align-items: center;
+    cursor: pointer;
+    margin-bottom: 30px;
+}
+.logo {
+
+}
+.buttonText {
+
+}
+.buttonHeader {
+    color: #354AFF;
+    font-weight: bold;
+    font-size: 18px;
+}
+.buttonBody {
+    font-size: 12px;
+}
+.attention {
+    font-size: 12px;
+}
