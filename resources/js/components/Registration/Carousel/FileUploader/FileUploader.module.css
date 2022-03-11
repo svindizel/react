@@ -1,0 +1,53 @@
+.fileUploader {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-bottom: 30px;
+}
+.uploadButton {
+    display: flex;
+    background-color: #F6F7FB;
+    border-radius: 4px;
+    align-items: center;
+    cursor: pointer;
+    margin-bottom: 30px;
+}
+.logo {
+
+}
+.buttonText {
+
+}
+.buttonHeader {
+    color: #354AFF;
+    font-weight: bold;
+    font-size: 18px;
+}
+.buttonBody {
+    font-size: 12px;
+}
+.attention {
+    font-size: 12px;
+}
+.logoPreview {
+    width: 150px;
+    height: 150px;
+}
+.logoPreview > img {
+    min-width: 100%;
+    transform: scale(1.1);
+    opacity: 1;
+    transition: opacity 4s ease-in-out;
+}
+.original {
+    position: absolute;
+}
+.thumb {
+    filter: blur(8px);
+}
+.hide {
+    opacity: 0;
+}
+.uploaderContent {
+    display: flex;
+}

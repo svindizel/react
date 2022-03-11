@@ -1,7 +1,8 @@
 import S from "./Carousel.module.css";
-import FileUploader from "../FileUploader/FileUploader";
+import FileUploader from "./FileUploader/FileUploader";
 import React, {Component} from "react";
 import {toUpper} from "lodash/string";
+import Suggestions from "./Suggestions/Suggestions";
 
 export default class Carousel extends Component {
     constructor(props) {
@@ -14,24 +15,22 @@ export default class Carousel extends Component {
             return (
                 <div className={S.carousel}>
                     <div className={S.input}>
-                        <label className={S.label} htmlFor="companyName">Название компании
-                        </label>
-                        <input
-                            id="companyName"
-                            type="text"
-                            name="companyName"
-                            onChange={this.props.onChangeHandler}
-                        />
-                    </div>
-                    <div className={S.input}>
                         <label className={S.label} htmlFor="inn">ИНН / ОГРН
                         </label>
                         <input
                             id="inn"
                             type="text"
                             name="inn"
+                            autocomplete="off"
                             onChange={this.props.onChangeHandler}
                         />
+                        <div className={S.dropdown}>
+                            <Suggestions
+                                suggestions={this.props.suggestions}
+                                companySelectHandler={this.props.companySelectHandler}
+                            />
+                        </div>
+
                     </div>
                     <div className={S.buttons}>
                         <button

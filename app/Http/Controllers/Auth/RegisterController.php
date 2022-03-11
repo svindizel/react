@@ -11,10 +11,11 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Auth\Events\Registered;
-//use App\Http\Controllers\Auth\Response;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\JsonResponse;
 use App\Models\EmailVerify;
 use Illuminate\Support\Facades\DB;
+
 
 use Mail;
 
@@ -56,13 +57,32 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
-    protected function validator(array $data)
+    protected function validateEmail(array $data)
     {
         return Validator::make($data, [
-            //'copmanyName' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255'],
+        ]);
+    }
+
+    protected function validateImage()
+    {
+        return Validator::make($data, [
+            'logo' => ['required, mimes:jpeg,bmp,png', 'max:3000', 'dimensions:min_width=300,min_height=300']
+        ]);
+    }
+
+    protected function validatePassword(array $data)
+    {
+        return Validator::make($data, [
             'password' => ['required', 'string', 'min:8'],
-            //'inn' => ['required', 'string', 'max:255'],
+        ]);
+    }
+
+    protected function validateInn(array $data)
+    {
+        return Validator::make($data, [
+            'inn' => ['required', 'string'],
+            //'confirm_password' => ['required', 'string', 'max:255'],
         ]);
     }
 
@@ -73,14 +93,20 @@ class RegisterController extends Controller
 
     public function sendVerify(Request $request)
     {
-        //$this->validator($request->all())->validate();
-        dd($request);
-        $email = $request->input('email');
-        $url = URL::current() . '/verify?token=' . sha1($email);
-        $verif = DB::table('email_verifies')->where('email', $email)->get();
-        $users = DB::table('users')->where('email', $email)->get();
+        $this->validateEmail($request->all())->validate()['email'];
 
-        if (empty($users->items) && empty($verif->items)) {
+        $email = $request->input('email');
+
+        if (User::where('email', $email)->exists()) {
+
+            return new JsonResponse('User exists!', 201);
+
+        } elseif (EmailVerify::where('email', $email)->exists()) {
+
+            return new JsonResponse('You have already received a letter!', 201);
+
+        } else {
+            $url = str_replace('api/register','', URL::current()) . 'registration?token=' . $request->_token;
 
             Mail::send('mail', ['email' => $email, 'url' => $url], function ($message) use ($email) {
                 $message->to($email)->subject('Продолжение регистрации');
@@ -89,13 +115,12 @@ class RegisterController extends Controller
 
             EmailVerify::create([
                 'email' => $email,
-                'token' => sha1($email),
-                //'status' => 1,
+                'token' => $request->_token,
             ]);
         }
 
         return $request->wantsJson()
-                    ? new JsonResponse('', 201)
+                    ? new JsonResponse('success', 201)
                     : redirect($this->redirectPath());
     }
 
@@ -104,13 +129,74 @@ class RegisterController extends Controller
         return view('welcome');
     }
 
-    public function verify(Request $request)
+    public function firstStep(Request $request)
+    {   
+        DB::table('email_verifies')
+            ->where('token', $request->_token)
+            ->update(['status' => 1]);
+
+        $email = DB::table('email_verifies')
+                    ->select('email')
+                    ->where('token', $request->_token)
+                    ->get()[0]->email;
+
+        $this->validateInn($request->only('inn'))->validate();
+
+        if (User::where('email', $email)->exists()) {
+            DB::table('users')
+                ->where('email', $email)
+                ->update(['inn' => $request->inn, 'name' => $request->companyName]);
+
+            return new JsonResponse('success', 201);
+        }
+
+        User::create([
+            'name' => $request->companyName,
+            'email' => $email,
+            'inn' => $request->inn,
+            'stage' => 1
+        ]);
+
+        return new JsonResponse('success', 201);
+    }
+
+    public function secondStep(Request $request)
     {
-        //$this->validator($request->all())->validate();
+        dd($request->logo);
+        //$this->validateImage($request->all())->validate()['logo'];
+        //валидация
+        DB::table('users')
+        ->where('email', $var)
+        ->update(['logo' => $var, 'stage' => 2]);
+    }
+
+    public function thirdStep(Request $request)
+    {
+        $this->validatePassword($request->only('password'))->validate();
+
+        $email = DB::table('email_verifies')
+            ->select('email')
+            ->where('token', $request->_token)
+            ->get()[0]->email;
+
+        DB::table('users')
+            ->where('email', $email)
+            ->update(['password' => Hash::make($request->password), 'stage' => 3]);
+
+        if (Auth::attempt([
+            'email' => $email, 
+            'password' => $request->password
+        ])) {
+            return true;
+        }
+
+        return new JsonResponse('success', 201);
+    }
+    /*
         event(new Registered($user = $this->create($request->all())));
 
-        $this->guard()->login($user);
-
+        
+    
         if ($response = $this->registered($request, $user)) {
             return $response;
         }
@@ -119,7 +205,8 @@ class RegisterController extends Controller
                     ? new Response('', 201)
                     : redirect($this->redirectPath());
         //$this->validator($request->all())->validate();
-    }
+    }*/
+    
 
     /**
      * Create a new user instance after a valid registration.
@@ -131,19 +218,18 @@ class RegisterController extends Controller
     {
         //$path = 'tmp\\' . substr(md5(microtime()), mt_rand(0, 30), 2) . '\\';
         //. md5($data['companyName']). '.txt'
-        
+        /*
         $dir = str_replace('app\Http\Controllers\Auth', 'tmp\\' , __DIR__);
 
         $f = fopen($dir . md5($data['companyName']). '.txt' , "w+");
         fputs($f, $data['logo']); // Запись в файл
         fclose($f); //Закрытие файла
-
-        return User::create([
-            'name' => $data['companyName'],
+*/
+        return User::where([
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
             'inn' => $data['inn'],
-            'logo' => 'tmp\\' . md5($data['companyName']). '.txt'
+            //'logo' => 'tmp\\' . md5($data['companyName']). '.txt'
         ]);
     }
 }

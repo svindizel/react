@@ -26,7 +26,7 @@ class FormBody extends Component {
                         <input
                             onChange={this.props.onChangeHandler}
                             id="email"
-                            type="text"
+                            type="email"
                             name="email"
                         />
                         <button className={S.button} type="submit">Продолжить &#8594;</button>

@@ -25,12 +25,14 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     //Route::get('register', [App\Http\Controllers\Auth\RegisterController::class, 'sendVerify']);
     Route::post('register', [App\Http\Controllers\Auth\RegisterController::class, 'sendVerify']);
 
-    //Route::get('/', [App\Http\Controllers\Auth\LoginController::class, 'login']);
+    Route::get('/', [App\Http\Controllers\Auth\LoginController::class, 'login'])->name('login');
     Route::post('login', [App\Http\Controllers\Auth\LoginController::class, 'login']);
-    Route::post('logout', [App\Http\Controllers\Auth\LoginController::class, 'logout']);
+    Route::post('logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');
 
     //Route::get('register/verify', [App\Http\Controllers\Auth\RegisterController::class, 'verify']);
-    Route::post('register/verify', [App\Http\Controllers\Auth\RegisterController::class, 'verify']);
+    Route::post('register/verify/1', [App\Http\Controllers\Auth\RegisterController::class, 'firstStep']);
+    Route::post('register/verify/2', [App\Http\Controllers\Auth\RegisterController::class, 'secondStep']);
+    Route::post('register/verify/3', [App\Http\Controllers\Auth\RegisterController::class, 'thirdStep']);
 });
 
 

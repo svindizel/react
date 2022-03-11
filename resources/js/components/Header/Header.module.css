@@ -1,0 +1,15 @@
+.header {
+    display: flex;
+    justify-content: space-around;
+}
+.button {
+    background-color: #354AFF;
+    color: #fff;
+    font-weight: bold;
+    padding: 10px 15px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    border-radius: 4px;
+}

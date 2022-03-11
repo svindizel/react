@@ -35,6 +35,8 @@
     color: #ffffff;
     font-weight: bold;
     border: 0;
-
     cursor: pointer;
+}
+.dropdown {
+    position: relative;
 }

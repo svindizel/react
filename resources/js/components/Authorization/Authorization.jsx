@@ -30,7 +30,7 @@ export default class Authorization extends Component {
             .then((response) => {
                 console.log(response)
                 if (response.status === 204 || response.status === 200) {
-                    window.location = "http://react/home";
+                    window.location = "http://react/products";
                     this.setState({
                         email: "",
                         password: "",
@@ -56,6 +56,7 @@ export default class Authorization extends Component {
                                 <label className={S.label} htmlFor="email">Email
                                 </label>
                                 <input
+                                    required
                                     id="email"
                                     type="text"
                                     name="email"
@@ -66,6 +67,7 @@ export default class Authorization extends Component {
                                 <label className={S.label} htmlFor="password">Пароль
                                 </label>
                                 <input
+                                    required
                                     id="password"
                                     type="password"
                                     name="password"
@@ -78,7 +80,7 @@ export default class Authorization extends Component {
                             <div className="text">
                                 Еще не зарегистрированы?&nbsp;
                             </div>
-                            <Link to='/register'>Регистрация</Link>
+                            <Link to='/verify'>Регистрация</Link>
                         </div>
                     </div>
                 </div>

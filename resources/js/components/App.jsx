@@ -1,35 +1,46 @@
+import React from "react";
+import ReactDOM from "react-dom";
+import {BrowserRouter, Routes, Route, Navigate} from "react-router-dom";
 import "./reset.css";
 import "./App.css";
-import {BrowserRouter, Routes, Route} from "react-router-dom";
 import Authorization from "./Authorization/Authorization";
-import ReactDOM from "react-dom";
 import EmailConfirm from "./EmailConfirm/EmailConfirm";
 import Registration from "./Registration/Registration";
-
+import Products from "./Products/Products";
 
 export default function App() {
     return (
         <BrowserRouter>
-            <div className="container">
-                <Routes>
-                    <Route
-                        exact path="/"
-                        element={<Authorization/>}
-                    />
-                    <Route
-                        path="/register"
-                        element={<EmailConfirm/>}
-                    />
-                    <Route
-                        exact path="/register/*"
-                        element={<Registration/>}
-                    />
-                </Routes>
-            </div>
+            <Routes>
+                <Route
+                    path="/login"
+                    element={<Authorization/>}
+                />
+                <Route
+                    exact path="/"
+                    element={<Navigate replace to="/login"/>}
+                />
+                <Route
+                    path="/verify"
+                    element={<EmailConfirm/>}
+                />
+                <Route
+                    exact path="/registration/*"
+                    element={<Registration/>}
+                />
+                <Route
+                    path="/products"
+                    element={<Products/>}
+                />
+            </Routes>
         </BrowserRouter>
     );
 }
 
 if (document.getElementById('root')) {
-    ReactDOM.render(<App/>, document.getElementById('root'));
+    ReactDOM.render(
+        <React.StrictMode>
+            <App/>
+        </React.StrictMode>,
+        document.getElementById('root'));
 }
