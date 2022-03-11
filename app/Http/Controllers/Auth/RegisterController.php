@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\JsonResponse;
 use App\Models\EmailVerify;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Http\UploadedFile;
 
 
 use Mail;
@@ -99,11 +100,13 @@ class RegisterController extends Controller
 
         if (User::where('email', $email)->exists()) {
 
-            return new JsonResponse('User exists!', 201);
+            return new JsonResponse(response()->json([
+                'error' => "User exists!",
+            ]), 422);
 
         } elseif (EmailVerify::where('email', $email)->exists()) {
 
-            return new JsonResponse('You have already received a letter!', 201);
+            return new JsonResponse(response()->json(['error' => 'You have already received a letter!']), 422);
 
         } else {
             $url = str_replace('api/register','', URL::current()) . 'registration?token=' . $request->_token;
@@ -132,12 +135,12 @@ class RegisterController extends Controller
     public function firstStep(Request $request)
     {   
         DB::table('email_verifies')
-            ->where('token', $request->_token)
+            ->where('token', $request->token)
             ->update(['status' => 1]);
 
         $email = DB::table('email_verifies')
                     ->select('email')
-                    ->where('token', $request->_token)
+                    ->where('token', $request->token)
                     ->get()[0]->email;
 
         $this->validateInn($request->only('inn'))->validate();
@@ -147,7 +150,12 @@ class RegisterController extends Controller
                 ->where('email', $email)
                 ->update(['inn' => $request->inn, 'name' => $request->companyName]);
 
-            return new JsonResponse('success', 201);
+            return new JsonResponse(response()->json([
+                'name' => $request->companyName,
+                'email' => $email,
+                'inn' => $request->inn,
+                'stage' => 1
+            ]), 201);
         }
 
         User::create([
@@ -157,17 +165,22 @@ class RegisterController extends Controller
             'stage' => 1
         ]);
 
-        return new JsonResponse('success', 201);
+        return new JsonResponse(response()->json([
+            'name' => $request->companyName,
+            'email' => $email,
+            'inn' => $request->inn,
+            'stage' => 1
+        ]), 201);
     }
 
     public function secondStep(Request $request)
     {
-        dd($request->logo);
+        dd($request->file('logo'));
         //$this->validateImage($request->all())->validate()['logo'];
         //валидация
-        DB::table('users')
+      /*  DB::table('users')
         ->where('email', $var)
-        ->update(['logo' => $var, 'stage' => 2]);
+        ->update(['logo' => $var, 'stage' => 2]);*/
     }
 
     public function thirdStep(Request $request)
@@ -176,7 +189,7 @@ class RegisterController extends Controller
 
         $email = DB::table('email_verifies')
             ->select('email')
-            ->where('token', $request->_token)
+            ->where('token', $request->token)
             ->get()[0]->email;
 
         DB::table('users')

@@ -58,7 +58,7 @@ export default class Authorization extends Component {
                                 <input
                                     required
                                     id="email"
-                                    type="text"
+                                    type="email"
                                     name="email"
                                     onChange={this.onChangeHandler}
                                 />

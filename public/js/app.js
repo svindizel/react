@@ -5505,7 +5505,7 @@ var Authorization = /*#__PURE__*/function (_Component) {
                 }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("input", {
                   required: true,
                   id: "email",
-                  type: "text",
+                  type: "email",
                   name: "email",
                   onChange: this.onChangeHandler
                 })]
@@ -5634,6 +5634,7 @@ var FormBody = /*#__PURE__*/function (_Component) {
             className: _EmailConfirm_module_css__WEBPACK_IMPORTED_MODULE_0__["default"].input,
             children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("input", {
               onChange: this.props.onChangeHandler,
+              required: true,
               id: "email",
               type: "email",
               name: "email"
@@ -6008,10 +6009,8 @@ var Carousel = /*#__PURE__*/function (_Component) {
       if (this.props.page === 2) {
         return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
           className: _Carousel_module_css__WEBPACK_IMPORTED_MODULE_0__["default"].carousel,
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
-            className: _Carousel_module_css__WEBPACK_IMPORTED_MODULE_0__["default"].companyName,
-            children: ["\u0420\u0415\u0421\u0422\u041E\u0420\u0410\u041D ", (0,lodash_string__WEBPACK_IMPORTED_MODULE_3__.toUpper)(this.props.companyName)]
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_FileUploader_FileUploader__WEBPACK_IMPORTED_MODULE_1__["default"], {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_FileUploader_FileUploader__WEBPACK_IMPORTED_MODULE_1__["default"], {
+            companyName: this.props.companyName,
             handleFile: this.props.handleFile
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
             className: _Carousel_module_css__WEBPACK_IMPORTED_MODULE_0__["default"].buttons,
@@ -6074,7 +6073,7 @@ var Carousel = /*#__PURE__*/function (_Component) {
               children: "\u2190 \u041D\u0430\u0437\u0430\u0434"
             }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("button", {
               "data-action": true,
-              type: "submit",
+              onClick: this.props.onClickHandler,
               className: _Carousel_module_css__WEBPACK_IMPORTED_MODULE_0__["default"].button,
               children: "\u0417\u0430\u0432\u0435\u0440\u0448\u0438\u0442\u044C"
             })]
@@ -6104,7 +6103,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var _FileUploader_module_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./FileUploader.module.css */ "./resources/js/components/Registration/Carousel/FileUploader/FileUploader.module.css");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var lodash_string__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! lodash/string */ "./node_modules/lodash/string.js");
+/* harmony import */ var lodash_string__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(lodash_string__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -6134,6 +6135,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
 
 
+
 var UploadButton = /*#__PURE__*/function (_Component) {
   _inherits(UploadButton, _Component);
 
@@ -6152,30 +6154,30 @@ var UploadButton = /*#__PURE__*/function (_Component) {
   _createClass(UploadButton, [{
     key: "render",
     value: function render() {
-      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
         className: _FileUploader_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].uploadButton,
         onClick: this.props.onClickHandler,
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
           className: _FileUploader_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].logo,
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("svg", {
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("svg", {
             xmlns: "http://www.w3.org/2000/svg",
             height: "48px",
             viewBox: "0 0 24 24",
             width: "48px",
             fill: "#354AFF",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("path", {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("path", {
               d: "M0 0h24v24H0z",
               fill: "none"
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("path", {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("path", {
               d: "M9 16h6v-6h4l-7-7-7 7h4zm-4 2h14v2H5z"
             })]
           })
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
           className: _FileUploader_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].buttonText,
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
             className: _FileUploader_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].buttonHeader,
             children: "\u0417\u0430\u0433\u0440\u0443\u0437\u0438\u0442\u044C \u043B\u043E\u0433\u043E\u0442\u0438\u043F"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
             className: _FileUploader_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].buttonBody,
             children: ["\u0420\u0430\u0437\u0440\u0435\u0448\u0435\u043D\u0438\u0435 ", '<', " 300x300 \u0438 \u0440\u0430\u0437\u043C\u0435\u0440 ", '<', " 3\u041C\u0431"]
           })]
@@ -6247,15 +6249,15 @@ var FileUploader = /*#__PURE__*/function (_Component2) {
     value: function render() {
       var _this3 = this;
 
-      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
         className: _FileUploader_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].fileUploader,
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
           className: _FileUploader_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].uploaderContent,
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
             className: _FileUploader_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].logoPreview,
             children: [function () {
               if (_this3.state.ready) {
-                return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("img", {
+                return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("img", {
                   className: _FileUploader_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].original,
                   src: _this3.state.logoSrc,
                   alt: ""
@@ -6263,7 +6265,7 @@ var FileUploader = /*#__PURE__*/function (_Component2) {
               }
 
               return null;
-            }, /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("img", {
+            }, /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("img", {
               className: function className() {
                 if (_this3.state.ready) {
                   return _FileUploader_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].hide;
@@ -6274,17 +6276,23 @@ var FileUploader = /*#__PURE__*/function (_Component2) {
               src: this.state.logoSrc,
               alt: ""
             })]
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(UploadButton, {
-            onClickHandler: this.onClickHandler
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("input", {
-            ref: this.hiddenFileInput,
-            type: "file",
-            style: {
-              display: 'none'
-            },
-            onChange: this.onChangeHandler
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+              className: _FileUploader_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].companyName,
+              children: ["\u0420\u0415\u0421\u0422\u041E\u0420\u0410\u041D ", (0,lodash_string__WEBPACK_IMPORTED_MODULE_2__.toUpper)(this.props.companyName)]
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(UploadButton, {
+              onClickHandler: this.onClickHandler
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
+              ref: this.hiddenFileInput,
+              type: "file",
+              name: "logo",
+              style: {
+                display: 'none'
+              },
+              onChange: this.onChangeHandler
+            })]
           })]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
           className: _FileUploader_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].attention,
           children: "\u041B\u043E\u0433\u043E\u0442\u0438\u043F \u0431\u0443\u0434\u0435\u0442 \u0438\u0441\u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u044C\u0441\u044F \u0434\u043B\u044F \u0431\u0440\u0435\u043D\u0434\u0438\u0440\u043E\u0432\u0430\u043D\u0438\u044F \u0441\u0438\u0441\u0442\u0435\u043C\u044B. \u0412\u044B \u043C\u043E\u0436\u0435\u0442\u0435 \u043D\u0435 \u0437\u0430\u0433\u0440\u0443\u0436\u0430\u0442\u044C \u043B\u043E\u0433\u043E\u0442\u0438\u043F, \u043D\u043E \u0432 \u044D\u0442\u043E\u043C \u0441\u043B\u0443\u0447\u0430\u0435 \u0431\u0443\u0434\u0435\u0442 \u0438\u0441\u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u044C\u0441\u044F \u043B\u043E\u0433\u043E\u0442\u0438\u043F \u043F\u043E \u0443\u043C\u043E\u043B\u0447\u0430\u043D\u0438\u044E."
         })]
@@ -6440,10 +6448,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
-
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -6510,10 +6514,11 @@ var Registration = /*#__PURE__*/function (_Component) {
     });
 
     _defineProperty(_assertThisInitialized(_this), "companySelectHandler", function (e) {
-      var registryData = _objectSpread({}, _this.state.registryData);
-
-      registryData.inn = e.currentTarget.getAttribute("inn");
-      registryData.companyName = e.currentTarget.getAttribute("name");
+      console.log(_this.state.registryData);
+      var registryData = _this.state.registryData;
+      console.log(registryData);
+      registryData.step_1.inn = e.currentTarget.getAttribute("inn");
+      registryData.step_1.companyName = e.currentTarget.getAttribute("name");
 
       _this.setState({
         registryData: registryData
@@ -6521,16 +6526,39 @@ var Registration = /*#__PURE__*/function (_Component) {
 
       console.log(_this.state);
       _this.state.suggestions = [];
-      document.getElementById("inn").value = registryData.inn;
+      document.getElementById("inn").value = registryData.step_1.inn;
     });
 
     _defineProperty(_assertThisInitialized(_this), "onChangeHandler", function (e) {
-      var registryData = _this.state.registryData;
-      registryData[e.target.name] = e.target.value;
+      if (_this.state.carouselPage === 1) {
+        console.log(_this.state.registryData);
+        var registryData = _this.state.registryData;
+        registryData.step_1[e.target.name] = e.target.value;
 
-      _this.setState({
-        registryData: registryData
-      });
+        _this.setState({
+          registryData: registryData
+        });
+
+        console.log(_this.state);
+      }
+
+      if (_this.state.carouselPage === 2) {
+        var _registryData = _this.state.registryData;
+        _registryData.step_2[e.target.name] = e.target.value;
+
+        _this.setState({
+          registryData: _registryData
+        });
+      }
+
+      if (_this.state.carouselPage === 3) {
+        var _registryData2 = _this.state.registryData;
+        _registryData2.step_3[e.target.name] = e.target.value;
+
+        _this.setState({
+          registryData: _registryData2
+        });
+      }
 
       if (e.target.id === "inn") {
         _this.dadataCall(e, e.target.value);
@@ -6551,10 +6579,26 @@ var Registration = /*#__PURE__*/function (_Component) {
         });
       }
 
-      axios.post("http://react/api/register/verify/1", _this.state.registryData).then(function (response) {
-        console.log(response);
-      });
-      console.log(_this.state);
+      if (_this.state.carouselPage === 1) {
+        axios.post("http://react/api/register/verify/1", _this.state.registryData.step_1).then(function (response) {
+          console.log(response);
+        });
+        console.log(_this.state);
+      }
+
+      if (_this.state.carouselPage === 2) {
+        axios.post("http://react/api/register/verify/2", _this.state.registryData.step_2).then(function (response) {
+          console.log(response);
+        });
+        console.log(_this.state);
+      }
+
+      if (_this.state.carouselPage === 3) {
+        axios.post("http://react/api/register/verify/3", _this.state.registryData.step_3).then(function (response) {
+          console.log(response);
+        });
+        console.log(_this.state);
+      }
     });
 
     _defineProperty(_assertThisInitialized(_this), "handleFile", function (uploadedFile) {
@@ -6567,17 +6611,16 @@ var Registration = /*#__PURE__*/function (_Component) {
         logo.logo = reader.result;
       };
 
-      reader.readAsDataURL(uploadedFile); //console.log(logo)
+      reader.readAsDataURL(uploadedFile);
+      var registryData = _this.state.registryData;
+      registryData.step_2.logo = uploadedFile;
 
-      _this.setState(logo);
-      /*this.setState({registryData:[...this.state.registryData, [uploadedFile]]});*/
-      //console.log(this.state);
-
+      _this.setState(registryData);
     });
 
     _defineProperty(_assertThisInitialized(_this), "onSubmitHandler", function (e) {
       e.preventDefault();
-      axios.post("http://react/api/register/verify/3", _this.state.registryData).then(function (response) {
+      axios.post("http://react/register/verify", _this.state.registryData).then(function (response) {
         console.log(response);
 
         if (response.status === 204 || response.status === 200) {
@@ -6594,15 +6637,28 @@ var Registration = /*#__PURE__*/function (_Component) {
     axios.defaults.headers.common['X-CSRF-TOKEN'] = window.token;
     var queryString = window.location.search;
     var urlParams = new URLSearchParams(queryString);
-    var email = urlParams.get('email');
-    console.log(email);
+    var token = urlParams.get('token');
     _this.state = {
       registryData: {
-        companyName: "",
+        step_1: {
+          companyName: "",
+          inn: "",
+          token: token,
+          _token: window.token
+        },
+        step_2: {
+          token: token,
+          _token: window.token
+        },
+        step_3: {
+          password: "",
+          token: token,
+          _token: window.token
+        }
+        /*companyName: "",
         inn: "",
-        password: "",
-        email: email,
-        _token: window.token
+        password: "",*/
+
       },
       carouselPage: 1,
       suggestions: []
@@ -6631,11 +6687,12 @@ var Registration = /*#__PURE__*/function (_Component) {
             className: _Registration_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].formBody,
             children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("form", {
               method: "POST",
+              enctype: "multipart/form-data",
               onSubmit: this.onSubmitHandler,
               children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_Carousel_Carousel__WEBPACK_IMPORTED_MODULE_2__["default"], {
                 onChangeHandler: this.onChangeHandler,
                 onClickHandler: this.onClickHandler,
-                companyName: this.state.registryData.companyName,
+                companyName: this.state.registryData.step_1.companyName,
                 handleFile: this.handleFile,
                 page: this.state.carouselPage,
                 suggestions: this.state.suggestions,
@@ -11758,7 +11815,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".KrsrPYgu9qhyw5CIFZ490A\\=\\= {\n    width: 100%;\n    height: 100%;\n    display: flex;\n    align-items: center;\n}\n.gBCxDzvwFEaIZR5A5mZbfw\\=\\= {\n    margin-left: auto;\n    margin-right: auto;\n    background-color: #fff;\n    border-radius: 4px;\n    width: 400px;\n    box-shadow: 0 2px 5px 0 #E9EAEE;\n}\n.JadRr530ZnGMl2jAkQsxmg\\=\\= {\n    padding: 30px 40px;\n    border-bottom: 1px solid #E8E8E8;\n    font-size: 24px;\n    font-weight: bold;\n}\n.gee5d4NpY-Cl93d4hoUVBA\\=\\= {\n\n}\n.Ix6sM9HR9Um1noXsHHIkOg\\=\\= {\n    padding: 30px 40px;\n}\n.WUr\\+am52NvilyPNKF85xGw\\=\\= {\n    font-weight: bold;\n    margin-bottom: 10px;\n}\n.hOMqrO6SdVx9IHSt-PwIIw\\=\\= {\n    display: flex;\n    margin-bottom: 30px;\n    position: relative;\n}\n.hOMqrO6SdVx9IHSt-PwIIw\\=\\= > input {\n    border: 1px solid #E8E8E8;\n    border-radius: 4px;\n    line-height: 40px;\n    align-items: center;\n    width: 100%;\n}\n.aiFHBTUf3gQEJLktYoDd-Q\\=\\= {\n    display: flex;\n}\n.aiFHBTUf3gQEJLktYoDd-Q\\=\\= > a {\n    color: #354AFF;\n}\n.i0LhKO1YMpzZVvSY4Ohf\\+g\\=\\= {\n    position: absolute;\n    right: 0;\n    height: 100%;\n    background-color: #354AFF;\n    padding: 0 20px;\n    text-align: center;\n    border-radius: 4px;\n    color: #ffffff;\n    font-weight: bold;\n    border: 0;\n    cursor: pointer;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".KrsrPYgu9qhyw5CIFZ490A\\=\\= {\n    width: 100%;\n    height: 100%;\n    display: flex;\n    align-items: center;\n}\n.gBCxDzvwFEaIZR5A5mZbfw\\=\\= {\n    margin-left: auto;\n    margin-right: auto;\n    background-color: #fff;\n    border-radius: 4px;\n    width: 400px;\n    box-shadow: 0 2px 5px 0 #E9EAEE;\n}\n.JadRr530ZnGMl2jAkQsxmg\\=\\= {\n    padding: 30px 40px;\n    border-bottom: 1px solid #E8E8E8;\n    font-size: 24px;\n    font-weight: bold;\n}\n.gee5d4NpY-Cl93d4hoUVBA\\=\\= {\n\n}\n.Ix6sM9HR9Um1noXsHHIkOg\\=\\= {\n    padding: 30px 40px;\n}\n.WUr\\+am52NvilyPNKF85xGw\\=\\= {\n    font-weight: bold;\n    margin-bottom: 10px;\n}\n.hOMqrO6SdVx9IHSt-PwIIw\\=\\= {\n    display: flex;\n    margin-bottom: 30px;\n    position: relative;\n}\n.hOMqrO6SdVx9IHSt-PwIIw\\=\\= > input {\n    border: 1px solid #E8E8E8;\n    border-radius: 4px;\n    line-height: 40px;\n    align-items: center;\n    width: 100%;\n    padding-right: 50%;\n}\n.aiFHBTUf3gQEJLktYoDd-Q\\=\\= {\n    display: flex;\n}\n.aiFHBTUf3gQEJLktYoDd-Q\\=\\= > a {\n    color: #354AFF;\n}\n.i0LhKO1YMpzZVvSY4Ohf\\+g\\=\\= {\n    position: absolute;\n    right: 0;\n    height: 100%;\n    background-color: #354AFF;\n    padding: 0 20px;\n    text-align: center;\n    border-radius: 4px;\n    color: #ffffff;\n    font-weight: bold;\n    border: 0;\n    cursor: pointer;\n}\n", ""]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"registration": "KrsrPYgu9qhyw5CIFZ490A==",
@@ -11848,11 +11905,10 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".JicDmIOtsXkRJ4G6xT-27Q\\=\\= {\n    display: flex;\n    flex-direction: column;\n}\n.hqD8jZxlsiGlSdYABAFzgQ\\=\\= {\n    font-weight: bold;\n    margin-bottom: 20px;\n}\n.W6QwqieAcTFFgGKpN-1ePQ\\=\\= {\n    display: flex;\n    justify-content: space-between;\n}\n.Tv4eD1a0h81HDX9OYhPX\\+w\\=\\= {\n    font-weight: bold;\n    margin-bottom: 10px;\n}\n._9Z0RpG9bO4HAF6ox6KdhZg\\=\\= {\n    display: flex;\n    flex-direction: column;\n    margin-bottom: 30px;\n}\n._9Z0RpG9bO4HAF6ox6KdhZg\\=\\= > input {\n    border: 1px solid #E8E8E8;\n    border-radius: 4px;\n    line-height: 40px;\n    align-items: center;\n    font-size: 20px;\n}\n._3Y-jq0oP2oJAPzpZiJQHYA\\=\\= {\n    font-size: 20px;\n    background-color: #354AFF;\n    padding: 10px 15px;\n    text-align: center;\n    border-radius: 4px;\n    color: #ffffff;\n    font-weight: bold;\n    border: 0;\n    cursor: pointer;\n}\n._2eBZ36bFm8CyEi3m-gBIPg\\=\\= {\n    position: relative;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".JicDmIOtsXkRJ4G6xT-27Q\\=\\= {\n    display: flex;\n    flex-direction: column;\n}\n\n.W6QwqieAcTFFgGKpN-1ePQ\\=\\= {\n    display: flex;\n    justify-content: space-between;\n}\n.Tv4eD1a0h81HDX9OYhPX\\+w\\=\\= {\n    font-weight: bold;\n    margin-bottom: 10px;\n}\n._9Z0RpG9bO4HAF6ox6KdhZg\\=\\= {\n    display: flex;\n    flex-direction: column;\n    margin-bottom: 30px;\n}\n._9Z0RpG9bO4HAF6ox6KdhZg\\=\\= > input {\n    border: 1px solid #E8E8E8;\n    border-radius: 4px;\n    line-height: 40px;\n    align-items: center;\n    font-size: 20px;\n}\n._3Y-jq0oP2oJAPzpZiJQHYA\\=\\= {\n    font-size: 20px;\n    background-color: #354AFF;\n    padding: 10px 15px;\n    text-align: center;\n    border-radius: 4px;\n    color: #ffffff;\n    font-weight: bold;\n    border: 0;\n    cursor: pointer;\n}\n._2eBZ36bFm8CyEi3m-gBIPg\\=\\= {\n    position: relative;\n}\n", ""]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"carousel": "JicDmIOtsXkRJ4G6xT-27Q==",
-	"companyName": "hqD8jZxlsiGlSdYABAFzgQ==",
 	"buttons": "W6QwqieAcTFFgGKpN-1ePQ==",
 	"label": "Tv4eD1a0h81HDX9OYhPX+w==",
 	"input": "_9Z0RpG9bO4HAF6ox6KdhZg==",
@@ -11881,7 +11937,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".s8ImKjKHyfSabMBOiPy0hg\\=\\= {\n    display: flex;\n    flex-direction: column;\n    justify-content: space-between;\n    margin-bottom: 30px;\n}\n.mX51ouB3qyWTRTSU8sC2CQ\\=\\= {\n    display: flex;\n    background-color: #F6F7FB;\n    border-radius: 4px;\n    align-items: center;\n    cursor: pointer;\n    margin-bottom: 30px;\n}\n.LtCKD39W7aXvwI5wLQDj3g\\=\\= {\n\n}\n._6S0XMN7-Eet8M8\\+-o4V5PQ\\=\\= {\n\n}\n.BCfj2GcFnd6y5Tp5RM7Rqw\\=\\= {\n    color: #354AFF;\n    font-weight: bold;\n    font-size: 18px;\n}\n.rxY21tdjVBKjXvwsDnqXBQ\\=\\= {\n    font-size: 12px;\n}\n.Ot0gNgxIM5IEgYAJs\\+YxDA\\=\\= {\n    font-size: 12px;\n}\n.k-2cVEmsAh10rVneSZyzgA\\=\\= {\n    width: 150px;\n    height: 150px;\n}\n.k-2cVEmsAh10rVneSZyzgA\\=\\= > img {\n    min-width: 100%;\n    transform: scale(1.1);\n    opacity: 1;\n    transition: opacity 4s ease-in-out;\n}\n.YuKC769vp2OcUI3Z4bOjaA\\=\\= {\n    position: absolute;\n}\n.cpyNeK\\+YQdlxhRc4b0oSmg\\=\\= {\n    filter: blur(8px);\n}\n.r3PunCz1lAZUBM0EHniVLg\\=\\= {\n    opacity: 0;\n}\n._9tyZBkRkk-jf3Ps78mHfuw\\=\\= {\n    display: flex;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".s8ImKjKHyfSabMBOiPy0hg\\=\\= {\n    display: flex;\n    flex-direction: column;\n    justify-content: space-between;\n    margin-bottom: 30px;\n}\n.mX51ouB3qyWTRTSU8sC2CQ\\=\\= {\n    display: flex;\n    background-color: #F6F7FB;\n    border-radius: 4px;\n    align-items: center;\n    cursor: pointer;\n    margin-bottom: 30px;\n    padding: 5px;\n}\n.LtCKD39W7aXvwI5wLQDj3g\\=\\= {\n\n}\n._6S0XMN7-Eet8M8\\+-o4V5PQ\\=\\= {\n\n}\n.BCfj2GcFnd6y5Tp5RM7Rqw\\=\\= {\n    color: #354AFF;\n    font-weight: bold;\n    font-size: 18px;\n}\n.rxY21tdjVBKjXvwsDnqXBQ\\=\\= {\n    font-size: 12px;\n}\n.Ot0gNgxIM5IEgYAJs\\+YxDA\\=\\= {\n    font-size: 12px;\n}\n.k-2cVEmsAh10rVneSZyzgA\\=\\= {\n    width: 100px;\n    height: 100px;\n}\n.k-2cVEmsAh10rVneSZyzgA\\=\\= > img {\n    min-width: 100%;\n    transform: scale(1.1);\n    opacity: 1;\n    transition: opacity 4s ease-in-out;\n}\n.YuKC769vp2OcUI3Z4bOjaA\\=\\= {\n    position: absolute;\n}\n.cpyNeK\\+YQdlxhRc4b0oSmg\\=\\= {\n    filter: blur(8px);\n}\n.r3PunCz1lAZUBM0EHniVLg\\=\\= {\n    opacity: 0;\n}\n._9tyZBkRkk-jf3Ps78mHfuw\\=\\= {\n    display: flex;\n}\n.LvCuU8XdM3rNmwJhaoWpHg\\=\\= {\n    font-weight: bold;\n    margin-bottom: 20px;\n}\n", ""]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"fileUploader": "s8ImKjKHyfSabMBOiPy0hg==",
@@ -11895,7 +11951,8 @@ ___CSS_LOADER_EXPORT___.locals = {
 	"original": "YuKC769vp2OcUI3Z4bOjaA==",
 	"thumb": "cpyNeK+YQdlxhRc4b0oSmg==",
 	"hide": "r3PunCz1lAZUBM0EHniVLg==",
-	"uploaderContent": "_9tyZBkRkk-jf3Ps78mHfuw=="
+	"uploaderContent": "_9tyZBkRkk-jf3Ps78mHfuw==",
+	"companyName": "LvCuU8XdM3rNmwJhaoWpHg=="
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

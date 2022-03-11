@@ -25,6 +25,7 @@ class FormBody extends Component {
                     <div className={S.input}>
                         <input
                             onChange={this.props.onChangeHandler}
+                            required
                             id="email"
                             type="email"
                             name="email"

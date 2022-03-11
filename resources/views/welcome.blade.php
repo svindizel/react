@@ -10,11 +10,6 @@
 
 </head>
 <body>
-    @error('email')
-        <span class="invalid-feedback" role="alert">
-            <strong>{{ $message }}</strong>
-        </span>
-    @enderror
     <div id="root"></div>
 </body>
 </html>

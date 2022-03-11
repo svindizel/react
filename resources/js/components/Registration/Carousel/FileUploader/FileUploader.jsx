@@ -1,5 +1,6 @@
 import React, {Component, createRef} from "react";
 import S from "./FileUploader.module.css";
+import {toUpper} from "lodash/string";
 
 class UploadButton extends Component {
     constructor(props) {
@@ -26,7 +27,6 @@ class UploadButton extends Component {
                     <div className={S.buttonHeader}>Загрузить логотип</div>
                     <div className={S.buttonBody}>Разрешение {'<'} 300x300 и размер {'<'} 3Мб</div>
                 </div>
-
             </div>
         )
     }
@@ -86,15 +86,18 @@ export default class FileUploader extends Component {
                             return S.thumb
                         }} src={this.state.logoSrc} alt=""/>
                     </div>
-                    <UploadButton onClickHandler={this.onClickHandler}/>
-                    <input
-                        ref={this.hiddenFileInput}
-                        type="file"
-                        style={{display: 'none'}}
-                        onChange={this.onChangeHandler}
-                    />
+                    <div>
+                        <div className={S.companyName}>РЕСТОРАН {toUpper(this.props.companyName)}</div>
+                        <UploadButton onClickHandler={this.onClickHandler}/>
+                        <input
+                            ref={this.hiddenFileInput}
+                            type="file"
+                            name='logo'
+                            style={{display: 'none'}}
+                            onChange={this.onChangeHandler}
+                        />
+                    </div>
                 </div>
-
                 <div className={S.attention}>
                     Логотип будет использоваться для брендирования системы. Вы можете не загружать логотип, но в этом
                     случае будет использоваться логотип по умолчанию.

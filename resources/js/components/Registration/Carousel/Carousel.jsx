@@ -46,8 +46,8 @@ export default class Carousel extends Component {
         if(this.props.page === 2) {
             return (
                 <div className={S.carousel}>
-                    <div className={S.companyName}>РЕСТОРАН {toUpper(this.props.companyName)}</div>
-                    <FileUploader handleFile={this.props.handleFile}/>
+
+                    <FileUploader companyName={this.props.companyName} handleFile={this.props.handleFile}/>
                     <div className={S.buttons}>
                         <button
                             style={{backgroundColor:"#E8E8E8",color:"#969696"}}
@@ -100,7 +100,7 @@ export default class Carousel extends Component {
                         </button>
                         <button
                             data-action={true}
-                            type="submit"
+                            onClick={this.props.onClickHandler}
                             className={S.button}>
                             Завершить
                         </button>

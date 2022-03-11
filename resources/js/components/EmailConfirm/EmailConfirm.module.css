@@ -39,6 +39,7 @@
     line-height: 40px;
     align-items: center;
     width: 100%;
+    padding-right: 50%;
 }
 .registrySuggest {
     display: flex;

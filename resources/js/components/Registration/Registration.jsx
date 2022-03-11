@@ -9,15 +9,28 @@ export default class Registration extends Component {
         axios.defaults.headers.common['X-CSRF-TOKEN'] = window.token;
         const queryString = window.location.search;
         const urlParams = new URLSearchParams(queryString);
-        const email = urlParams.get('email');
-        console.log(email);
+        const token = urlParams.get('token');
         this.state = {
             registryData: {
-                companyName: "",
+                step_1: {
+                    companyName: "",
+                    inn: "",
+                    token: token,
+                    _token: window.token
+                },
+                step_2: {
+                    token: token,
+                    _token: window.token
+                },
+                step_3: {
+                    password: "",
+                    token: token,
+                    _token: window.token
+                },
+                /*companyName: "",
                 inn: "",
-                password: "",
-                email: email,
-                _token: window.token
+                password: "",*/
+
             },
             carouselPage: 1,
             suggestions: []
@@ -46,20 +59,35 @@ export default class Registration extends Component {
     };
 
     companySelectHandler = (e) => {
-        const registryData = {...this.state.registryData};
-        registryData.inn = e.currentTarget.getAttribute("inn");
-        registryData.companyName = e.currentTarget.getAttribute("name");
-        this.setState({registryData: registryData});
+        console.log(this.state.registryData)
+        let registryData = this.state.registryData;
+        console.log(registryData)
+        registryData.step_1.inn = e.currentTarget.getAttribute("inn");
+        registryData.step_1.companyName = e.currentTarget.getAttribute("name");
+        this.setState({registryData});
         console.log(this.state);
         this.state.suggestions = [];
-        document.getElementById("inn").value = registryData.inn;
-    }
+        document.getElementById("inn").value = registryData.step_1.inn;
+    };
 
     onChangeHandler = (e) => {
-        const {registryData} = this.state;
-        registryData[e.target.name] = e.target.value;
-        this.setState({registryData});
-
+        if(this.state.carouselPage === 1) {
+            console.log(this.state.registryData)
+            let registryData = this.state.registryData;
+            registryData.step_1[e.target.name] = e.target.value;
+            this.setState({registryData});
+            console.log(this.state)
+        }
+        if(this.state.carouselPage === 2) {
+            let registryData = this.state.registryData;
+            registryData.step_2[e.target.name] = e.target.value;
+            this.setState({registryData});
+        }
+        if(this.state.carouselPage === 3) {
+            let registryData = this.state.registryData;
+            registryData.step_3[e.target.name] = e.target.value;
+            this.setState({registryData});
+        }
         if(e.target.id === "inn") {
             this.dadataCall(e, e.target.value)
         }
@@ -77,12 +105,31 @@ export default class Registration extends Component {
                 carouselPage: this.state.carouselPage - 1
             });
         }
-        axios
-            .post("http://react/api/register/verify/1", this.state.registryData)
-            .then((response) => {
-                console.log(response)
-            })
-        console.log(this.state);
+        if(this.state.carouselPage === 1) {
+            axios
+                .post("http://react/api/register/verify/1", this.state.registryData.step_1)
+                .then((response) => {
+                    console.log(response)
+                })
+            console.log(this.state);
+        }
+        if(this.state.carouselPage === 2) {
+            axios
+                .post("http://react/api/register/verify/2", this.state.registryData.step_2)
+                .then((response) => {
+                    console.log(response)
+                })
+            console.log(this.state);
+        }
+        if(this.state.carouselPage === 3) {
+            axios
+                .post("http://react/api/register/verify/3", this.state.registryData.step_3)
+                .then((response) => {
+                    console.log(response)
+                })
+            console.log(this.state);
+        }
+
     };
 
     handleFile = (uploadedFile) => {
@@ -94,16 +141,15 @@ export default class Registration extends Component {
             logo.logo = reader.result;
         }
         reader.readAsDataURL(uploadedFile);
-        //console.log(logo)
-        this.setState(logo)
-        /*this.setState({registryData:[...this.state.registryData, [uploadedFile]]});*/
-        //console.log(this.state);
+        let registryData = this.state.registryData;
+        registryData.step_2.logo = uploadedFile;
+        this.setState(registryData)
     };
 
     onSubmitHandler = (e) => {
         e.preventDefault();
         axios
-            .post("http://react/api/register/verify/3", this.state.registryData)
+            .post("http://react/register/verify", this.state.registryData)
             .then((response) => {
                 console.log(response)
                 if (response.status === 204 || response.status === 200) {
@@ -130,11 +176,11 @@ export default class Registration extends Component {
                         </div>
                     </div>
                     <div className={S.formBody}>
-                        <form method="POST" onSubmit={this.onSubmitHandler}>
+                        <form method="POST" enctype="multipart/form-data" onSubmit={this.onSubmitHandler}>
                             <Carousel
                                 onChangeHandler={this.onChangeHandler}
                                 onClickHandler={this.onClickHandler}
-                                companyName={this.state.registryData.companyName}
+                                companyName={this.state.registryData.step_1.companyName}
                                 handleFile={this.handleFile}
                                 page={this.state.carouselPage}
                                 suggestions={this.state.suggestions}
