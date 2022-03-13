@@ -150,7 +150,7 @@ class LoginController extends Controller
         }
         
         return $request->wantsJson()
-                    ? new JsonResponse([], 204)
+                    ? new JsonResponse([], 201)
                     : redirect()->intended($this->redirectPath());
     }
 
@@ -210,7 +210,7 @@ class LoginController extends Controller
         }
 
         return $request->wantsJson()
-            ? new JsonResponse([], 204)
+            ? new JsonResponse([], 201)
             : redirect()->route('login');
     }
 

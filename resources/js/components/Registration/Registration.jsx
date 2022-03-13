@@ -1,5 +1,6 @@
 import React, {Component} from "react";
 import S from "./Registration.module.css";
+import FormData from "form-data";
 import Carousel from "./Carousel/Carousel";
 
 export default class Registration extends Component {
@@ -20,7 +21,8 @@ export default class Registration extends Component {
                 },
                 step_2: {
                     token: token,
-                    _token: window.token
+                    _token: window.token,
+                    logo: null
                 },
                 step_3: {
                     password: "",
@@ -71,30 +73,31 @@ export default class Registration extends Component {
     };
 
     onChangeHandler = (e) => {
-        if(this.state.carouselPage === 1) {
+        if (this.state.carouselPage === 1) {
             console.log(this.state.registryData)
             let registryData = this.state.registryData;
             registryData.step_1[e.target.name] = e.target.value;
             this.setState({registryData});
             console.log(this.state)
         }
-        if(this.state.carouselPage === 2) {
+        if (this.state.carouselPage === 2) {
             let registryData = this.state.registryData;
             registryData.step_2[e.target.name] = e.target.value;
             this.setState({registryData});
         }
-        if(this.state.carouselPage === 3) {
+        if (this.state.carouselPage === 3) {
             let registryData = this.state.registryData;
             registryData.step_3[e.target.name] = e.target.value;
             this.setState({registryData});
         }
-        if(e.target.id === "inn") {
+        if (e.target.id === "inn") {
             this.dadataCall(e, e.target.value)
         }
     };
 
     onClickHandler = (e) => {
         e.preventDefault();
+        let state = this.state;
         const action = e.target.getAttribute("data-action");
         if (action === "true") {
             this.setState({
@@ -105,23 +108,37 @@ export default class Registration extends Component {
                 carouselPage: this.state.carouselPage - 1
             });
         }
-        if(this.state.carouselPage === 1) {
+        if (this.state.carouselPage === 1) {
+            if (this.state.registryData.step_1.inn !== "") {
+                axios
+                    .post("http://react/api/register/verify/1", this.state.registryData.step_1)
+                    .then((response) => {
+                        console.log(response)
+                    })
+                console.log(this.state);
+            }
+        }
+        if (this.state.carouselPage === 2) {
+            let data = new FormData();
+            data.append('logo', this.state.registryData.step_2.logo, this.state.registryData.step_2.logo.name)
+            data.append('token', this.state.registryData.step_2.token)
+            console.log(data);
+            console.log(this.state.registryData.step_2.logo.type)
+            let headers = {
+                'accept': 'application/json',
+                'Accept-Language': 'en-US,en;q=0.8',
+                'Content-Type': `multipart/form-data; boundary=${data._boundary}`,
+            }
             axios
-                .post("http://react/api/register/verify/1", this.state.registryData.step_1)
+                .post("http://react/api/register/verify/2", data, {
+                    headers: headers
+                })
                 .then((response) => {
                     console.log(response)
                 })
             console.log(this.state);
         }
-        if(this.state.carouselPage === 2) {
-            axios
-                .post("http://react/api/register/verify/2", this.state.registryData.step_2)
-                .then((response) => {
-                    console.log(response)
-                })
-            console.log(this.state);
-        }
-        if(this.state.carouselPage === 3) {
+        if (this.state.carouselPage === 3) {
             axios
                 .post("http://react/api/register/verify/3", this.state.registryData.step_3)
                 .then((response) => {
@@ -134,13 +151,6 @@ export default class Registration extends Component {
 
     handleFile = (uploadedFile) => {
         console.log(uploadedFile);
-        const logo = this.state.registryData;
-        let reader = new FileReader();
-        reader.onloadend = () => {
-            console.log(reader.result)
-            logo.logo = reader.result;
-        }
-        reader.readAsDataURL(uploadedFile);
         let registryData = this.state.registryData;
         registryData.step_2.logo = uploadedFile;
         this.setState(registryData)
@@ -165,28 +175,30 @@ export default class Registration extends Component {
     render() {
         console.log(this.state)
         return (
-            <div className={S.registration}>
-                <div className={S.registrationForm}>
-                    <div className={S.formHeader}>
-                        <div className={S.headerText}>
-                            Регистрация
+            <div className={S.container}>
+                <div className={S.registration}>
+                    <div className={S.registrationForm}>
+                        <div className={S.formHeader}>
+                            <div className={S.headerText}>
+                                Регистрация
+                            </div>
+                            <div className={S.pageNumber}>
+                                {this.state.carouselPage} из 3
+                            </div>
                         </div>
-                        <div className={S.pageNumber}>
-                            {this.state.carouselPage} из 3
+                        <div className={S.formBody}>
+                            <form method="POST" onSubmit={this.onSubmitHandler}>
+                                <Carousel
+                                    onChangeHandler={this.onChangeHandler}
+                                    onClickHandler={this.onClickHandler}
+                                    companyName={this.state.registryData.step_1.companyName}
+                                    handleFile={this.handleFile}
+                                    page={this.state.carouselPage}
+                                    suggestions={this.state.suggestions}
+                                    companySelectHandler={this.companySelectHandler}
+                                />
+                            </form>
                         </div>
-                    </div>
-                    <div className={S.formBody}>
-                        <form method="POST" enctype="multipart/form-data" onSubmit={this.onSubmitHandler}>
-                            <Carousel
-                                onChangeHandler={this.onChangeHandler}
-                                onClickHandler={this.onClickHandler}
-                                companyName={this.state.registryData.step_1.companyName}
-                                handleFile={this.handleFile}
-                                page={this.state.carouselPage}
-                                suggestions={this.state.suggestions}
-                                companySelectHandler={this.companySelectHandler}
-                            />
-                        </form>
                     </div>
                 </div>
             </div>

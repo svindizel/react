@@ -86,7 +86,7 @@ export default class Carousel extends Component {
                         <input
                             id="passwordConfirm"
                             type="password"
-                            name="password"
+                            name="passwordConfirm"
                             onChange={this.props.onChangeHandler}
                         />
                     </div>

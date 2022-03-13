@@ -38,4 +38,8 @@ Route::get('/home', function (){
 Route::get('/home', function (){
     return view('home');
 })->name('home');
+
+Route::get('product', [App\Http\Controllers\ProductController::class, 'create'])->name('productCreate');
+Route::post('product', [App\Http\Controllers\ProductController::class, 'create'])->name('productCreate');/*
+*/
 Route::get('/{any}', [HomeController::class, 'index'])->where('any', '.*');

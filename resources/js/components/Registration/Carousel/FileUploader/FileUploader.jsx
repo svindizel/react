@@ -92,7 +92,7 @@ export default class FileUploader extends Component {
                         <input
                             ref={this.hiddenFileInput}
                             type="file"
-                            name='logo'
+                            name="logo"
                             style={{display: 'none'}}
                             onChange={this.onChangeHandler}
                         />
