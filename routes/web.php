@@ -34,7 +34,7 @@ Route::post('register/verify', [App\Http\Controllers\Auth\RegisterController::cl
 Route::get('/home', function (){
     return view('home');
 })->name('home');
-*/
+*//*
 Route::get('/home', function (){
     return view('home');
 })->name('home');
@@ -45,6 +45,6 @@ Route::get('products', [App\Http\Controllers\ProductController::class, 'getProdu
 Route::post('products', [App\Http\Controllers\ProductController::class, 'getProducts'])->name('getProducts');
 Route::get('product/update/{id}', [App\Http\Controllers\ProductController::class, 'update']);
 Route::post('product/update/{id}', [App\Http\Controllers\ProductController::class, 'update'])->name('productUpdate');
-
+*/
 
 Route::get('/{any}', [HomeController::class, 'index'])->where('any', '.*');

@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import S from "./Authorization.module.css";
 import {Link} from "react-router-dom";
 import data from "bootstrap/js/src/dom/data";
+import axios from "axios";
 
 export default class Authorization extends Component {
 
@@ -68,10 +69,18 @@ export default class Authorization extends Component {
         }
     }
 
+    componentDidMount = () => {
+        axios
+            .get("http://react/api/products")
+            .then((response) => {
+                if(response.data.auth) {
+                    window.location = "http://react/products"
+                }
+            })
+    }
+
     onSubmitHandler = (e) => {
         e.preventDefault();
-        this.console();
-        console.log("aaa")
         this.validateData();
         console.log(this.state.errors);
         if (this.validateData) {
@@ -91,6 +100,7 @@ export default class Authorization extends Component {
     };
 
     render() {
+        console.log(localStorage.loggedIn)
         let isEmailIncorrect = this.state.errors.isEmailIncorrect;
         let isEmailEmpty = this.state.errors.isEmailEmpty;
         let isPasswordIncorrect = this.state.errors.isPasswordIncorrect;

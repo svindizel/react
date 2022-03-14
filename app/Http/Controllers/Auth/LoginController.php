@@ -46,12 +46,7 @@ class LoginController extends Controller
     {
         if (Auth::check()) {
             return response()->json(["auth" => "success" ]);
-        } else return response()->json(["auth" => "success" ]);
-    }
-
-    public function showLoginForm()
-    {
-        return view('welcome');
+        } else return response()->json(["auth" => "unsuccess" ]);
     }
 
     /**
@@ -64,8 +59,14 @@ class LoginController extends Controller
      */
     public function login(Request $request)
     {
-        $this->validateLogin($request);
+        $credentials = $this->validateLogin($request);
 
+        if (Auth::attempt($credentials)) {
+            $request->session()->regenerate();
+
+            return response()->json(["auth" => "success" ]);
+        }
+/*
         // If the class is using the ThrottlesLogins trait, we can automatically throttle
         // the login attempts for this application. We'll key this by the username and
         // the IP address of the client making these requests into this application.
@@ -88,8 +89,8 @@ class LoginController extends Controller
         // to login and redirect the user back to the login form. Of course, when this
         // user surpasses their maximum number of attempts they will get locked out.
         $this->incrementLoginAttempts($request);
-
-        return $this->sendFailedLoginResponse($request);
+       
+        return $this->sendFailedLoginResponse($request);*/
     }
 
     /**
@@ -102,7 +103,7 @@ class LoginController extends Controller
      */
     protected function validateLogin(Request $request)
     {
-        $request->validate([
+        return $request->validate([
             'email' => ['required', 'string', 'email', 'max:255'],
             'password' => 'required|string',
         ]);
@@ -117,7 +118,7 @@ class LoginController extends Controller
     protected function attemptLogin(Request $request)
     {
         return $this->guard()->attempt(
-            $this->credentials($request), $request->filled('remember')
+            $this->credentials($request)
         );
     }
 
@@ -141,6 +142,7 @@ class LoginController extends Controller
      
     protected function sendLoginResponse(Request $request)
     {
+        dd($this->guard()->user());
         $request->session()->regenerate();
 
         $this->clearLoginAttempts($request);
@@ -149,9 +151,7 @@ class LoginController extends Controller
             return $response;
         }
         
-        return $request->wantsJson()
-                    ? new JsonResponse([], 201)
-                    : redirect()->intended($this->redirectPath());
+        return new JsonResponse(response()->json(['auth' => Auth::check()]), 200);
     }
 
     /**
@@ -163,7 +163,7 @@ class LoginController extends Controller
      */
     protected function authenticated(Request $request, $user)
     {
-        //
+        return $request->only('email', 'password');
     }
 
     /**
@@ -208,10 +208,11 @@ class LoginController extends Controller
         if ($response = $this->loggedOut($request)) {
             return $response;
         }
-
+/*
         return $request->wantsJson()
-            ? new JsonResponse([], 201)
-            : redirect()->route('login');
+            ? new JsonResponse([], 200)
+            : redirect()->route('login');*/
+            return new JsonResponse(response()->json(['auth' => Auth::check()]), 200);
     }
 
     /**

@@ -10,6 +10,8 @@ use App\Models\Articles;
 use App\Models\ProductDescription;
 use App\Post;
 use Illuminate\Support\Arr;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
@@ -21,6 +23,11 @@ class ProductController extends Controller
             'is_over' => ['required', 'string', 'max:1'],
             'status' => ['required', 'string', 'max:1'],
         ]);
+    }
+
+    public function authCheck()
+    {
+        return response()->json(['auth' => Auth::check()]);
     }
 
     public function getProducts(Request $request)

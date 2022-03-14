@@ -12,9 +12,8 @@ export default class Header extends Component {
             .post("http://react/api/logout")
             .then((response) => {
                 console.log(response);
-                if (response.status === 204 || response.status === 200) {
-                    window.location = "http://react/";
-                }
+                localStorage.setItem("loggedIn", "false")
+                window.location = "http://react/login";
             })
     }
 

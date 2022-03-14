@@ -95,13 +95,20 @@ class RegisterController extends Controller
 
         if (User::where('email', $email)->exists()) {
 
+            $url = str_replace('api/register','', URL::current()) . 'registration?token=' . $request->_token . '&stage=' . User::where('email', $email)->value('stage');
+
+            Mail::send('mail', ['email' => $email, 'url' => $url], function ($message) use ($email) {
+                $message->to($email)->subject('Продолжение регистрации');
+                $message->from('admin@admin.ru', 'Admin');
+            });
+
             return new JsonResponse(response()->json([
-                'error' => "User exists!",
-            ]), 201);
+                'isExists' => User::where('email', $email)->exists(),
+            ]), 200);
 
         } elseif (EmailVerify::where('email', $email)->where('status', 1)->exists()) {
 
-            return new JsonResponse(response()->json(['error' => 'You have already received a letter!']), 201);
+            return new JsonResponse(response()->json(['error' => 'You have already received a letter!']), 200);
 
         } else {
             $url = str_replace('api/register','', URL::current()) . 'registration?token=' . $request->_token;
@@ -118,8 +125,29 @@ class RegisterController extends Controller
         }
 
         return $request->wantsJson()
-                    ? new JsonResponse('success', 201)
+                    ? new JsonResponse('success', 200)
                     : redirect($this->redirectPath());
+    }
+
+    public function setStatus(Request $request)
+    {
+        DB::table('email_verifies')
+        ->where('token', $request->token)
+        ->update(['status' => 1]);
+
+        return new JsonResponse(response()->json('success', 200));
+    }
+
+    public function isTokenTrue(Request $request)
+    {
+        if (DB::table('email_verifies')
+        ->where('token', $request->token)
+        ->exists()
+        )
+        {
+            return new JsonResponse(response()->json(['isTokenTrue' => true], 200));
+        }
+        return new JsonResponse(response()->json(['isTokenTrue' => false], 200));
     }
 
     public function firstStep(Request $request)
@@ -129,14 +157,10 @@ class RegisterController extends Controller
             ->exists()
         )
         {
-            DB::table('email_verifies')
-            ->where('token', $request->token)
-            ->update(['status' => 1]);
-
             $email = DB::table('email_verifies')
                         ->select('email')
                         ->where('token', $request->token)
-                        ->get()[0]->email;
+                        ->value('email');
 
             $this->validateInn($request->only('inn'))->validate();
 
@@ -150,7 +174,7 @@ class RegisterController extends Controller
                     'email' => $email,
                     'inn' => $request->inn,
                     'stage' => 1
-                ]), 201);
+                ]), 200);
             }
 
             User::create([
@@ -165,12 +189,12 @@ class RegisterController extends Controller
                 'email' => $email,
                 'inn' => $request->inn,
                 'stage' => 1
-            ]), 201);
+            ]), 200);
         }
 
         return new JsonResponse(response()->json([
             'error' => 'Incorrect token',
-        ]), 201);
+        ]), 200);
     }
 
     public function secondStep(Request $request)
@@ -199,7 +223,7 @@ class RegisterController extends Controller
         }
         return new JsonResponse(response()->json([
             'error' => 'Incorrect token',
-        ]), 201);
+        ]), 200);
     }
 
     public function thirdStep(Request $request)
@@ -227,12 +251,12 @@ class RegisterController extends Controller
                 return true;
             }
 
-            return new JsonResponse('success', 201);
+            return new JsonResponse('success', 200);
         }
 
         return new JsonResponse(response()->json([
             'error' => 'Incorrect token',
-        ]), 201);
+        ]), 200);
     }
     
 

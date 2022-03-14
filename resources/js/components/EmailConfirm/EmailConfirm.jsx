@@ -7,44 +7,10 @@ class FormBody extends Component {
     constructor(props) {
         axios.defaults.headers.common['X-CSRF-TOKEN'] = window.token;
         super(props);
-        this.state = {
-            errors: {
-                isEmailEmpty: false,
-                isEmailIncorrect: false,
-            }
-        }
-    }
-
-    clearErrors = (state) => {
-        state.errors.isEmailEmpty = false;
-        state.errors.isPasswordEmpty = false;
-        state.errors.isEmailIncorrect = false;
-        state.errors.isPasswordIncorrect = false;
-        this.setState(state);
-    }
-    validateData = () => {
-        let state = this.state;
-        this.clearErrors(state);
-        let emailFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-        if (state.signInData.email !== "") {
-            if (!state.signInData.email.match(emailFormat)) {
-                state.errors.isEmailIncorrect = true;
-                this.setState(state);
-                return false
-            }
-            return true
-        } else {
-            if (state.signInData.email === "") {
-                state.errors.isEmailEmpty = true;
-            }
-            this.setState(state);
-            return false
-        }
     }
 
     render() {
-        let isEmailIncorrect = this.state.errors.isEmailIncorrect;
-        let isEmailEmpty = this.state.errors.isEmailEmpty;
+
         if (this.props.isConfirmed === true) {
             return (
                 <div className={S.formBody}>
@@ -56,20 +22,21 @@ class FormBody extends Component {
         return (
             <div className={S.formBody}>
                 <form method="POST" onSubmit={this.props.onSubmitHandler}>
-                    <label className={`${isEmailIncorrect || isEmailEmpty ? S.errorLabel : S.label}`} htmlFor="email">Email</label>
+                    <label className={this.props.errors.isEmailIncorrect || this.props.errors.isEmailEmpty ? S.errorLabel : S.label} htmlFor="email">Email</label>
                     <div className={S.input}>
                         <input
+                            className={this.props.errors.isEmailEmpty || this.props.errors.isEmailIncorrect ? S.error : null}
                             onChange={this.props.onChangeHandler}
                             id="email"
-                            type="email"
+                            type="text"
                             name="email"
                         />
-                        {this.state.errors.isEmailEmpty ?
-                            <div className={S.errorText}>Заполните это поле</div> : null}
-                        {this.state.errors.isEmailIncorrect ?
-                            <div className={S.errorText}>Введите корректный Email</div> : null}
                         <button className={S.button} type="submit">Продолжить &#8594;</button>
                     </div>
+                    {this.props.errors.isEmailEmpty ?
+                        <div className={S.errorText}>Заполните это поле</div> : null}
+                    {this.props.errors.isEmailIncorrect ?
+                        <div className={S.errorText}>Введите корректный Email</div> : null}
                 </form>
                 <div className={S.registrySuggest}>
                     <div className="text">
@@ -95,7 +62,11 @@ export default class EmailConfirm extends Component {
                 _token: window.token,
                 email: "",
             },
-            isConfirmed: false
+            isConfirmed: false,
+            errors: {
+                isEmailEmpty: false,
+                isEmailIncorrect: false,
+            }
         };
     };
 
@@ -106,19 +77,47 @@ export default class EmailConfirm extends Component {
         this.setState({signUpData});
     };
 
+    clearErrors = (state) => {
+        state.errors.isEmailEmpty = false;
+        state.errors.isEmailIncorrect = false;
+        this.setState(state);
+    };
+
+    validateData = () => {
+        let state = this.state;
+        this.clearErrors(state);
+        let emailFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+        if (state.signUpData.email !== "") {
+            if (!state.signUpData.email.match(emailFormat)) {
+                state.errors.isEmailIncorrect = true;
+                this.setState(state);
+                return false
+            } else {
+                return true
+            }
+        } else {
+            state.errors.isEmailEmpty = true;
+            this.setState(state);
+            return false
+        }
+    };
+
     onSubmitHandler = (e) => {
         e.preventDefault();
-        axios
-            .post("http://react/api/register", this.state.signUpData)
-            .then((response) => {
-                if (response.status === 204 || response.status === 200) {
-                    //window.location = "http://react/registration";
-                    this.setState({
-                        email: "",
-                    })
-                }
-            })
-        this.state.isConfirmed = true;
+        if(this.validateData()) {
+            axios
+                .post("http://react/api/register", this.state.signUpData)
+                .then((response) => {
+                    if (response.status === 204 || response.status === 200) {
+                        //window.location = "http://react/registration";
+                        this.setState({
+                            email: "",
+                        })
+                    }
+                })
+            this.state.isConfirmed = true;
+        }
+
     };
 
     render() {
@@ -132,6 +131,7 @@ export default class EmailConfirm extends Component {
                             </div>
                         </div>
                         <FormBody
+                            errors={this.state.errors}
                             isConfirmed={this.state.isConfirmed}
                             onChangeHandler={this.onChangeHandler}
                             onSubmitHandler={this.onSubmitHandler}

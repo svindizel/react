@@ -37,7 +37,7 @@
 }
 .input {
     display: flex;
-    margin-bottom: 30px;
+
     position: relative;
 
 }
@@ -51,6 +51,7 @@
 }
 .registrySuggest {
     display: flex;
+    margin-top: 30px;
 }
 .registrySuggest > a {
     color: #354AFF;

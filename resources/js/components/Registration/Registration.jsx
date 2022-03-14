@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import S from "./Registration.module.css";
 import FormData from "form-data";
 import Carousel from "./Carousel/Carousel";
+import axios from "axios";
 
 export default class Registration extends Component {
 
@@ -26,6 +27,7 @@ export default class Registration extends Component {
                 },
                 step_3: {
                     password: "",
+                    passwordConfirm: "",
                     token: token,
                     _token: window.token
                 },
@@ -35,9 +37,56 @@ export default class Registration extends Component {
 
             },
             carouselPage: 1,
-            suggestions: []
+            suggestions: [],
+            errors: {
+                isPasswordConfirmEmpty: false,
+                isPasswordEmpty: false,
+                isPasswordIncorrect: false,
+                isPasswordsNotMatch: false,
+                isInnEmpty: false,
+                isTokenFalse: false 
+            }
         }
     };
+
+    componentDidMount = () => {
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        const token = urlParams.get('token');
+        axios
+            .post("http://react/api/register/verify/token", {token: token})
+            .then((response) => {
+                console.log(response)
+                if(response.data.original.isTokenTrue) {
+                    this.getStage();
+                } else {
+                    let state = this.state;
+                    state.errors.isTokenFalse = true;
+                    this.setState(state);
+                }
+            })
+        
+
+    }
+
+    getStage = () => {
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        let state = this.state;
+        if(urlParams.get("stage")) {
+            state.carouselPage = parseInt(urlParams.get("stage"));
+            this.setState(state);
+        } else {
+            let initialData = {
+                token: urlParams.get('token'),
+                stage: 1
+            }
+            /*state.carouselPage = 1
+            this.setState(state);*/
+            axios
+                .post("http://react/api/register/verify")
+        }
+    }
 
     dadataCall = (e, query) => {
         let url = "https://suggestions.dadata.ru/suggestions/api/4_1/rs/suggest/party";
@@ -97,11 +146,14 @@ export default class Registration extends Component {
 
     onClickHandler = (e) => {
         e.preventDefault();
+        console.log(this.state)
         let state = this.state;
         const action = e.target.getAttribute("data-action");
         if (action === "true") {
+            console.log(333)
+            let page = this.state.carouselPage + 1
             this.setState({
-                carouselPage: this.state.carouselPage + 1
+                carouselPage: page
             });
         } else {
             this.setState({
@@ -109,21 +161,20 @@ export default class Registration extends Component {
             });
         }
         if (this.state.carouselPage === 1) {
-            if (this.state.registryData.step_1.inn !== "") {
+            console.log(11)
+            if (this.validateData()) {
+                console.log(12)
                 axios
                     .post("http://react/api/register/verify/1", this.state.registryData.step_1)
                     .then((response) => {
                         console.log(response)
                     })
-                console.log(this.state);
             }
         }
         if (this.state.carouselPage === 2) {
             let data = new FormData();
             data.append('logo', this.state.registryData.step_2.logo, this.state.registryData.step_2.logo.name)
             data.append('token', this.state.registryData.step_2.token)
-            console.log(data);
-            console.log(this.state.registryData.step_2.logo.type)
             let headers = {
                 'accept': 'application/json',
                 'Accept-Language': 'en-US,en;q=0.8',
@@ -136,18 +187,71 @@ export default class Registration extends Component {
                 .then((response) => {
                     console.log(response)
                 })
-            console.log(this.state);
         }
         if (this.state.carouselPage === 3) {
-            axios
-                .post("http://react/api/register/verify/3", this.state.registryData.step_3)
-                .then((response) => {
-                    console.log(response)
-                })
-            console.log(this.state);
+            if(this.validateData()) {
+                axios
+                    .post("http://react/api/register/verify/3", this.state.registryData.step_3)
+                    .then((response) => {
+                        if (response.status === 204 || response.status === 200) {
+                            window.location = "http://react/products";
+                        }
+                    })
+            }
         }
-
     };
+
+    clearErrors = (state) => {
+        state.errors.isPasswordConfirmEmpty = false;
+        state.errors.isPasswordEmpty = false;
+        state.errors.isPasswordIncorrect = false;
+        state.errors.isPasswordsNotMatch = false;
+        this.setState(state);
+    }
+
+    validateData = () => {
+        let state = this.state;
+        this.clearErrors(state);
+        if(state.carouselPage === 1) {
+            if(state.registryData.step_1.inn === "") {
+                console.log(111)
+                state.errors.isInnEmpty = true
+                this.setState(state);
+                return false
+            } else {
+                return true
+            }
+        }
+        if(state.carouselPage === 3) {
+            if (state.registryData.step_3.passwordConfirm !== "" && state.registryData.step_3.password !== "") {
+                if(state.registryData.step_3.password.length > 8) {
+                    if (state.registryData.step_3.passwordConfirm === state.registryData.step_3.password) {
+                        this.setState(state);
+                        return true
+                    } else {
+                        state.errors.isPasswordsNotMatch = true;
+                        this.setState(state);
+                        return false
+                    }
+                } else {
+                    state.errors.isPasswordIncorrect = true;
+                    this.setState(state);
+                    return false
+                }
+            } else {
+                if(state.registryData.step_3.passwordConfirm === "" || state.registryData.step_3.password === "") {
+                    if(state.registryData.step_3.passwordConfirm === "") {
+                        state.errors.isPasswordConfirmEmpty = true;
+                    }
+                    if(state.registryData.step_3.password === "") {
+                        state.errors.isPasswordEmpty = true;
+                    }
+                    this.setState(state);
+                    return false
+                }
+            }
+        }
+    }
 
     handleFile = (uploadedFile) => {
         console.log(uploadedFile);
@@ -158,22 +262,31 @@ export default class Registration extends Component {
 
     onSubmitHandler = (e) => {
         e.preventDefault();
-        axios
-            .post("http://react/register/verify", this.state.registryData)
-            .then((response) => {
-                console.log(response)
-                if (response.status === 204 || response.status === 200) {
-                    window.location = "http://react/home";
-                    this.setState({
-                        email: "",
-                        password: "",
-                    })
-                }
-            })
+        console.log("asdasdsd")
+        if(this.validateData) {
+            axios
+                .post("http://react/register/verify", this.state.registryData)
+                .then((response) => {
+                    console.log(response)
+                    if (response.status === 204 || response.status === 200) {
+                        window.location = "http://react/home";
+                        this.setState({
+                            email: "",
+                            password: "",
+                        })
+                    }
+                })
+        }
     };
 
     render() {
-        console.log(this.state)
+        if(this.state.errors.isTokenFalse) {
+            return(
+                <div>
+                    404 nahui
+                </div>
+            )
+        }
         return (
             <div className={S.container}>
                 <div className={S.registration}>
@@ -189,6 +302,8 @@ export default class Registration extends Component {
                         <div className={S.formBody}>
                             <form method="POST" onSubmit={this.onSubmitHandler}>
                                 <Carousel
+                                    errors={this.state.errors}
+                                    registryData={this.state.registryData}
                                     onChangeHandler={this.onChangeHandler}
                                     onClickHandler={this.onClickHandler}
                                     companyName={this.state.registryData.step_1.companyName}

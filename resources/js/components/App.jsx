@@ -38,9 +38,9 @@ export default function App() {
 }
 
 if (document.getElementById('root')) {
-    ReactDOM.render(
-        <React.StrictMode>
-            <App/>
-        </React.StrictMode>,
+    if(!localStorage.getItem('loggedIn')) {
+        localStorage.setItem("loggedIn", "false")
+    }
+    ReactDOM.render(<App/>,
         document.getElementById('root'));
 }
