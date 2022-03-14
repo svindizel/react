@@ -7,7 +7,9 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Products;
 use App\Models\Articles;
+use App\Models\ProductDescription;
 use App\Post;
+use Illuminate\Support\Arr;
 
 class ProductController extends Controller
 {
@@ -21,23 +23,94 @@ class ProductController extends Controller
         ]);
     }
 
-    public function all()
+    public function getProducts(Request $request)
     {
-        $products = DB::table('products')->get();
-        $products_desc = DB::table('product_description')->get();
-        $units = DB::table('units')->get();
+        $data['products'] = Products::all()->toArray();
+        $product_descriptions = ProductDescription::all()->toArray(); 
+        $articles = Articles::all()->toArray();
+
+        for ($i = 0; $i < count($data['products']); $i++)
+        {
+            if ($data['products'][$i]['art_id'] == $articles[$i]['id']) {
+                $data['products'][$i] = Arr::add($data['products'][$i], 'art', $articles[$i]['art']);
+            }
+
+            if ($data['products'][$i]['id'] == $product_descriptions[$i]['product_id']) {
+                $data['products'][$i] = Arr::add($data['products'][$i], 'name', $product_descriptions[$i]['name']);
+                $data['products'][$i] = Arr::add($data['products'][$i], 'description', $product_descriptions[$i]['description']);
+            }
+        }
+
+        return view('products.index', $data);
     }
 
     public function create(Request $request)
     {
-        //Articles::create(['art' => '123321']);
+        $data['categories'] = DB::table('categories')
+            ->select('name')->get();
+
+        if (!empty($request->input('articul'))){
+            Articles::create(['art' => $request->input('articul')]);
+        }
+
+        $id = DB::table('articles')->select('id')->where('art', $request->input('articul'))->value('id');
+    
+        if (!empty($request->input('price'))){
+
+            $productId = Products::create([
+                'price' => $request->input('price'),
+                'art_id' => $id,
+                'is_over' => 0,
+                'status' => 1,
+            ])->id;
+        }
         
-        Products::create([
-            'price' => 123,
-            'art_id' => DB::table('articles')->select('id')->where('art', '123321')->get(),
-            'is_over' => 0,
-            'status' => 1,
-        ]);
+        if (!empty($request->input('name'))){
+            $description = $request->input('description');
+
+            ProductDescription::create([
+                'name' => $request->input('name'),
+                'description' => $description,
+                'product_id' => $productId,
+            ]);
+        }
+
+        return view('products.form', $data);
+    }
+
+    public function update(Request $request)
+    {
+        /*
+        $data['categories'] = DB::table('categories')
+            ->select('name')->get();
+
+        if (!empty($request->input('articul'))){
+            Articles::create(['art' => $request->input('articul')]);
+        }
+
+        $id = DB::table('articles')->select('id')->where('art', $request->input('articul'))->value('id');
+    
+        if (!empty($request->input('price'))){
+
+            $productId = Products::create([
+                'price' => $request->input('price'),
+                'art_id' => $id,
+                'is_over' => 0,
+                'status' => 1,
+            ])->id;
+        }
+        
+        if (!empty($request->input('name'))){
+            $description = $request->input('description');
+
+            ProductDescription::create([
+                'name' => $request->input('name'),
+                'description' => $description,
+                'product_id' => $productId,
+            ]);
+        }*/
+
+        return view('products.formUpd', $data);
     }
 
 

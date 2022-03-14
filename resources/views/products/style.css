@@ -1,0 +1,137 @@
+@media screen and (max-width: 1920px) {
+    .container{
+        width: 1600px;
+    }
+}
+@media screen and (max-width: 1600px) {
+    .container{
+        width: 1400px;
+    }
+}
+@media screen and (max-width: 1366px) {
+    .container{
+        width: 1200px;
+    }
+}
+@media screen and (max-width: 1040px) {
+    .container {
+        width: 940px;
+    }
+}
+@media screen and (max-width: 800px) {
+    .container {
+        width: 700px;
+    }
+}
+* {
+    font-family: 'Nunito', sans-serif;
+}
+body {
+    background-color: #f2f2f2;
+    height: 100vh;
+}
+.container {
+    height: 100%;
+    display: flex;
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+.products {
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    width: 100%;
+    border-radius: 4px;
+    padding: 10px;
+
+}
+.productsHeader {
+    display: flex;
+    justify-content: space-between;
+    font-size: 22px;
+    font-weight: bold;
+    align-items: center;
+}
+.productsSearch {
+    font-size: 16px;
+}
+.productsSearch > input {
+    background-color: #f2f2f2;
+    border: 0;
+    padding: 5px 10px;
+    border-radius: 4px;
+}
+.productsBody {
+    display: flex;
+}
+.productsCategories {
+    min-width: 150px;
+    width: max-content;
+    font-size: 18px;
+}
+.productsTable {
+    font-size: 18px;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+.tableHeader {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+.categoryName {
+    margin-right: 10%;
+}
+.button {
+    padding: 5px 10px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    border-radius: 4px;
+    background-color: #354AFF;
+    color: #fff;
+}
+.tableBody {
+    display: flex;
+    flex-direction: column;
+    border-radius: 4px;
+    background-color: #f2f2f2;
+}
+.headersRow {
+    display: flex;
+    justify-content: space-between;
+    border-radius: 4px 4px 0 0;
+    background-color: #e7e7e7;
+    padding: 5px 10px;
+}
+.tableRow {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 10px;
+
+}
+.productName {
+    width: 150px;
+}
+.productPrice {
+    width: 50px;
+}
+.productMeasureItems {
+    width: 30px;
+}
+.productArticul {
+    width: 40px;
+}
+.productSale {
+    width: 65px;
+}
+.productIngredients {
+    width: 250px;
+}
+.productStop {
+    width: 90px;
+}
+

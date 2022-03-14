@@ -1,0 +1,85 @@
+@media screen and (max-width: 1920px) {
+    .container{
+        width: 1600px;
+    }
+}
+@media screen and (max-width: 1600px) {
+    .container{
+        width: 1400px;
+    }
+}
+@media screen and (max-width: 1366px) {
+    .container{
+        width: 1200px;
+    }
+}
+@media screen and (max-width: 1040px) {
+    .container {
+        width: 940px;
+    }
+}
+@media screen and (max-width: 800px) {
+    .container {
+        width: 700px;
+    }
+}
+* {
+    font-family: 'Nunito', sans-serif;
+}
+body {
+    background-color: #f2f2f2;
+    height: 100vh;
+}
+.container {
+    height: 100%;
+    display: flex;
+    margin-left: auto;
+    margin-right: auto;
+    align-items: center;
+}
+.form {
+    width: 40%;
+}
+.form > form {
+    display: flex;
+    flex-direction: column;
+    font-size: 20px;
+}
+.formItem {
+    margin-bottom: 5px;
+    display: flex;
+    justify-content: space-between;
+}
+.formItem > select {
+    width: 80%;
+    background-color: #e7e7e7;
+    border: 0;
+}
+.formItem > input {
+    border-radius: 4px;
+    background-color: #e7e7e7;
+    border: 0;
+}
+.form {
+    background-color: white;
+    border-radius: 4px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 10px 10px;
+}
+select {
+    font-size: 18px;
+}
+.button {
+    padding: 5px 10px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    border-radius: 4px;
+    background-color: #354AFF;
+    color: #fff;
+    border: 0;
+}
+.formHeader {
+    font-weight: bold;
+}

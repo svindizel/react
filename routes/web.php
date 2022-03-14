@@ -39,7 +39,12 @@ Route::get('/home', function (){
     return view('home');
 })->name('home');
 
-Route::get('product', [App\Http\Controllers\ProductController::class, 'create'])->name('productCreate');
-Route::post('product', [App\Http\Controllers\ProductController::class, 'create'])->name('productCreate');/*
-*/
+Route::get('product/add', [App\Http\Controllers\ProductController::class, 'create']);
+Route::post('product/add', [App\Http\Controllers\ProductController::class, 'create'])->name('productCreate');
+Route::get('products', [App\Http\Controllers\ProductController::class, 'getProducts']);
+Route::post('products', [App\Http\Controllers\ProductController::class, 'getProducts'])->name('getProducts');
+Route::get('product/update/{id}', [App\Http\Controllers\ProductController::class, 'update']);
+Route::post('product/update/{id}', [App\Http\Controllers\ProductController::class, 'update'])->name('productUpdate');
+
+
 Route::get('/{any}', [HomeController::class, 'index'])->where('any', '.*');
