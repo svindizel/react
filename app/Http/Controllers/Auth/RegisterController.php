@@ -87,46 +87,67 @@ class RegisterController extends Controller
         ]);
     }
 
+    public function getData (Request $request)
+    {
+        $email = EmailVerify::where('token', $request->token)->value('email');
+
+        return new JsonResponse(response()->json(User::where('email', $email)->get()->toArray()), 200);
+    }
+
+    public function resendEmail (Request $request)
+    {
+        $email = $request->input('email');
+        
+        if (User::where('email', $email)->exists()) {
+            $url = str_replace('api/register/verify/resend','', URL::current()) . 'registration?token=' . $request->_token . '&stage=' . User::where('email', $email)->value('stage');
+        } else {
+            $url = str_replace('api/register/verify/resend','', URL::current()) . 'registration?token=' . $request->_token;
+        }
+
+        if (EmailVerify::where('email', $email)->exists()) {
+            EmailVerify::where('email', $email)
+                ->update([
+                    'token' => $request->_token
+                ]);
+        }
+        
+        Mail::send('mail', ['email' => $email, 'url' => $url], function ($message) use ($email) {
+            $message->to($email)->subject('Продолжение регистрации');
+            $message->from('admin@admin.ru', 'Admin');
+        });
+
+        return new JsonResponse(response()->json('success'), 200);
+    }
+
     public function sendVerify(Request $request)
     {
         $this->validateEmail($request->all())->validate()['email'];
 
         $email = $request->input('email');
 
-        if (User::where('email', $email)->exists()) {
+        if (User::where('email', $email)->where('password', NULL)->exists() || EmailVerify::where('email', $email)->exists()) {
 
-            $url = str_replace('api/register','', URL::current()) . 'registration?token=' . $request->_token . '&stage=' . User::where('email', $email)->value('stage');
+            //$url = str_replace('api/register','', URL::current()) . 'registration?token=' . $request->_token . '&stage=' . User::where('email', $email)->value('stage');
 
-            Mail::send('mail', ['email' => $email, 'url' => $url], function ($message) use ($email) {
-                $message->to($email)->subject('Продолжение регистрации');
-                $message->from('admin@admin.ru', 'Admin');
-            });
+            return new JsonResponse(response()->json('incomplete'), 200);
 
-            return new JsonResponse(response()->json([
-                'isExists' => User::where('email', $email)->exists(),
-            ]), 200);
-
-        } elseif (EmailVerify::where('email', $email)->where('status', 1)->exists()) {
-
-            return new JsonResponse(response()->json(['error' => 'You have already received a letter!']), 200);
-
-        } else {
-            $url = str_replace('api/register','', URL::current()) . 'registration?token=' . $request->_token;
-
-            Mail::send('mail', ['email' => $email, 'url' => $url], function ($message) use ($email) {
-                $message->to($email)->subject('Продолжение регистрации');
-                $message->from('admin@admin.ru', 'Admin');
-            });
-
-            EmailVerify::create([
-                'email' => $email,
-                'token' => $request->_token,
-            ]);
+        } elseif (User::where('email', $email)->where('password', '!=', NULL)->where('stage', 3)->exists()) {
+            return new JsonResponse(response()->json(['error' => 'User exists']), 200);
         }
 
-        return $request->wantsJson()
-                    ? new JsonResponse('success', 200)
-                    : redirect($this->redirectPath());
+        EmailVerify::create([
+            'email' => $email,
+            'token' => $request->_token,
+        ]);
+
+        $url = str_replace('api/register','', URL::current()) . 'registration?token=' . $request->_token;
+
+        Mail::send('mail', ['email' => $email, 'url' => $url], function ($message) use ($email) {
+            $message->to($email)->subject('Продолжение регистрации');
+            $message->from('admin@admin.ru', 'Admin');
+        });
+
+        return new JsonResponse(response()->json('success'), 200);
     }
 
     public function setStatus(Request $request)
@@ -206,7 +227,8 @@ class RegisterController extends Controller
         {
             $this->validateImage($request->all())->validate()['logo'];
 
-            $path = $request->logo->store('logo');
+            $public_path = $request->logo->store('public');
+            $path = str_replace('public/', '' , $public_path);
             
             $email = DB::table('email_verifies')
                         ->select('email')

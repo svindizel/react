@@ -51,6 +51,7 @@
 }
 .uploaderContent {
     display: flex;
+    justify-content: space-between;
 }
 .companyName {
     font-weight: bold;

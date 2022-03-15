@@ -54,6 +54,7 @@ export default class Registration extends Component {
         const queryString = window.location.search;
         const urlParams = new URLSearchParams(queryString);
         const token = urlParams.get('token');
+        let state = this.state;
         axios
             .post("http://react/api/register/verify/token", {token: token})
             .then((response) => {
@@ -65,6 +66,18 @@ export default class Registration extends Component {
                     state.errors.isTokenFalse = true;
                     this.setState(state);
                 }
+            })
+        axios
+            .post("http://react/api/register/getData", {token: token})
+            .then((response) => {
+                console.log(response.data.original[0]);
+                let data = response.data.original[0];
+                state.carouselPage = data.stage;
+                state.registryData.step_1.inn = data.inn;
+                state.registryData.step_1.companyName = data.name;
+                state.registryData.step_2.logo = data.logo;
+                this.setState(state);
+                console.log(this.state)
             })
     }
 
@@ -328,39 +341,41 @@ export default class Registration extends Component {
             return (
                 <NotFound />
             )
-        }
-        return (
-            <div className={S.container}>
-                <div className={S.registration}>
-                    <div className={S.registrationForm}>
-                        <div className={S.formHeader}>
-                            <div className={S.headerText}>
-                                Регистрация
+        } else {
+            return (
+                <div className={S.container}>
+                    <div className={S.registration}>
+                        <div className={S.registrationForm}>
+                            <div className={S.formHeader}>
+                                <div className={S.headerText}>
+                                    Регистрация
+                                </div>
+                                <div className={S.pageNumber}>
+                                    {this.state.carouselPage} из 3
+                                </div>
                             </div>
-                            <div className={S.pageNumber}>
-                                {this.state.carouselPage} из 3
+                            <div className={S.formBody}>
+                                <form method="POST" onSubmit={this.onSubmitHandler}>
+                                    <Carousel
+                                        logo={this.state.registryData.step_2.logo}
+                                        previousPage={this.previousPage}
+                                        errors={this.state.errors}
+                                        registryData={this.state.registryData}
+                                        onChangeHandler={this.onChangeHandler}
+                                        nextPage={this.nextPage}
+                                        onClickHandler={this.onClickHandler}
+                                        companyName={this.state.registryData.step_1.companyName}
+                                        handleFile={this.handleFile}
+                                        page={this.state.carouselPage}
+                                        suggestions={this.state.suggestions}
+                                        companySelectHandler={this.companySelectHandler}
+                                    />
+                                </form>
                             </div>
-                        </div>
-                        <div className={S.formBody}>
-                            <form method="POST" onSubmit={this.onSubmitHandler}>
-                                <Carousel
-                                    previousPage={this.previousPage}
-                                    errors={this.state.errors}
-                                    registryData={this.state.registryData}
-                                    onChangeHandler={this.onChangeHandler}
-                                    nextPage={this.nextPage}
-                                    onClickHandler={this.onClickHandler}
-                                    companyName={this.state.registryData.step_1.companyName}
-                                    handleFile={this.handleFile}
-                                    page={this.state.carouselPage}
-                                    suggestions={this.state.suggestions}
-                                    companySelectHandler={this.companySelectHandler}
-                                />
-                            </form>
                         </div>
                     </div>
                 </div>
-            </div>
-        )
+            )
+        }
     }
 }

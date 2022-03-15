@@ -32,9 +32,11 @@ Route::group([
 
     Route::post('register/verify/token', [App\Http\Controllers\Auth\RegisterController::class, 'isTokenTrue']);
     Route::post('register/verify', [App\Http\Controllers\Auth\RegisterController::class, 'setStatus']);
+    Route::post('register/verify/resend', [App\Http\Controllers\Auth\RegisterController::class, 'resendEmail']);
     Route::post('register/verify/1', [App\Http\Controllers\Auth\RegisterController::class, 'firstStep']);
     Route::post('register/verify/2', [App\Http\Controllers\Auth\RegisterController::class, 'secondStep']);
     Route::post('register/verify/3', [App\Http\Controllers\Auth\RegisterController::class, 'thirdStep']);
+    Route::post('register/getData', [App\Http\Controllers\Auth\RegisterController::class, 'getData']);
     });
 
     Route::get('products', [App\Http\Controllers\ProductController::class, 'authCheck']);

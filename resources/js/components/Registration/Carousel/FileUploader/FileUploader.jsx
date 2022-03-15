@@ -48,6 +48,7 @@ export default class FileUploader extends Component {
 
     componentDidMount() {
         this.hiddenFileInput.current.focus();
+        console.log(this.props.logo)
     };
 
     onChangeHandler = (e) => {
@@ -57,28 +58,51 @@ export default class FileUploader extends Component {
     }
 
     renderLogo = (uploadedLogo) => {
+        let state = this.state;
         let reader = new FileReader();
         let url = reader.readAsDataURL(uploadedLogo);
         reader.onloadend = (e) => {
-            this.setState({
-                logoSrc: [reader.result],
-            });
-            this.setState({ready: true})
+            state.logoSrc = [reader.result];
+            state.ready = true;
+            this.setState(state);
         }
         console.log(this.state)
+    }
+
+    setImgSrc = () => {
+        if(this.props.logo !== "") {
+            console.log(111)
+            console.log(this.props)
+            let src = "/public/storage/" + this.props.logo
+            console.log("public/storage/" + this.props.logo)
+            return (<img className={S.original} src={"/public/storage/" + this.props.logo} alt=""/>)
+        } else {
+            if (this.state.ready) {
+                return (<img className={S.original} src={this.state.logoSrc} alt=""/>)
+            }
+        }
+        return null
     }
 
     render() {
         return (
             <div className={S.fileUploader}>
                 <div className={S.uploaderContent}>
-                    <div className={S.logoPreview}>
-                        {() => {
-                            if (this.state.ready) {
-                                return (<img className={S.original} src={this.state.logoSrc} alt=""/>)
+                    <div className={S.logoPreview} onClick={this.setImgSrc}>
+                        {
+                            this.setImgSrc()
+                        /*() => {
+                            console.log(111)
+                            if(this.props.logo !== "") {
+                                console.log(this.props.logo)
+                                return (<img className={S.original} src={this.props.logo} alt=""/>)
+                            } else {
+                                if (this.state.ready) {
+                                    return (<img className={S.original} src={this.state.logoSrc} alt=""/>)
+                                }
                             }
                             return null
-                        }}
+                        }*/}
                         <img className={() => {
                             if (this.state.ready) {
                                 return S.hide

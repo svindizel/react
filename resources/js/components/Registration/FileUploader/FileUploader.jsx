@@ -5,7 +5,10 @@ class UploadButton extends Component {
     constructor(props) {
         super(props);
         this.state = {
-
+            errors: {
+                isResolutionIncorrect: false,
+                isSizeIncorrect: false
+            }
         };
     }
     render() {
@@ -51,6 +54,7 @@ export default class FileUploader extends Component {
 
     onChangeHandler = (e) => {
         const uploadedFile = e.target.files[0];
+
         this.props.handleFile(uploadedFile);
     }
 

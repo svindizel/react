@@ -5658,10 +5658,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _EmailConfirm_module_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./EmailConfirm.module.css */ "./resources/js/components/EmailConfirm/EmailConfirm.module.css");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/index.js");
-/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
-/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -5693,6 +5695,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
 
 
+
 var FormBody = /*#__PURE__*/function (_Component) {
   _inherits(FormBody, _Component);
 
@@ -5701,7 +5704,7 @@ var FormBody = /*#__PURE__*/function (_Component) {
   function FormBody(props) {
     _classCallCheck(this, FormBody);
 
-    axios.defaults.headers.common['X-CSRF-TOKEN'] = window.token;
+    (axios__WEBPACK_IMPORTED_MODULE_2___default().defaults.headers.common["X-CSRF-TOKEN"]) = window.token;
     return _super.call(this, props);
   }
 
@@ -5709,52 +5712,63 @@ var FormBody = /*#__PURE__*/function (_Component) {
     key: "render",
     value: function render() {
       if (this.props.isConfirmed === true) {
-        return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+        return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
           className: _EmailConfirm_module_css__WEBPACK_IMPORTED_MODULE_0__["default"].formBody,
           children: "\u041D\u0430 \u0432\u0430\u0448 email \u043E\u0442\u043F\u0440\u0430\u0432\u043B\u0435\u043D\u043E \u043F\u0438\u0441\u044C\u043C\u043E \u0441 \u043F\u043E\u0434\u0442\u0432\u0435\u0440\u0436\u0434\u0435\u043D\u0438\u0435\u043C \u0440\u0435\u0433\u0438\u0441\u0442\u0440\u0430\u0446\u0438\u0438. \u041F\u043E\u0436\u0430\u043B\u0443\u0439\u0441\u0442\u0430, \u043F\u0435\u0440\u0435\u0439\u0434\u0438\u0442\u0435 \u043F\u043E \u0441\u0441\u044B\u043B\u043A\u0435 \u0432 \u043F\u0438\u0441\u044C\u043C\u0435 \u0434\u043B\u044F \u043F\u0440\u043E\u0434\u043E\u043B\u0436\u0435\u043D\u0438\u044F."
         });
-      }
-
-      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
-        className: _EmailConfirm_module_css__WEBPACK_IMPORTED_MODULE_0__["default"].formBody,
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("form", {
-          method: "POST",
-          onSubmit: this.props.onSubmitHandler,
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("label", {
-            className: this.props.errors.isEmailIncorrect || this.props.errors.isEmailEmpty ? _EmailConfirm_module_css__WEBPACK_IMPORTED_MODULE_0__["default"].errorLabel : _EmailConfirm_module_css__WEBPACK_IMPORTED_MODULE_0__["default"].label,
-            htmlFor: "email",
-            children: "Email"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
-            className: _EmailConfirm_module_css__WEBPACK_IMPORTED_MODULE_0__["default"].input,
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("input", {
-              className: this.props.errors.isEmailEmpty || this.props.errors.isEmailIncorrect ? _EmailConfirm_module_css__WEBPACK_IMPORTED_MODULE_0__["default"].error : null,
-              onChange: this.props.onChangeHandler,
-              id: "email",
-              type: "text",
-              name: "email"
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("button", {
-              className: _EmailConfirm_module_css__WEBPACK_IMPORTED_MODULE_0__["default"].button,
-              type: "submit",
-              children: "\u041F\u0440\u043E\u0434\u043E\u043B\u0436\u0438\u0442\u044C \u2192"
-            })]
-          }), this.props.errors.isEmailEmpty ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
-            className: _EmailConfirm_module_css__WEBPACK_IMPORTED_MODULE_0__["default"].errorText,
-            children: "\u0417\u0430\u043F\u043E\u043B\u043D\u0438\u0442\u0435 \u044D\u0442\u043E \u043F\u043E\u043B\u0435"
-          }) : null, this.props.errors.isEmailIncorrect ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
-            className: _EmailConfirm_module_css__WEBPACK_IMPORTED_MODULE_0__["default"].errorText,
-            children: "\u0412\u0432\u0435\u0434\u0438\u0442\u0435 \u043A\u043E\u0440\u0440\u0435\u043A\u0442\u043D\u044B\u0439 Email"
-          }) : null]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
-          className: _EmailConfirm_module_css__WEBPACK_IMPORTED_MODULE_0__["default"].registrySuggest,
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
-            className: "text",
-            children: "\u0423\u0436\u0435 \u0437\u0430\u0440\u0435\u0433\u0438\u0441\u0442\u0440\u0438\u0440\u043E\u0432\u0430\u043D\u044B?\xA0"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_3__.Link, {
-            to: "/",
-            children: "\u0412\u043E\u0439\u0442\u0438 \u0432 \u0441\u0438\u0441\u0442\u0435\u043C\u0443"
+      } else if (this.props.incomplete === true) {
+        return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+          className: _EmailConfirm_module_css__WEBPACK_IMPORTED_MODULE_0__["default"].formBody,
+          children: ["\u041D\u0430 \u0432\u0430\u0448 email \u0443\u0436\u0435 \u0431\u044B\u043B\u043E \u043E\u0442\u043F\u0440\u0430\u0432\u043B\u0435\u043D\u043E \u043F\u0438\u0441\u044C\u043C\u043E \u0441 \u043F\u043E\u0434\u0442\u0432\u0435\u0440\u0436\u0434\u0435\u043D\u0438\u0435\u043C \u0440\u0435\u0433\u0438\u0441\u0442\u0440\u0430\u0446\u0438\u0438. \u0415\u0441\u043B\u0438 \u0432\u044B \u0445\u043E\u0442\u0438\u0442\u0435 \u043F\u043E\u043B\u0443\u0447\u0438\u0442\u044C \u043F\u0438\u0441\u044C\u043C\u043E \u043F\u043E\u0432\u0442\u043E\u0440\u043D\u043E, \u043D\u0430\u0436\u043C\u0438\u0442\u0435 \u043D\u0430 \u043A\u043D\u043E\u043F\u043A\u0443.", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+            onClick: this.props.onClickHandler,
+            children: "\u041E\u0442\u043F\u0440\u0430\u0432\u0438\u0442\u044C \u0441\u043D\u043E\u0432\u0430"
           })]
-        })]
-      });
+        });
+      } else {
+        return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+          className: _EmailConfirm_module_css__WEBPACK_IMPORTED_MODULE_0__["default"].formBody,
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("form", {
+            method: "POST",
+            onSubmit: this.props.onSubmitHandler,
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("label", {
+              className: this.props.errors.isEmailIncorrect || this.props.errors.isEmailEmpty || this.props.userExists ? _EmailConfirm_module_css__WEBPACK_IMPORTED_MODULE_0__["default"].errorLabel : _EmailConfirm_module_css__WEBPACK_IMPORTED_MODULE_0__["default"].label,
+              htmlFor: "email",
+              children: "Email"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+              className: _EmailConfirm_module_css__WEBPACK_IMPORTED_MODULE_0__["default"].input,
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
+                className: this.props.errors.isEmailEmpty || this.props.errors.isEmailIncorrect || this.props.userExists ? _EmailConfirm_module_css__WEBPACK_IMPORTED_MODULE_0__["default"].error : null,
+                onChange: this.props.onChangeHandler,
+                id: "email",
+                type: "text",
+                name: "email"
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("button", {
+                className: _EmailConfirm_module_css__WEBPACK_IMPORTED_MODULE_0__["default"].button,
+                type: "submit",
+                children: "\u041F\u0440\u043E\u0434\u043E\u043B\u0436\u0438\u0442\u044C \u2192"
+              })]
+            }), this.props.errors.isEmailEmpty ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+              className: _EmailConfirm_module_css__WEBPACK_IMPORTED_MODULE_0__["default"].errorText,
+              children: "\u0417\u0430\u043F\u043E\u043B\u043D\u0438\u0442\u0435 \u044D\u0442\u043E \u043F\u043E\u043B\u0435"
+            }) : null, this.props.errors.isEmailIncorrect ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+              className: _EmailConfirm_module_css__WEBPACK_IMPORTED_MODULE_0__["default"].errorText,
+              children: "\u0412\u0432\u0435\u0434\u0438\u0442\u0435 \u043A\u043E\u0440\u0440\u0435\u043A\u0442\u043D\u044B\u0439 Email"
+            }) : null, this.props.userExists ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+              className: _EmailConfirm_module_css__WEBPACK_IMPORTED_MODULE_0__["default"].errorText,
+              children: "\u0422\u0430\u043A\u043E\u0439 \u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u0435\u043B\u044C \u0443\u0436\u0435 \u0441\u0443\u0449\u0435\u0441\u0442\u0432\u0443\u0435\u0442"
+            }) : null]
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+            className: _EmailConfirm_module_css__WEBPACK_IMPORTED_MODULE_0__["default"].registrySuggest,
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+              className: "text",
+              children: "\u0423\u0436\u0435 \u0437\u0430\u0440\u0435\u0433\u0438\u0441\u0442\u0440\u0438\u0440\u043E\u0432\u0430\u043D\u044B?\xA0"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_4__.Link, {
+              to: "/",
+              children: "\u0412\u043E\u0439\u0442\u0438 \u0432 \u0441\u0438\u0441\u0442\u0435\u043C\u0443"
+            })]
+          })]
+        });
+      }
     }
   }]);
 
@@ -5762,7 +5776,7 @@ var FormBody = /*#__PURE__*/function (_Component) {
 }(react__WEBPACK_IMPORTED_MODULE_1__.Component);
 
 FormBody.propTypes = {
-  isConfirmed: (prop_types__WEBPACK_IMPORTED_MODULE_4___default().bool.isRequired)
+  isConfirmed: (prop_types__WEBPACK_IMPORTED_MODULE_5___default().bool.isRequired)
 };
 
 var EmailConfirm = /*#__PURE__*/function (_Component2) {
@@ -5775,8 +5789,22 @@ var EmailConfirm = /*#__PURE__*/function (_Component2) {
 
     _classCallCheck(this, EmailConfirm);
 
-    axios.defaults.headers.common['X-CSRF-TOKEN'] = window.token;
+    (axios__WEBPACK_IMPORTED_MODULE_2___default().defaults.headers.common["X-CSRF-TOKEN"]) = window.token;
     _this = _super2.call(this, props);
+
+    _defineProperty(_assertThisInitialized(_this), "onClickHandler", function (e) {
+      e.preventDefault();
+      console.log(_this.state.signUpData);
+      var state = _this.state;
+      axios__WEBPACK_IMPORTED_MODULE_2___default().post("http://react/api/register/verify/resend", _this.state.signUpData).then(function (response) {
+        if (response.data.original === "success") {
+          state.signUpData.email = "";
+          state.isConfirmed = true;
+
+          _this.setState(state);
+        }
+      });
+    });
 
     _defineProperty(_assertThisInitialized(_this), "onChangeHandler", function (e) {
       console.log(_this.state);
@@ -5823,17 +5851,30 @@ var EmailConfirm = /*#__PURE__*/function (_Component2) {
 
     _defineProperty(_assertThisInitialized(_this), "onSubmitHandler", function (e) {
       e.preventDefault();
+      var state = _this.state;
 
       if (_this.validateData()) {
-        axios.post("http://react/api/register", _this.state.signUpData).then(function (response) {
-          if (response.status === 204 || response.status === 200) {
-            //window.location = "http://react/registration";
-            _this.setState({
-              email: ""
-            });
+        axios__WEBPACK_IMPORTED_MODULE_2___default().post("http://react/api/register", _this.state.signUpData).then(function (response) {
+          if (response.data.original === "success") {
+            state.signUpData.email = "";
+            state.isConfirmed = true;
+
+            _this.setState(state);
+          }
+
+          if (response.data.original === "incomplete") {
+            state.incomplete = true;
+
+            _this.setState(state);
+          }
+
+          if (response.data.original === "User exists") {
+            state.signUpData.email = "";
+            state.userExists = true;
+
+            _this.setState(state);
           }
         });
-        _this.state.isConfirmed = true;
       }
     });
 
@@ -5843,6 +5884,8 @@ var EmailConfirm = /*#__PURE__*/function (_Component2) {
         email: ""
       },
       isConfirmed: false,
+      incomplete: false,
+      userExists: false,
       errors: {
         isEmailEmpty: false,
         isEmailIncorrect: false
@@ -5854,23 +5897,28 @@ var EmailConfirm = /*#__PURE__*/function (_Component2) {
   _createClass(EmailConfirm, [{
     key: "render",
     value: function render() {
-      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+      if (this.state.isConfirmed === false) {}
+
+      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
         className: _EmailConfirm_module_css__WEBPACK_IMPORTED_MODULE_0__["default"].container,
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
           className: _EmailConfirm_module_css__WEBPACK_IMPORTED_MODULE_0__["default"].registration,
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
             className: _EmailConfirm_module_css__WEBPACK_IMPORTED_MODULE_0__["default"].registrationForm,
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
               className: _EmailConfirm_module_css__WEBPACK_IMPORTED_MODULE_0__["default"].formHeader,
-              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
                 className: _EmailConfirm_module_css__WEBPACK_IMPORTED_MODULE_0__["default"].headerText,
                 children: "\u0420\u0435\u0433\u0438\u0441\u0442\u0440\u0430\u0446\u0438\u044F \u0432 \u0441\u0438\u0441\u0442\u0435\u043C\u0435"
               })
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(FormBody, {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(FormBody, {
+              userExists: this.state.userExists,
+              onClickHandler: this.onClickHandler,
               errors: this.state.errors,
               isConfirmed: this.state.isConfirmed,
               onChangeHandler: this.onChangeHandler,
-              onSubmitHandler: this.onSubmitHandler
+              onSubmitHandler: this.onSubmitHandler,
+              incomplete: this.state.incomplete
             })]
           })
         })
@@ -6251,6 +6299,7 @@ var Carousel = /*#__PURE__*/function (_Component) {
         return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
           className: _Carousel_module_css__WEBPACK_IMPORTED_MODULE_0__["default"].carousel,
           children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_FileUploader_FileUploader__WEBPACK_IMPORTED_MODULE_1__["default"], {
+            logo: this.props.logo,
             companyName: this.props.companyName,
             handleFile: this.props.handleFile
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
@@ -6471,20 +6520,42 @@ var FileUploader = /*#__PURE__*/function (_Component2) {
     });
 
     _defineProperty(_assertThisInitialized(_this2), "renderLogo", function (uploadedLogo) {
+      var state = _this2.state;
       var reader = new FileReader();
       var url = reader.readAsDataURL(uploadedLogo);
 
       reader.onloadend = function (e) {
-        _this2.setState({
-          logoSrc: [reader.result]
-        });
+        state.logoSrc = [reader.result];
+        state.ready = true;
 
-        _this2.setState({
-          ready: true
-        });
+        _this2.setState(state);
       };
 
       console.log(_this2.state);
+    });
+
+    _defineProperty(_assertThisInitialized(_this2), "setImgSrc", function () {
+      if (_this2.props.logo !== "") {
+        console.log(111);
+        console.log(_this2.props);
+        var src = "/public/storage/" + _this2.props.logo;
+        console.log("public/storage/" + _this2.props.logo);
+        return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("img", {
+          className: _FileUploader_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].original,
+          src: "/public/storage/" + _this2.props.logo,
+          alt: ""
+        });
+      } else {
+        if (_this2.state.ready) {
+          return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("img", {
+            className: _FileUploader_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].original,
+            src: _this2.state.logoSrc,
+            alt: ""
+          });
+        }
+      }
+
+      return null;
     });
 
     _this2.hiddenFileInput = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_0__.createRef)();
@@ -6498,6 +6569,7 @@ var FileUploader = /*#__PURE__*/function (_Component2) {
     key: "componentDidMount",
     value: function componentDidMount() {
       this.hiddenFileInput.current.focus();
+      console.log(this.props.logo);
     }
   }, {
     key: "render",
@@ -6510,17 +6582,21 @@ var FileUploader = /*#__PURE__*/function (_Component2) {
           className: _FileUploader_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].uploaderContent,
           children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
             className: _FileUploader_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].logoPreview,
-            children: [function () {
-              if (_this3.state.ready) {
-                return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("img", {
-                  className: _FileUploader_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].original,
-                  src: _this3.state.logoSrc,
-                  alt: ""
-                });
-              }
-
-              return null;
-            }, /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("img", {
+            onClick: this.setImgSrc,
+            children: [this.setImgSrc()
+            /*() => {
+                console.log(111)
+                if(this.props.logo !== "") {
+                    console.log(this.props.logo)
+                    return (<img className={S.original} src={this.props.logo} alt=""/>)
+                } else {
+                    if (this.state.ready) {
+                        return (<img className={S.original} src={this.state.logoSrc} alt=""/>)
+                    }
+                }
+                return null
+            }*/
+            , /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("img", {
               className: function className() {
                 if (_this3.state.ready) {
                   return _FileUploader_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].hide;
@@ -6755,6 +6831,7 @@ var Registration = /*#__PURE__*/function (_Component) {
       var queryString = window.location.search;
       var urlParams = new URLSearchParams(queryString);
       var token = urlParams.get('token');
+      var state = _this.state;
       axios__WEBPACK_IMPORTED_MODULE_4___default().post("http://react/api/register/verify/token", {
         token: token
       }).then(function (response) {
@@ -6763,11 +6840,25 @@ var Registration = /*#__PURE__*/function (_Component) {
         if (response.data.original.isTokenTrue) {
           _this.getStage();
         } else {
-          var state = _this.state;
-          state.errors.isTokenFalse = true;
+          var _state = _this.state;
+          _state.errors.isTokenFalse = true;
 
-          _this.setState(state);
+          _this.setState(_state);
         }
+      });
+      axios__WEBPACK_IMPORTED_MODULE_4___default().post("http://react/api/register/getData", {
+        token: token
+      }).then(function (response) {
+        console.log(response.data.original[0]);
+        var data = response.data.original[0];
+        state.carouselPage = data.stage;
+        state.registryData.step_1.inn = data.inn;
+        state.registryData.step_1.companyName = data.name;
+        state.registryData.step_2.logo = data.logo;
+
+        _this.setState(state);
+
+        console.log(_this.state);
       });
     });
 
@@ -7114,46 +7205,47 @@ var Registration = /*#__PURE__*/function (_Component) {
     value: function render() {
       if (this.state.errors.isTokenFalse) {
         return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_NotFound_NotFound__WEBPACK_IMPORTED_MODULE_5__["default"], {});
-      }
-
-      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
-        className: _Registration_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].container,
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
-          className: _Registration_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].registration,
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
-            className: _Registration_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].registrationForm,
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
-              className: _Registration_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].formHeader,
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
-                className: _Registration_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].headerText,
-                children: "\u0420\u0435\u0433\u0438\u0441\u0442\u0440\u0430\u0446\u0438\u044F"
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
-                className: _Registration_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].pageNumber,
-                children: [this.state.carouselPage, " \u0438\u0437 3"]
-              })]
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
-              className: _Registration_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].formBody,
-              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("form", {
-                method: "POST",
-                onSubmit: this.onSubmitHandler,
-                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_Carousel_Carousel__WEBPACK_IMPORTED_MODULE_3__["default"], {
-                  previousPage: this.previousPage,
-                  errors: this.state.errors,
-                  registryData: this.state.registryData,
-                  onChangeHandler: this.onChangeHandler,
-                  nextPage: this.nextPage,
-                  onClickHandler: this.onClickHandler,
-                  companyName: this.state.registryData.step_1.companyName,
-                  handleFile: this.handleFile,
-                  page: this.state.carouselPage,
-                  suggestions: this.state.suggestions,
-                  companySelectHandler: this.companySelectHandler
+      } else {
+        return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
+          className: _Registration_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].container,
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
+            className: _Registration_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].registration,
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
+              className: _Registration_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].registrationForm,
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
+                className: _Registration_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].formHeader,
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
+                  className: _Registration_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].headerText,
+                  children: "\u0420\u0435\u0433\u0438\u0441\u0442\u0440\u0430\u0446\u0438\u044F"
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
+                  className: _Registration_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].pageNumber,
+                  children: [this.state.carouselPage, " \u0438\u0437 3"]
+                })]
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
+                className: _Registration_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].formBody,
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("form", {
+                  method: "POST",
+                  onSubmit: this.onSubmitHandler,
+                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_Carousel_Carousel__WEBPACK_IMPORTED_MODULE_3__["default"], {
+                    logo: this.state.registryData.step_2.logo,
+                    previousPage: this.previousPage,
+                    errors: this.state.errors,
+                    registryData: this.state.registryData,
+                    onChangeHandler: this.onChangeHandler,
+                    nextPage: this.nextPage,
+                    onClickHandler: this.onClickHandler,
+                    companyName: this.state.registryData.step_1.companyName,
+                    handleFile: this.handleFile,
+                    page: this.state.carouselPage,
+                    suggestions: this.state.suggestions,
+                    companySelectHandler: this.companySelectHandler
+                  })
                 })
-              })
-            })]
+              })]
+            })
           })
-        })
-      });
+        });
+      }
     }
   }]);
 
@@ -12502,7 +12594,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".s8ImKjKHyfSabMBOiPy0hg\\=\\= {\n    display: flex;\n    flex-direction: column;\n    justify-content: space-between;\n    margin-bottom: 30px;\n}\n.mX51ouB3qyWTRTSU8sC2CQ\\=\\= {\n    display: flex;\n    background-color: #F6F7FB;\n    border-radius: 4px;\n    align-items: center;\n    cursor: pointer;\n    margin-bottom: 30px;\n    padding: 5px;\n}\n.LtCKD39W7aXvwI5wLQDj3g\\=\\= {\n\n}\n._6S0XMN7-Eet8M8\\+-o4V5PQ\\=\\= {\n\n}\n.BCfj2GcFnd6y5Tp5RM7Rqw\\=\\= {\n    color: #354AFF;\n    font-weight: bold;\n    font-size: 18px;\n}\n.rxY21tdjVBKjXvwsDnqXBQ\\=\\= {\n    font-size: 12px;\n}\n.Ot0gNgxIM5IEgYAJs\\+YxDA\\=\\= {\n    font-size: 12px;\n}\n.k-2cVEmsAh10rVneSZyzgA\\=\\= {\n    width: 100px;\n    height: 100px;\n}\n.k-2cVEmsAh10rVneSZyzgA\\=\\= > img {\n    min-width: 100%;\n    transform: scale(1.1);\n    opacity: 1;\n    transition: opacity 4s ease-in-out;\n}\n.YuKC769vp2OcUI3Z4bOjaA\\=\\= {\n    position: absolute;\n}\n.cpyNeK\\+YQdlxhRc4b0oSmg\\=\\= {\n    filter: blur(8px);\n}\n.r3PunCz1lAZUBM0EHniVLg\\=\\= {\n    opacity: 0;\n}\n._9tyZBkRkk-jf3Ps78mHfuw\\=\\= {\n    display: flex;\n}\n.LvCuU8XdM3rNmwJhaoWpHg\\=\\= {\n    font-weight: bold;\n    margin-bottom: 20px;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".s8ImKjKHyfSabMBOiPy0hg\\=\\= {\n    display: flex;\n    flex-direction: column;\n    justify-content: space-between;\n    margin-bottom: 30px;\n}\n.mX51ouB3qyWTRTSU8sC2CQ\\=\\= {\n    display: flex;\n    background-color: #F6F7FB;\n    border-radius: 4px;\n    align-items: center;\n    cursor: pointer;\n    margin-bottom: 30px;\n    padding: 5px;\n}\n.LtCKD39W7aXvwI5wLQDj3g\\=\\= {\n\n}\n._6S0XMN7-Eet8M8\\+-o4V5PQ\\=\\= {\n\n}\n.BCfj2GcFnd6y5Tp5RM7Rqw\\=\\= {\n    color: #354AFF;\n    font-weight: bold;\n    font-size: 18px;\n}\n.rxY21tdjVBKjXvwsDnqXBQ\\=\\= {\n    font-size: 12px;\n}\n.Ot0gNgxIM5IEgYAJs\\+YxDA\\=\\= {\n    font-size: 12px;\n}\n.k-2cVEmsAh10rVneSZyzgA\\=\\= {\n    width: 100px;\n    height: 100px;\n}\n.k-2cVEmsAh10rVneSZyzgA\\=\\= > img {\n    min-width: 100%;\n    transform: scale(1.1);\n    opacity: 1;\n    transition: opacity 4s ease-in-out;\n}\n.YuKC769vp2OcUI3Z4bOjaA\\=\\= {\n    position: absolute;\n}\n.cpyNeK\\+YQdlxhRc4b0oSmg\\=\\= {\n    filter: blur(8px);\n}\n.r3PunCz1lAZUBM0EHniVLg\\=\\= {\n    opacity: 0;\n}\n._9tyZBkRkk-jf3Ps78mHfuw\\=\\= {\n    display: flex;\n    justify-content: space-between;\n}\n.LvCuU8XdM3rNmwJhaoWpHg\\=\\= {\n    font-weight: bold;\n    margin-bottom: 20px;\n}\n", ""]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"fileUploader": "s8ImKjKHyfSabMBOiPy0hg==",

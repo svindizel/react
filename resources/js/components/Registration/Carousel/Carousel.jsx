@@ -54,7 +54,7 @@ export default class Carousel extends Component {
             return (
                 <div className={S.carousel}>
 
-                    <FileUploader companyName={this.props.companyName} handleFile={this.props.handleFile}/>
+                    <FileUploader logo={this.props.logo} companyName={this.props.companyName} handleFile={this.props.handleFile}/>
                     <div className={S.buttons}>
                         <button
                             style={{backgroundColor: "#E8E8E8", color: "#969696"}}
