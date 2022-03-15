@@ -5977,6 +5977,87 @@ var Header = /*#__PURE__*/function (_Component) {
 
 /***/ }),
 
+/***/ "./resources/js/components/NotFound/NotFound.jsx":
+/*!*******************************************************!*\
+  !*** ./resources/js/components/NotFound/NotFound.jsx ***!
+  \*******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ NotFound)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var _NotFound_module_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./NotFound.module.css */ "./resources/js/components/NotFound/NotFound.module.css");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); Object.defineProperty(subClass, "prototype", { writable: false }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } else if (call !== void 0) { throw new TypeError("Derived constructors may only return object or undefined"); } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+
+
+
+
+
+var NotFound = /*#__PURE__*/function (_Component) {
+  _inherits(NotFound, _Component);
+
+  var _super = _createSuper(NotFound);
+
+  function NotFound() {
+    _classCallCheck(this, NotFound);
+
+    return _super.call(this);
+  }
+
+  _createClass(NotFound, [{
+    key: "render",
+    value: function render() {
+      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+        className: _NotFound_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].container,
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+          className: _NotFound_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].notFound,
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+            className: _NotFound_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].message,
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+              className: _NotFound_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].error,
+              children: "404\xA0"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+              className: _NotFound_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].text,
+              children: "| \u0417\u0430\u043F\u0440\u0430\u0448\u0438\u0432\u0430\u0435\u043C\u0430\u044F \u0441\u0442\u0440\u0430\u043D\u0438\u0446\u0430 \u043D\u0435 \u0441\u0443\u0449\u0435\u0441\u0442\u0432\u0443\u0435\u0442"
+            })]
+          })
+        })
+      });
+    }
+  }]);
+
+  return NotFound;
+}(react__WEBPACK_IMPORTED_MODULE_0__.Component);
+
+
+
+/***/ }),
+
 /***/ "./resources/js/components/Products/Products.jsx":
 /*!*******************************************************!*\
   !*** ./resources/js/components/Products/Products.jsx ***!
@@ -6158,7 +6239,7 @@ var Carousel = /*#__PURE__*/function (_Component) {
             className: _Carousel_module_css__WEBPACK_IMPORTED_MODULE_0__["default"].buttons,
             children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("button", {
               "data-action": true,
-              onClick: this.props.onClickHandler,
+              onClick: this.props.nextPage,
               className: _Carousel_module_css__WEBPACK_IMPORTED_MODULE_0__["default"].button,
               children: "\u041F\u0440\u043E\u0434\u043E\u043B\u0436\u0438\u0442\u044C \u2192"
             })
@@ -6180,12 +6261,12 @@ var Carousel = /*#__PURE__*/function (_Component) {
                 color: "#969696"
               },
               "data-action": false,
-              onClick: this.props.onClickHandler,
+              onClick: this.props.previousPage,
               className: _Carousel_module_css__WEBPACK_IMPORTED_MODULE_0__["default"].button,
               children: "\u2190 \u041D\u0430\u0437\u0430\u0434"
             }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("button", {
               "data-action": true,
-              onClick: this.props.onClickHandler,
+              onClick: this.props.nextPage,
               className: _Carousel_module_css__WEBPACK_IMPORTED_MODULE_0__["default"].button,
               children: "\u041F\u0440\u043E\u0434\u043E\u043B\u0436\u0438\u0442\u044C \u2192"
             })]
@@ -6242,12 +6323,12 @@ var Carousel = /*#__PURE__*/function (_Component) {
                 color: "#969696"
               },
               "data-action": false,
-              onClick: this.props.onClickHandler,
+              onClick: this.props.previousPage,
               className: _Carousel_module_css__WEBPACK_IMPORTED_MODULE_0__["default"].button,
               children: "\u2190 \u041D\u0430\u0437\u0430\u0434"
             }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("button", {
               "data-action": true,
-              onClick: this.props.onClickHandler,
+              onClick: this.props.nextPage,
               className: _Carousel_module_css__WEBPACK_IMPORTED_MODULE_0__["default"].button,
               children: "\u0417\u0430\u0432\u0435\u0440\u0448\u0438\u0442\u044C"
             })]
@@ -6623,7 +6704,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Carousel_Carousel__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Carousel/Carousel */ "./resources/js/components/Registration/Carousel/Carousel.jsx");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var _NotFound_NotFound__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../NotFound/NotFound */ "./resources/js/components/NotFound/NotFound.jsx");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -6647,6 +6729,7 @@ function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Re
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 
 
 
@@ -6735,9 +6818,7 @@ var Registration = /*#__PURE__*/function (_Component) {
     });
 
     _defineProperty(_assertThisInitialized(_this), "companySelectHandler", function (e) {
-      console.log(_this.state.registryData);
       var registryData = _this.state.registryData;
-      console.log(registryData);
       registryData.step_1.inn = e.currentTarget.getAttribute("inn");
       registryData.step_1.companyName = e.currentTarget.getAttribute("name");
 
@@ -6745,22 +6826,18 @@ var Registration = /*#__PURE__*/function (_Component) {
         registryData: registryData
       });
 
-      console.log(_this.state);
       _this.state.suggestions = [];
       document.getElementById("inn").value = registryData.step_1.inn;
     });
 
     _defineProperty(_assertThisInitialized(_this), "onChangeHandler", function (e) {
       if (_this.state.carouselPage === 1) {
-        console.log(_this.state.registryData);
         var registryData = _this.state.registryData;
         registryData.step_1[e.target.name] = e.target.value;
 
         _this.setState({
           registryData: registryData
         });
-
-        console.log(_this.state);
       }
 
       if (_this.state.carouselPage === 2) {
@@ -6786,30 +6863,81 @@ var Registration = /*#__PURE__*/function (_Component) {
       }
     });
 
+    _defineProperty(_assertThisInitialized(_this), "nextPage", function (e) {
+      e.preventDefault();
+      var state = _this.state;
+
+      if (state.carouselPage === 1) {
+        if (_this.validateData()) {
+          axios__WEBPACK_IMPORTED_MODULE_4___default().post("http://react/api/register/verify/1", _this.state.registryData.step_1).then(function (response) {
+            console.log(response);
+          });
+        }
+      }
+
+      if (state.carouselPage === 2) {
+        var data = new (form_data__WEBPACK_IMPORTED_MODULE_2___default())();
+        data.append('logo', _this.state.registryData.step_2.logo, _this.state.registryData.step_2.logo.name);
+        data.append('token', _this.state.registryData.step_2.token);
+        var headers = {
+          'accept': 'application/json',
+          'Accept-Language': 'en-US,en;q=0.8',
+          'Content-Type': "multipart/form-data; boundary=".concat(data._boundary)
+        };
+        axios__WEBPACK_IMPORTED_MODULE_4___default().post("http://react/api/register/verify/2", data, {
+          headers: headers
+        }).then(function (response) {
+          console.log(response);
+        });
+      }
+
+      if (state.carouselPage === 3) {
+        if (_this.validateData()) {
+          axios__WEBPACK_IMPORTED_MODULE_4___default().post("http://react/api/register/verify/3", _this.state.registryData.step_3).then(function (response) {
+            if (response.status === 204 || response.status === 200) {
+              window.location = "http://react/products";
+            }
+          });
+        }
+      }
+
+      if (state.carouselPage !== 3) {
+        var page = _this.state.carouselPage + 1;
+        state.carouselPage = page;
+
+        _this.setState(state);
+      }
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "previousPage", function (e) {
+      e.preventDefault();
+      var state = _this.state;
+      var page = _this.state.carouselPage - 1;
+      state.carouselPage = page;
+
+      _this.setState(state);
+    });
+
     _defineProperty(_assertThisInitialized(_this), "onClickHandler", function (e) {
       e.preventDefault();
-      console.log(_this.state);
       var state = _this.state;
       var action = e.target.getAttribute("data-action");
 
       if (action === "true") {
-        console.log(333);
         var page = _this.state.carouselPage + 1;
+        state.carouselPage = page;
 
-        _this.setState({
-          carouselPage: page
-        });
+        _this.setState(state);
       } else {
-        _this.setState({
-          carouselPage: _this.state.carouselPage - 1
-        });
+        var _page = _this.state.carouselPage - 1;
+
+        state.carouselPage = _page;
+
+        _this.setState(state);
       }
 
       if (_this.state.carouselPage === 1) {
-        console.log(11);
-
         if (_this.validateData()) {
-          console.log(12);
           axios__WEBPACK_IMPORTED_MODULE_4___default().post("http://react/api/register/verify/1", _this.state.registryData.step_1).then(function (response) {
             console.log(response);
           });
@@ -6919,7 +7047,6 @@ var Registration = /*#__PURE__*/function (_Component) {
 
     _defineProperty(_assertThisInitialized(_this), "onSubmitHandler", function (e) {
       e.preventDefault();
-      console.log("asdasdsd");
 
       if (_this.validateData) {
         axios__WEBPACK_IMPORTED_MODULE_4___default().post("http://react/register/verify", _this.state.registryData).then(function (response) {
@@ -6986,35 +7113,35 @@ var Registration = /*#__PURE__*/function (_Component) {
     key: "render",
     value: function render() {
       if (this.state.errors.isTokenFalse) {
-        return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
-          children: "404 nahui"
-        });
+        return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_NotFound_NotFound__WEBPACK_IMPORTED_MODULE_5__["default"], {});
       }
 
-      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
         className: _Registration_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].container,
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
           className: _Registration_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].registration,
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
             className: _Registration_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].registrationForm,
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
               className: _Registration_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].formHeader,
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
                 className: _Registration_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].headerText,
                 children: "\u0420\u0435\u0433\u0438\u0441\u0442\u0440\u0430\u0446\u0438\u044F"
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
                 className: _Registration_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].pageNumber,
                 children: [this.state.carouselPage, " \u0438\u0437 3"]
               })]
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
               className: _Registration_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].formBody,
-              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("form", {
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("form", {
                 method: "POST",
                 onSubmit: this.onSubmitHandler,
-                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_Carousel_Carousel__WEBPACK_IMPORTED_MODULE_3__["default"], {
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_Carousel_Carousel__WEBPACK_IMPORTED_MODULE_3__["default"], {
+                  previousPage: this.previousPage,
                   errors: this.state.errors,
                   registryData: this.state.registryData,
                   onChangeHandler: this.onChangeHandler,
+                  nextPage: this.nextPage,
                   onClickHandler: this.onClickHandler,
                   companyName: this.state.registryData.step_1.companyName,
                   handleFile: this.handleFile,
@@ -12260,6 +12387,36 @@ ___CSS_LOADER_EXPORT___.push([module.id, ".NxTKGAUWa8RFMO1IKYov9w\\=\\= {\n    d
 ___CSS_LOADER_EXPORT___.locals = {
 	"header": "NxTKGAUWa8RFMO1IKYov9w==",
 	"button": "VgED1dPnqDTVZ42UBthdhg=="
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[6].oneOf[1].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[6].oneOf[1].use[2]!./resources/js/components/NotFound/NotFound.module.css":
+/*!************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[6].oneOf[1].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[6].oneOf[1].use[2]!./resources/js/components/NotFound/NotFound.module.css ***!
+  \************************************************************************************************************************************************************************************************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__);
+// Imports
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, "@media screen and (max-width: 1920px) {\n    .LZN02dQ12RyXwnUT3tKkIA\\=\\={\n        width: 1600px;\n    }\n}\n@media screen and (max-width: 1600px) {\n    .LZN02dQ12RyXwnUT3tKkIA\\=\\={\n        width: 1400px;\n    }\n}\n@media screen and (max-width: 1366px) {\n    .LZN02dQ12RyXwnUT3tKkIA\\=\\={\n        width: 1200px;\n    }\n}\n@media screen and (max-width: 1040px) {\n    .LZN02dQ12RyXwnUT3tKkIA\\=\\= {\n        width: 940px;\n    }\n}\n@media screen and (max-width: 800px) {\n    .LZN02dQ12RyXwnUT3tKkIA\\=\\= {\n        width: 700px;\n    }\n}\n* {\n    font-family: 'Nunito', sans-serif;\n}\nbody {\n    background-color: #F6F7FB;\n}\n.LZN02dQ12RyXwnUT3tKkIA\\=\\= {\n    height: 100vh;\n    display: flex;\n    align-items: center;\n    margin-left: auto;\n    margin-right: auto;\n}\n.r2tX0KA7LdT8EaPCiG50Jg\\=\\= {\n    display: flex;\n    align-items: center;\n    margin-left: auto;\n    margin-right: auto;\n}\n.-gmAXL5A60mfk7HGS68bMw\\=\\= {\n    font-size: 36px;\n    text-align: center;\n    font-weight: bold;\n    display: flex;\n    align-items: center;\n}\n.t\\+zJhraJBV-UlC1wdoRFxA\\=\\= {\n    color: red;\n}\n", ""]);
+// Exports
+___CSS_LOADER_EXPORT___.locals = {
+	"container": "LZN02dQ12RyXwnUT3tKkIA==",
+	"notFound": "r2tX0KA7LdT8EaPCiG50Jg==",
+	"message": "-gmAXL5A60mfk7HGS68bMw==",
+	"error": "t+zJhraJBV-UlC1wdoRFxA=="
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -69930,6 +70087,36 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_6_oneOf_1_use_1_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_6_oneOf_1_use_2_Header_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].locals || {});
+
+/***/ }),
+
+/***/ "./resources/js/components/NotFound/NotFound.module.css":
+/*!**************************************************************!*\
+  !*** ./resources/js/components/NotFound/NotFound.module.css ***!
+  \**************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_6_oneOf_1_use_1_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_6_oneOf_1_use_2_NotFound_module_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !!../../../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[6].oneOf[1].use[1]!../../../../node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[6].oneOf[1].use[2]!./NotFound.module.css */ "./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[6].oneOf[1].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[6].oneOf[1].use[2]!./resources/js/components/NotFound/NotFound.module.css");
+
+            
+
+var options = {};
+
+options.insert = "head";
+options.singleton = false;
+
+var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_6_oneOf_1_use_1_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_6_oneOf_1_use_2_NotFound_module_css__WEBPACK_IMPORTED_MODULE_1__["default"], options);
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_6_oneOf_1_use_1_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_6_oneOf_1_use_2_NotFound_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].locals || {});
 
 /***/ }),
 

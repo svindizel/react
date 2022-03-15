@@ -22,7 +22,7 @@
 				</label>
 				<select id="category" name="category">
 					@foreach ($categories as $category)
-					<option>{{$category->name}}</option>
+					<option value="{{$category->id}}">{{$category->name}}</option>
 					@endforeach
 				</select>
 			</div>
@@ -54,12 +54,11 @@
 				<label for="measureItem">
 					Единица
 				</label>
-			<!--	<select id="measureItem">
-					<option>шт.</option>
-					<option>г.</option>
-					<option>кг.</option>
-					<option>л.</option>
-				</select>-->
+				<select id="measureItem" name='units'>
+                    @foreach ($units as $unit)
+					<option value="{{$unit->id}}">{{$unit->name}}</option>
+                    @endforeach
+				</select>
 			</div>
 			<button class="button" type="submit">Добавить товар</button>
 		</form>

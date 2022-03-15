@@ -15,6 +15,7 @@ class Products extends Model
         'art_id',
         'is_over',
         'status',
+        'unit_id'
     ];
 
 }

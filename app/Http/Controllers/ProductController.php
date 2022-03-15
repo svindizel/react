@@ -46,6 +46,8 @@ class ProductController extends Controller
                 $data['products'][$i] = Arr::add($data['products'][$i], 'name', $product_descriptions[$i]['name']);
                 $data['products'][$i] = Arr::add($data['products'][$i], 'description', $product_descriptions[$i]['description']);
             }
+
+            $data['products'][$i] = Arr::add($data['products'][$i], 'unit', DB::table('units')->select('name')->where('id',$data['products'][$i]['unit_id'])->value('name'));
         }
 
         return view('products.index', $data);
@@ -54,7 +56,12 @@ class ProductController extends Controller
     public function create(Request $request)
     {
         $data['categories'] = DB::table('categories')
-            ->select('name')->get();
+            ->select('id', 'name')
+            ->get();
+        
+        $data['units'] = DB::table('units')
+            ->select('id','name')
+            ->get();
 
         if (!empty($request->input('articul'))){
             Articles::create(['art' => $request->input('articul')]);
@@ -69,6 +76,7 @@ class ProductController extends Controller
                 'art_id' => $id,
                 'is_over' => 0,
                 'status' => 1,
+                'unit_id' => $request->units
             ])->id;
         }
         
@@ -78,7 +86,12 @@ class ProductController extends Controller
             ProductDescription::create([
                 'name' => $request->input('name'),
                 'description' => $description,
+                'product_id' => $productId
+            ]);
+
+            DB::table('category_to_products')->insert([
                 'product_id' => $productId,
+                'category_id' => $request->category
             ]);
         }
 

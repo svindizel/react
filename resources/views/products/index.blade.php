@@ -47,9 +47,9 @@
 					<div class="headersRow">
 						<div class="productName">Название</div>
 						<div class="productPrice">Цена</div>
-						<!--<div class="productMeasureItems">Ед.</div>-->
-						<div class="productArticul">Арт.</div>
-						<div class="productSale">Скидка</div>
+						<div class="productMeasureItems">Ед.</div>
+						<div class="productArticul">Артикул</div>
+						<!--<div class="productSale">Скидка</div>-->
 						<div class="productIngredients">Состав</div>
 						<div class="productStop">Стоп-лист</div>
 					</div>
@@ -57,9 +57,9 @@
 					<div class="tableRow">
 						<div class="productName">{{$products[$i]['name']}}</div>
 						<div class="productPrice">{{$products[$i]['price']}}</div>
-						<!--<div class="productMeasureItems">шт.</div>-->
+						<div class="productMeasureItems">{{$products[$i]['unit']}}</div>
 						<div class="productArticul">{{$products[$i]['art']}}</div>
-						<div class="productSale">Да</div>
+						<!--<div class="productSale">Да</div>-->
 						<div class="productIngredients">{{$products[$i]['description']}}</div>
 						
 						<div class="productStop">

@@ -42,7 +42,7 @@ export default class Carousel extends Component {
                     <div className={S.buttons}>
                         <button
                             data-action={true}
-                            onClick={this.props.onClickHandler}
+                            onClick={this.props.nextPage}
                             className={S.button}>
                             Продолжить &#8594;
                         </button>
@@ -59,13 +59,13 @@ export default class Carousel extends Component {
                         <button
                             style={{backgroundColor: "#E8E8E8", color: "#969696"}}
                             data-action={false}
-                            onClick={this.props.onClickHandler}
+                            onClick={this.props.previousPage}
                             className={S.button}>
                             &#8592; Назад
                         </button>
                         <button
                             data-action={true}
-                            onClick={this.props.onClickHandler}
+                            onClick={this.props.nextPage}
                             className={S.button}>
                             Продолжить &#8594;
                         </button>
@@ -114,13 +114,13 @@ export default class Carousel extends Component {
                         <button
                             style={{backgroundColor: "#E8E8E8", color: "#969696"}}
                             data-action={false}
-                            onClick={this.props.onClickHandler}
+                            onClick={this.props.previousPage}
                             className={S.button}>
                             &#8592; Назад
                         </button>
                         <button
                             data-action={true}
-                            onClick={this.props.onClickHandler}
+                            onClick={this.props.nextPage}
                             className={S.button}>
                             Завершить
                         </button>

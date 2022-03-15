@@ -1,0 +1,54 @@
+@media screen and (max-width: 1920px) {
+    .container{
+        width: 1600px;
+    }
+}
+@media screen and (max-width: 1600px) {
+    .container{
+        width: 1400px;
+    }
+}
+@media screen and (max-width: 1366px) {
+    .container{
+        width: 1200px;
+    }
+}
+@media screen and (max-width: 1040px) {
+    .container {
+        width: 940px;
+    }
+}
+@media screen and (max-width: 800px) {
+    .container {
+        width: 700px;
+    }
+}
+* {
+    font-family: 'Nunito', sans-serif;
+}
+body {
+    background-color: #F6F7FB;
+}
+.container {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+.notFound {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+.message {
+    font-size: 36px;
+    text-align: center;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+}
+.error {
+    color: red;
+}
