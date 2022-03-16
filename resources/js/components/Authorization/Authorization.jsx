@@ -1,7 +1,6 @@
 import React, {Component} from "react";
 import S from "./Authorization.module.css";
 import {Link} from "react-router-dom";
-import data from "bootstrap/js/src/dom/data";
 import axios from "axios";
 
 export default class Authorization extends Component {
@@ -107,6 +106,7 @@ export default class Authorization extends Component {
         let isPasswordEmpty = this.state.errors.isPasswordEmpty;
         return (
             <div className={S.container}>
+                <img src={this.props.assetPath + "/lazyloadtest.jpg"} alt=""/>
                 <div className={S.authorization}>
                     <div className={S.authorizationForm}>
                         <div className={S.formHeader}>

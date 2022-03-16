@@ -5332,6 +5332,27 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Registration_Registration__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Registration/Registration */ "./resources/js/components/Registration/Registration.jsx");
 /* harmony import */ var _Products_Products__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Products/Products */ "./resources/js/components/Products/Products.jsx");
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); Object.defineProperty(subClass, "prototype", { writable: false }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } else if (call !== void 0) { throw new TypeError("Derived constructors may only return object or undefined"); } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
 
 
@@ -5343,40 +5364,70 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-function App() {
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_9__.BrowserRouter, {
-    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)(react_router_dom__WEBPACK_IMPORTED_MODULE_10__.Routes, {
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_10__.Route, {
-        path: "/login",
-        element: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_Authorization_Authorization__WEBPACK_IMPORTED_MODULE_4__["default"], {})
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_10__.Route, {
-        exact: true,
-        path: "/",
-        element: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_10__.Navigate, {
-          replace: true,
-          to: "/login"
+
+
+var App = /*#__PURE__*/function (_Component) {
+  _inherits(App, _Component);
+
+  var _super = _createSuper(App);
+
+  function App(props) {
+    var _this;
+
+    _classCallCheck(this, App);
+
+    _this = _super.call(this, props);
+    console.log(_this.props.assetPath);
+    return _this;
+  }
+
+  _createClass(App, [{
+    key: "render",
+    value: function render() {
+      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_9__.BrowserRouter, {
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)(react_router_dom__WEBPACK_IMPORTED_MODULE_10__.Routes, {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_10__.Route, {
+            path: "/login",
+            element: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_Authorization_Authorization__WEBPACK_IMPORTED_MODULE_4__["default"], {
+              assetPath: this.props.assetPath
+            })
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_10__.Route, {
+            exact: true,
+            path: "/",
+            element: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_10__.Navigate, {
+              replace: true,
+              to: "/login"
+            })
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_10__.Route, {
+            path: "/verify",
+            element: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_EmailConfirm_EmailConfirm__WEBPACK_IMPORTED_MODULE_5__["default"], {})
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_10__.Route, {
+            exact: true,
+            path: "/registration/*",
+            element: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_Registration_Registration__WEBPACK_IMPORTED_MODULE_6__["default"], {})
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_10__.Route, {
+            path: "/products",
+            element: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_Products_Products__WEBPACK_IMPORTED_MODULE_7__["default"], {})
+          })]
         })
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_10__.Route, {
-        path: "/verify",
-        element: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_EmailConfirm_EmailConfirm__WEBPACK_IMPORTED_MODULE_5__["default"], {})
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_10__.Route, {
-        exact: true,
-        path: "/registration/*",
-        element: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_Registration_Registration__WEBPACK_IMPORTED_MODULE_6__["default"], {})
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_10__.Route, {
-        path: "/products",
-        element: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_Products_Products__WEBPACK_IMPORTED_MODULE_7__["default"], {})
-      })]
-    })
-  });
-}
+      });
+    }
+  }]);
+
+  return App;
+}(react__WEBPACK_IMPORTED_MODULE_0__.Component);
+
+
 
 if (document.getElementById('root')) {
   if (!localStorage.getItem('loggedIn')) {
     localStorage.setItem("loggedIn", "false");
   }
 
-  react_dom__WEBPACK_IMPORTED_MODULE_1__.render( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(App, {}), document.getElementById('root'));
+  var assetPath = document.getElementById("root").getAttribute("assetPath");
+  react_dom__WEBPACK_IMPORTED_MODULE_1__.render( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(App, {
+    assetPath: assetPath
+  }), document.getElementById('root'));
 }
 
 /***/ }),
@@ -5394,11 +5445,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var _Authorization_module_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Authorization.module.css */ "./resources/js/components/Authorization/Authorization.module.css");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/index.js");
-/* harmony import */ var bootstrap_js_src_dom_data__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! bootstrap/js/src/dom/data */ "./node_modules/bootstrap/js/src/dom/data.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -5430,7 +5480,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 
-
 var Authorization = /*#__PURE__*/function (_Component) {
   _inherits(Authorization, _Component);
 
@@ -5441,7 +5490,7 @@ var Authorization = /*#__PURE__*/function (_Component) {
 
     _classCallCheck(this, Authorization);
 
-    (axios__WEBPACK_IMPORTED_MODULE_3___default().defaults.headers.common["X-CSRF-TOKEN"]) = window.token;
+    (axios__WEBPACK_IMPORTED_MODULE_2___default().defaults.headers.common["X-CSRF-TOKEN"]) = window.token;
     _this = _super.call(this, props);
 
     _defineProperty(_assertThisInitialized(_this), "console", function () {
@@ -5505,7 +5554,7 @@ var Authorization = /*#__PURE__*/function (_Component) {
     });
 
     _defineProperty(_assertThisInitialized(_this), "componentDidMount", function () {
-      axios__WEBPACK_IMPORTED_MODULE_3___default().get("http://react/api/products").then(function (response) {
+      axios__WEBPACK_IMPORTED_MODULE_2___default().get("http://react/api/products").then(function (response) {
         if (response.data.auth) {
           window.location = "http://react/products";
         }
@@ -5520,7 +5569,7 @@ var Authorization = /*#__PURE__*/function (_Component) {
       console.log(_this.state.errors);
 
       if (_this.validateData) {
-        axios__WEBPACK_IMPORTED_MODULE_3___default().post("http://react/api/login", _this.state.signInData).then(function (response) {
+        axios__WEBPACK_IMPORTED_MODULE_2___default().post("http://react/api/login", _this.state.signInData).then(function (response) {
           console.log(response);
 
           if (response.status === 204 || response.status === 200) {
@@ -5560,79 +5609,82 @@ var Authorization = /*#__PURE__*/function (_Component) {
       var isEmailEmpty = this.state.errors.isEmailEmpty;
       var isPasswordIncorrect = this.state.errors.isPasswordIncorrect;
       var isPasswordEmpty = this.state.errors.isPasswordEmpty;
-      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
         className: _Authorization_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].container,
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("img", {
+          src: this.props.assetPath + "/lazyloadtest.jpg",
+          alt: ""
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
           className: _Authorization_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].authorization,
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
             className: _Authorization_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].authorizationForm,
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
               className: _Authorization_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].formHeader,
-              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
                 className: _Authorization_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].headerText,
                 children: "\u0410\u0432\u0442\u043E\u0440\u0438\u0437\u0430\u0446\u0438\u044F"
               })
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
               className: _Authorization_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].formBody,
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("form", {
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("form", {
                 method: "POST",
                 onSubmit: this.onSubmitHandler,
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
                   className: _Authorization_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].input,
-                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("label", {
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("label", {
                     className: "".concat(isEmailIncorrect || isEmailEmpty ? _Authorization_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].errorLabel : _Authorization_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].label),
                     htmlFor: "email",
                     children: "Email"
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("input", {
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
                     className: "".concat(isEmailIncorrect || isEmailEmpty ? _Authorization_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].error : null),
                     id: "email",
                     type: "text",
                     name: "email",
                     onChange: this.onChangeHandler
-                  }), this.state.errors.isEmailEmpty ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+                  }), this.state.errors.isEmailEmpty ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
                     className: _Authorization_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].errorText,
                     children: "\u0417\u0430\u043F\u043E\u043B\u043D\u0438\u0442\u0435 \u044D\u0442\u043E \u043F\u043E\u043B\u0435"
-                  }) : null, this.state.errors.isEmailIncorrect ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+                  }) : null, this.state.errors.isEmailIncorrect ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
                     className: _Authorization_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].errorText,
                     children: "\u0412\u0432\u0435\u0434\u0438\u0442\u0435 \u043A\u043E\u0440\u0440\u0435\u043A\u0442\u043D\u044B\u0439 Email"
                   }) : null]
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
                   className: _Authorization_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].input,
-                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("label", {
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("label", {
                     className: this.state.errors.isPasswordEmpty || this.state.errors.isPasswordIncorrect ? _Authorization_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].errorLabel : _Authorization_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].label,
                     htmlFor: "password",
                     children: "\u041F\u0430\u0440\u043E\u043B\u044C"
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("input", {
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
                     className: this.state.errors.isPasswordEmpty || this.state.errors.isPasswordIncorrect ? _Authorization_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].error : null,
                     id: "password",
                     type: "password",
                     name: "password",
                     onChange: this.onChangeHandler
-                  }), this.state.errors.isPasswordEmpty ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+                  }), this.state.errors.isPasswordEmpty ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
                     className: _Authorization_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].errorText,
                     children: "\u0417\u0430\u043F\u043E\u043B\u043D\u0438\u0442\u0435 \u044D\u0442\u043E \u043F\u043E\u043B\u0435"
-                  }) : null, this.state.errors.isPasswordIncorrect ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+                  }) : null, this.state.errors.isPasswordIncorrect ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
                     className: _Authorization_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].errorText,
                     children: "\u041F\u0430\u0440\u043E\u043B\u044C \u0434\u043E\u043B\u0436\u0435\u043D \u0431\u044B\u0442\u044C \u0434\u043B\u0438\u043D\u043D\u0435\u0435 8 \u0441\u0438\u043C\u0432\u043E\u043B\u043E\u0432"
                   }) : null]
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("button", {
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("button", {
                   className: _Authorization_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].button,
                   type: "submit",
                   children: "\u0412\u043E\u0439\u0442\u0438 \u0432 \u0441\u0438\u0441\u0442\u0435\u043C\u0443"
                 })]
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
                 className: _Authorization_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].registrySuggest,
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
                   className: "text",
                   children: "\u0415\u0449\u0435 \u043D\u0435 \u0437\u0430\u0440\u0435\u0433\u0438\u0441\u0442\u0440\u0438\u0440\u043E\u0432\u0430\u043D\u044B?\xA0"
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_5__.Link, {
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_4__.Link, {
                   to: "/verify",
                   children: "\u0420\u0435\u0433\u0438\u0441\u0442\u0440\u0430\u0446\u0438\u044F"
                 })]
               })]
             })]
           })
-        })
+        })]
       });
     }
   }]);
@@ -6534,33 +6586,22 @@ var FileUploader = /*#__PURE__*/function (_Component2) {
       console.log(_this2.state);
     });
 
-    _defineProperty(_assertThisInitialized(_this2), "setImgSrc", function () {
-      if (_this2.props.logo !== "") {
-        console.log(111);
-        console.log(_this2.props);
-        var src = "/public/storage/" + _this2.props.logo;
-        console.log("public/storage/" + _this2.props.logo);
-        return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("img", {
-          className: _FileUploader_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].original,
-          src: "/public/storage/" + _this2.props.logo,
-          alt: ""
-        });
-      } else {
-        if (_this2.state.ready) {
-          return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("img", {
-            className: _FileUploader_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].original,
-            src: _this2.state.logoSrc,
-            alt: ""
-          });
-        }
-      }
+    _defineProperty(_assertThisInitialized(_this2), "setLogoSrc", function () {
+      var state = _this2.state;
 
-      return null;
+      if (state.logoSrc === null) {
+        state.logoSrc = _this2.props.logo;
+
+        _this2.setState(state);
+
+        console.log(_this2.state);
+      }
     });
 
     _this2.hiddenFileInput = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_0__.createRef)();
     _this2.state = {
-      ready: false
+      ready: false,
+      logoSrc: null
     };
     return _this2;
   }
@@ -6570,43 +6611,30 @@ var FileUploader = /*#__PURE__*/function (_Component2) {
     value: function componentDidMount() {
       this.hiddenFileInput.current.focus();
       console.log(this.props.logo);
+
+      if (this.state.logoSrc === null) {
+        var state = this.state;
+        state.logoSrc = this.props.logo;
+        console.log(this.props);
+        this.setState(state);
+      }
     }
   }, {
     key: "render",
-    value: function render() {
-      var _this3 = this;
-
+    value: //{/*className={() => {if (this.state.ready) {return S.hide}return S.thumb}}*/}
+    function render() {
+      //this.setLogoSrc();
       return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
         className: _FileUploader_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].fileUploader,
         children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
           className: _FileUploader_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].uploaderContent,
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
             className: _FileUploader_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].logoPreview,
-            onClick: this.setImgSrc,
-            children: [this.setImgSrc()
-            /*() => {
-                console.log(111)
-                if(this.props.logo !== "") {
-                    console.log(this.props.logo)
-                    return (<img className={S.original} src={this.props.logo} alt=""/>)
-                } else {
-                    if (this.state.ready) {
-                        return (<img className={S.original} src={this.state.logoSrc} alt=""/>)
-                    }
-                }
-                return null
-            }*/
-            , /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("img", {
-              className: function className() {
-                if (_this3.state.ready) {
-                  return _FileUploader_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].hide;
-                }
-
-                return _FileUploader_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].thumb;
-              },
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("img", {
+              className: _FileUploader_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].hide,
               src: this.state.logoSrc,
               alt: ""
-            })]
+            })
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
             children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
               className: _FileUploader_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].companyName,
@@ -6854,7 +6882,7 @@ var Registration = /*#__PURE__*/function (_Component) {
         state.carouselPage = data.stage;
         state.registryData.step_1.inn = data.inn;
         state.registryData.step_1.companyName = data.name;
-        state.registryData.step_2.logo = data.logo;
+        state.registryData.step_2.logo = "./storage/" + data.logo;
 
         _this.setState(state);
 
@@ -6968,18 +6996,21 @@ var Registration = /*#__PURE__*/function (_Component) {
 
       if (state.carouselPage === 2) {
         var data = new (form_data__WEBPACK_IMPORTED_MODULE_2___default())();
-        data.append('logo', _this.state.registryData.step_2.logo, _this.state.registryData.step_2.logo.name);
-        data.append('token', _this.state.registryData.step_2.token);
-        var headers = {
-          'accept': 'application/json',
-          'Accept-Language': 'en-US,en;q=0.8',
-          'Content-Type': "multipart/form-data; boundary=".concat(data._boundary)
-        };
-        axios__WEBPACK_IMPORTED_MODULE_4___default().post("http://react/api/register/verify/2", data, {
-          headers: headers
-        }).then(function (response) {
-          console.log(response);
-        });
+
+        if (_this.state.registryData.step_2.logo === "") {
+          data.append('logo', _this.state.registryData.step_2.logo, _this.state.registryData.step_2.logo.name);
+          data.append('token', _this.state.registryData.step_2.token);
+          var headers = {
+            'accept': 'application/json',
+            'Accept-Language': 'en-US,en;q=0.8',
+            'Content-Type': "multipart/form-data; boundary=".concat(data._boundary)
+          };
+          axios__WEBPACK_IMPORTED_MODULE_4___default().post("http://react/api/register/verify/2", data, {
+            headers: headers
+          }).then(function (response) {
+            console.log(response);
+          });
+        }
       }
 
       if (state.carouselPage === 3) {
@@ -7173,7 +7204,7 @@ var Registration = /*#__PURE__*/function (_Component) {
         step_2: {
           token: _token,
           _token: window.token,
-          logo: null
+          logo: ""
         },
         step_3: {
           password: "",
@@ -7203,49 +7234,50 @@ var Registration = /*#__PURE__*/function (_Component) {
   _createClass(Registration, [{
     key: "render",
     value: function render() {
-      if (this.state.errors.isTokenFalse) {
-        return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_NotFound_NotFound__WEBPACK_IMPORTED_MODULE_5__["default"], {});
-      } else {
-        return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
-          className: _Registration_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].container,
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
-            className: _Registration_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].registration,
-            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
-              className: _Registration_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].registrationForm,
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
-                className: _Registration_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].formHeader,
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
-                  className: _Registration_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].headerText,
-                  children: "\u0420\u0435\u0433\u0438\u0441\u0442\u0440\u0430\u0446\u0438\u044F"
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
-                  className: _Registration_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].pageNumber,
-                  children: [this.state.carouselPage, " \u0438\u0437 3"]
-                })]
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
-                className: _Registration_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].formBody,
-                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("form", {
-                  method: "POST",
-                  onSubmit: this.onSubmitHandler,
-                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_Carousel_Carousel__WEBPACK_IMPORTED_MODULE_3__["default"], {
-                    logo: this.state.registryData.step_2.logo,
-                    previousPage: this.previousPage,
-                    errors: this.state.errors,
-                    registryData: this.state.registryData,
-                    onChangeHandler: this.onChangeHandler,
-                    nextPage: this.nextPage,
-                    onClickHandler: this.onClickHandler,
-                    companyName: this.state.registryData.step_1.companyName,
-                    handleFile: this.handleFile,
-                    page: this.state.carouselPage,
-                    suggestions: this.state.suggestions,
-                    companySelectHandler: this.companySelectHandler
-                  })
-                })
+      /*if (this.state.errors.isTokenFalse) {
+          return (
+              <NotFound />
+          )
+      } else {*/
+      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
+        className: _Registration_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].container,
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
+          className: _Registration_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].registration,
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
+            className: _Registration_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].registrationForm,
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
+              className: _Registration_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].formHeader,
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
+                className: _Registration_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].headerText,
+                children: "\u0420\u0435\u0433\u0438\u0441\u0442\u0440\u0430\u0446\u0438\u044F"
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
+                className: _Registration_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].pageNumber,
+                children: [this.state.carouselPage, " \u0438\u0437 3"]
               })]
-            })
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
+              className: _Registration_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].formBody,
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("form", {
+                method: "POST",
+                onSubmit: this.onSubmitHandler,
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_Carousel_Carousel__WEBPACK_IMPORTED_MODULE_3__["default"], {
+                  logo: this.state.registryData.step_2.logo,
+                  previousPage: this.previousPage,
+                  errors: this.state.errors,
+                  registryData: this.state.registryData,
+                  onChangeHandler: this.onChangeHandler,
+                  nextPage: this.nextPage,
+                  onClickHandler: this.onClickHandler,
+                  companyName: this.state.registryData.step_1.companyName,
+                  handleFile: this.handleFile,
+                  page: this.state.carouselPage,
+                  suggestions: this.state.suggestions,
+                  companySelectHandler: this.companySelectHandler
+                })
+              })
+            })]
           })
-        });
-      }
+        })
+      }); //}
     }
   }]);
 
@@ -12279,78 +12311,6 @@ defineJQueryPlugin(Toast);
 
 
 //# sourceMappingURL=bootstrap.esm.js.map
-
-
-/***/ }),
-
-/***/ "./node_modules/bootstrap/js/src/dom/data.js":
-/*!***************************************************!*\
-  !*** ./node_modules/bootstrap/js/src/dom/data.js ***!
-  \***************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/**
- * --------------------------------------------------------------------------
- * Bootstrap (v5.1.3): dom/data.js
- * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
- * --------------------------------------------------------------------------
- */
-
-/**
- * ------------------------------------------------------------------------
- * Constants
- * ------------------------------------------------------------------------
- */
-
-const elementMap = new Map()
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  set(element, key, instance) {
-    if (!elementMap.has(element)) {
-      elementMap.set(element, new Map())
-    }
-
-    const instanceMap = elementMap.get(element)
-
-    // make it clear we only want one instance per element
-    // can be removed later when multiple key/instances are fine to be used
-    if (!instanceMap.has(key) && instanceMap.size !== 0) {
-      // eslint-disable-next-line no-console
-      console.error(`Bootstrap doesn't allow more than one instance per element. Bound instance: ${Array.from(instanceMap.keys())[0]}.`)
-      return
-    }
-
-    instanceMap.set(key, instance)
-  },
-
-  get(element, key) {
-    if (elementMap.has(element)) {
-      return elementMap.get(element).get(key) || null
-    }
-
-    return null
-  },
-
-  remove(element, key) {
-    if (!elementMap.has(element)) {
-      return
-    }
-
-    const instanceMap = elementMap.get(element)
-
-    instanceMap.delete(key)
-
-    // free up element references if there are no instances left for an element
-    if (instanceMap.size === 0) {
-      elementMap.delete(element)
-    }
-  }
-});
 
 
 /***/ }),

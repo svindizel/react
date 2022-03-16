@@ -37,7 +37,8 @@ export default class FileUploader extends Component {
         super(props);
         this.hiddenFileInput = createRef();
         this.state = {
-            ready: false
+            ready: false,
+            logoSrc: null
         };
     };
 
@@ -48,7 +49,13 @@ export default class FileUploader extends Component {
 
     componentDidMount() {
         this.hiddenFileInput.current.focus();
-        console.log(this.props.logo)
+        console.log(this.props.logo);
+        if(this.state.logoSrc === null) {
+            let state = this.state;
+            state.logoSrc = this.props.logo;
+            console.log(this.props)
+            this.setState(state)
+        }
     };
 
     onChangeHandler = (e) => {
@@ -69,46 +76,27 @@ export default class FileUploader extends Component {
         console.log(this.state)
     }
 
-    setImgSrc = () => {
-        if(this.props.logo !== "") {
-            console.log(111)
-            console.log(this.props)
-            let src = "/public/storage/" + this.props.logo
-            console.log("public/storage/" + this.props.logo)
-            return (<img className={S.original} src={"/public/storage/" + this.props.logo} alt=""/>)
-        } else {
-            if (this.state.ready) {
-                return (<img className={S.original} src={this.state.logoSrc} alt=""/>)
-            }
+    setLogoSrc = () => {
+        let state = this.state;
+        if (state.logoSrc === null) {
+            state.logoSrc = this.props.logo;
+            this.setState(state);
+            console.log(this.state)
         }
-        return null
     }
 
+    //{/*className={() => {if (this.state.ready) {return S.hide}return S.thumb}}*/}
     render() {
+        //this.setLogoSrc();
         return (
             <div className={S.fileUploader}>
                 <div className={S.uploaderContent}>
-                    <div className={S.logoPreview} onClick={this.setImgSrc}>
-                        {
-                            this.setImgSrc()
-                        /*() => {
-                            console.log(111)
-                            if(this.props.logo !== "") {
-                                console.log(this.props.logo)
-                                return (<img className={S.original} src={this.props.logo} alt=""/>)
-                            } else {
-                                if (this.state.ready) {
-                                    return (<img className={S.original} src={this.state.logoSrc} alt=""/>)
-                                }
-                            }
-                            return null
-                        }*/}
-                        <img className={() => {
-                            if (this.state.ready) {
-                                return S.hide
-                            }
-                            return S.thumb
-                        }} src={this.state.logoSrc} alt=""/>
+                    <div className={S.logoPreview}>
+                        <img
+                            className={S.hide}
+                            src={this.state.logoSrc}
+                            alt=""
+                        />
                     </div>
                     <div>
                         <div className={S.companyName}>РЕСТОРАН {toUpper(this.props.companyName)}</div>

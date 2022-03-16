@@ -220,32 +220,27 @@ class RegisterController extends Controller
 
     public function secondStep(Request $request)
     {
-        if (DB::table('email_verifies')
-            ->where('token', $request->token)
-            ->exists()
-        )
-        {
-            $this->validateImage($request->all())->validate()['logo'];
+        $this->validateImage($request->all())->validate()['logo'];
+        
+        $path = 'uploads/default.png';
 
-            $public_path = $request->logo->store('public');
+        if ($request->hasFile('logo')) {
+            $public_path = $request->logo->store('public/uploads');
             $path = str_replace('public/', '' , $public_path);
-            
-            $email = DB::table('email_verifies')
-                        ->select('email')
-                        ->where('token', $request->token)->get()[0]->email;
-
-            DB::table('users')
-                ->where('email', $email)
-                ->update(['logo' => $path, 'stage' => 2]);
-
-            return new JsonResponse(response()->json([
-                'logo' => $path,
-                'stage' => 2
-            ]));
         }
+
+        $email = DB::table('email_verifies')
+            ->select('email')
+            ->where('token', $request->token)->get()[0]->email;
+
+        DB::table('users')
+            ->where('email', $email)
+            ->update(['logo' => $path, 'stage' => 2]);
+
         return new JsonResponse(response()->json([
-            'error' => 'Incorrect token',
-        ]), 200);
+            'logo' => $path,
+            'stage' => 2
+        ]));
     }
 
     public function thirdStep(Request $request)

@@ -24,7 +24,7 @@ export default class Registration extends Component {
                 step_2: {
                     token: token,
                     _token: window.token,
-                    logo: null
+                    logo: ""
                 },
                 step_3: {
                     password: "",
@@ -75,7 +75,7 @@ export default class Registration extends Component {
                 state.carouselPage = data.stage;
                 state.registryData.step_1.inn = data.inn;
                 state.registryData.step_1.companyName = data.name;
-                state.registryData.step_2.logo = data.logo;
+                state.registryData.step_2.logo = "./storage/" + data.logo;
                 this.setState(state);
                 console.log(this.state)
             })
@@ -165,7 +165,8 @@ export default class Registration extends Component {
         }
         if (state.carouselPage === 2) {
             let data = new FormData();
-            data.append('logo', this.state.registryData.step_2.logo, this.state.registryData.step_2.logo.name)
+            if(this.state.registryData.step_2.logo === "") {
+                data.append('logo', this.state.registryData.step_2.logo, this.state.registryData.step_2.logo.name)
             data.append('token', this.state.registryData.step_2.token)
             let headers = {
                 'accept': 'application/json',
@@ -179,6 +180,7 @@ export default class Registration extends Component {
                 .then((response) => {
                     console.log(response)
                 })
+            } 
         }
         if (state.carouselPage === 3) {
             if (this.validateData()) {
@@ -337,11 +339,11 @@ export default class Registration extends Component {
     };
 
     render() {
-        if (this.state.errors.isTokenFalse) {
+        /*if (this.state.errors.isTokenFalse) {
             return (
                 <NotFound />
             )
-        } else {
+        } else {*/
             return (
                 <div className={S.container}>
                     <div className={S.registration}>
@@ -376,6 +378,6 @@ export default class Registration extends Component {
                     </div>
                 </div>
             )
-        }
+        //}
     }
 }
