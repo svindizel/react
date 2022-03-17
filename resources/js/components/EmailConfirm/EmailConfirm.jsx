@@ -22,18 +22,30 @@ class FormBody extends Component {
         } else if (this.props.incomplete === true) {
             return (
                 <div className={S.formBody}>
-                    На ваш email уже было отправлено письмо с подтверждением регистрации. Если вы хотите получить письмо повторно, нажмите на кнопку.
-                    <div onClick={this.props.onClickHandler}>
-                     Отправить снова
+                    На ваш email уже было отправлено письмо с подтверждением регистрации. Если вы хотите получить письмо
+                    повторно, нажмите на кнопку.
+                    <div onClick={this.props.onClickHandler} className={S.resendButton}>
+                        Отправить снова
                     </div>
                 </div>
-                 
+
             )
-        } else {
+        } /*else if (this.props.userExists === true) {
+            return (
+                <div className={S.formBody}>
+                    Пользователь с таким email уже зарегистрирован в системе. Введите другой email.
+                    <div onClick={this.props.onClickHandler} className={S.resendButton}>
+                        Отправить снова
+                    </div>
+                </div>
+            )
+        }*/ else {
             return (
                 <div className={S.formBody}>
                     <form method="POST" onSubmit={this.props.onSubmitHandler}>
-                        <label className={this.props.errors.isEmailIncorrect || this.props.errors.isEmailEmpty || this.props.userExists ? S.errorLabel : S.label} htmlFor="email">Email</label>
+                        <label
+                            className={this.props.errors.isEmailIncorrect || this.props.errors.isEmailEmpty || this.props.userExists ? S.errorLabel : S.label}
+                            htmlFor="email">Email</label>
                         <div className={S.input}>
                             <input
                                 className={this.props.errors.isEmailEmpty || this.props.errors.isEmailIncorrect || this.props.userExists ? S.error : null}
@@ -49,7 +61,7 @@ class FormBody extends Component {
                         {this.props.errors.isEmailIncorrect ?
                             <div className={S.errorText}>Введите корректный Email</div> : null}
                         {this.props.userExists ?
-                                        <div className={S.errorText}>Такой пользователь уже существует</div> : null}
+                            <div className={S.errorText}>Такой пользователь уже существует</div> : null}
                     </form>
                     <div className={S.registrySuggest}>
                         <div className="text">
@@ -85,6 +97,11 @@ export default class EmailConfirm extends Component {
             }
         };
     };
+
+    getBack = (e) => {
+        let state = this.state;
+
+    }
 
     onClickHandler = (e) => {
         e.preventDefault();
@@ -136,7 +153,7 @@ export default class EmailConfirm extends Component {
     onSubmitHandler = (e) => {
         e.preventDefault();
         let state = this.state;
-        if(this.validateData()) {
+        if (this.validateData()) {
             axios
                 .post("http://react/api/register", this.state.signUpData)
                 .then((response) => {
@@ -145,11 +162,11 @@ export default class EmailConfirm extends Component {
                         state.isConfirmed = true;
                         this.setState(state);
                     }
-                    if(response.data.original === "incomplete") {
+                    if (response.data.original === "incomplete") {
                         state.incomplete = true;
                         this.setState(state);
                     }
-                    if(response.data.original === "User exists") {
+                    if (response.data.original.error === "User exists") {
                         state.signUpData.email = "";
                         state.userExists = true;
                         this.setState(state);
@@ -161,7 +178,7 @@ export default class EmailConfirm extends Component {
     };
 
     render() {
-        if(this.state.isConfirmed === false) {
+        if (this.state.isConfirmed === false) {
 
         }
         return (

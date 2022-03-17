@@ -69,6 +69,17 @@
     border: 0;
     cursor: pointer;
 }
+.resendButton {
+    background-color: #354AFF;
+    padding: 10px 20px;
+    text-align: center;
+    border-radius: 4px;
+    color: #ffffff;
+    font-weight: bold;
+    border: 0;
+    cursor: pointer;
+    width: max-content;
+}
 .error {
     border: 1px solid red !important;
     color: red;

@@ -5773,10 +5773,22 @@ var FormBody = /*#__PURE__*/function (_Component) {
           className: _EmailConfirm_module_css__WEBPACK_IMPORTED_MODULE_0__["default"].formBody,
           children: ["\u041D\u0430 \u0432\u0430\u0448 email \u0443\u0436\u0435 \u0431\u044B\u043B\u043E \u043E\u0442\u043F\u0440\u0430\u0432\u043B\u0435\u043D\u043E \u043F\u0438\u0441\u044C\u043C\u043E \u0441 \u043F\u043E\u0434\u0442\u0432\u0435\u0440\u0436\u0434\u0435\u043D\u0438\u0435\u043C \u0440\u0435\u0433\u0438\u0441\u0442\u0440\u0430\u0446\u0438\u0438. \u0415\u0441\u043B\u0438 \u0432\u044B \u0445\u043E\u0442\u0438\u0442\u0435 \u043F\u043E\u043B\u0443\u0447\u0438\u0442\u044C \u043F\u0438\u0441\u044C\u043C\u043E \u043F\u043E\u0432\u0442\u043E\u0440\u043D\u043E, \u043D\u0430\u0436\u043C\u0438\u0442\u0435 \u043D\u0430 \u043A\u043D\u043E\u043F\u043A\u0443.", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
             onClick: this.props.onClickHandler,
+            className: _EmailConfirm_module_css__WEBPACK_IMPORTED_MODULE_0__["default"].resendButton,
             children: "\u041E\u0442\u043F\u0440\u0430\u0432\u0438\u0442\u044C \u0441\u043D\u043E\u0432\u0430"
           })]
         });
-      } else {
+      }
+      /*else if (this.props.userExists === true) {
+        return (
+            <div className={S.formBody}>
+                Пользователь с таким email уже зарегистрирован в системе. Введите другой email.
+                <div onClick={this.props.onClickHandler} className={S.resendButton}>
+                    Отправить снова
+                </div>
+            </div>
+        )
+      }*/
+      else {
         return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
           className: _EmailConfirm_module_css__WEBPACK_IMPORTED_MODULE_0__["default"].formBody,
           children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("form", {
@@ -5843,6 +5855,10 @@ var EmailConfirm = /*#__PURE__*/function (_Component2) {
 
     (axios__WEBPACK_IMPORTED_MODULE_2___default().defaults.headers.common["X-CSRF-TOKEN"]) = window.token;
     _this = _super2.call(this, props);
+
+    _defineProperty(_assertThisInitialized(_this), "getBack", function (e) {
+      var state = _this.state;
+    });
 
     _defineProperty(_assertThisInitialized(_this), "onClickHandler", function (e) {
       e.preventDefault();
@@ -5920,7 +5936,7 @@ var EmailConfirm = /*#__PURE__*/function (_Component2) {
             _this.setState(state);
           }
 
-          if (response.data.original === "User exists") {
+          if (response.data.original.error === "User exists") {
             state.signUpData.email = "";
             state.userExists = true;
 
@@ -12367,7 +12383,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".nA1uh05XrRtJh9kDAEaUwQ\\=\\= {\n    height: 100vh;\n    display: flex;\n    align-items: center;\n    margin-left: auto;\n    margin-right: auto;\n}\n.KrsrPYgu9qhyw5CIFZ490A\\=\\= {\n    width: 100%;\n    height: 100%;\n    display: flex;\n    align-items: center;\n}\n.gBCxDzvwFEaIZR5A5mZbfw\\=\\= {\n    margin-left: auto;\n    margin-right: auto;\n    background-color: #fff;\n    border-radius: 4px;\n    width: 400px;\n    box-shadow: 0 2px 5px 0 #E9EAEE;\n}\n.JadRr530ZnGMl2jAkQsxmg\\=\\= {\n    padding: 30px 40px;\n    border-bottom: 1px solid #E8E8E8;\n    font-size: 24px;\n    font-weight: bold;\n}\n.gee5d4NpY-Cl93d4hoUVBA\\=\\= {\n\n}\n.Ix6sM9HR9Um1noXsHHIkOg\\=\\= {\n    padding: 30px 40px;\n}\n.WUr\\+am52NvilyPNKF85xGw\\=\\= {\n    font-weight: bold;\n    margin-bottom: 10px;\n}\n.hOMqrO6SdVx9IHSt-PwIIw\\=\\= {\n    display: flex;\n\n    position: relative;\n\n}\n.hOMqrO6SdVx9IHSt-PwIIw\\=\\= > input {\n    border: 1px solid #E8E8E8;\n    border-radius: 4px;\n    line-height: 40px;\n    align-items: center;\n    width: 100%;\n    padding-right: 50%;\n}\n.aiFHBTUf3gQEJLktYoDd-Q\\=\\= {\n    display: flex;\n    margin-top: 30px;\n}\n.aiFHBTUf3gQEJLktYoDd-Q\\=\\= > a {\n    color: #354AFF;\n}\n.i0LhKO1YMpzZVvSY4Ohf\\+g\\=\\= {\n    position: absolute;\n    right: 0;\n    height: 100%;\n    background-color: #354AFF;\n    padding: 0 20px;\n    text-align: center;\n    border-radius: 4px;\n    color: #ffffff;\n    font-weight: bold;\n    border: 0;\n    cursor: pointer;\n}\n.lTgnVSVsFcI-GOagzdMkrg\\=\\= {\n    border: 1px solid red !important;\n    color: red;\n}\n.Nra0fIp-zC0117QUr3vwZA\\=\\= {\n    color: red;\n}\n.UYVVcUAtwjsVa1N4VdfnKg\\=\\= {\n    font-weight: bold;\n    margin-bottom: 5px;\n    font-size: 14px;\n    color: red;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".nA1uh05XrRtJh9kDAEaUwQ\\=\\= {\n    height: 100vh;\n    display: flex;\n    align-items: center;\n    margin-left: auto;\n    margin-right: auto;\n}\n.KrsrPYgu9qhyw5CIFZ490A\\=\\= {\n    width: 100%;\n    height: 100%;\n    display: flex;\n    align-items: center;\n}\n.gBCxDzvwFEaIZR5A5mZbfw\\=\\= {\n    margin-left: auto;\n    margin-right: auto;\n    background-color: #fff;\n    border-radius: 4px;\n    width: 400px;\n    box-shadow: 0 2px 5px 0 #E9EAEE;\n}\n.JadRr530ZnGMl2jAkQsxmg\\=\\= {\n    padding: 30px 40px;\n    border-bottom: 1px solid #E8E8E8;\n    font-size: 24px;\n    font-weight: bold;\n}\n.gee5d4NpY-Cl93d4hoUVBA\\=\\= {\n\n}\n.Ix6sM9HR9Um1noXsHHIkOg\\=\\= {\n    padding: 30px 40px;\n}\n.WUr\\+am52NvilyPNKF85xGw\\=\\= {\n    font-weight: bold;\n    margin-bottom: 10px;\n}\n.hOMqrO6SdVx9IHSt-PwIIw\\=\\= {\n    display: flex;\n\n    position: relative;\n\n}\n.hOMqrO6SdVx9IHSt-PwIIw\\=\\= > input {\n    border: 1px solid #E8E8E8;\n    border-radius: 4px;\n    line-height: 40px;\n    align-items: center;\n    width: 100%;\n    padding-right: 50%;\n}\n.aiFHBTUf3gQEJLktYoDd-Q\\=\\= {\n    display: flex;\n    margin-top: 30px;\n}\n.aiFHBTUf3gQEJLktYoDd-Q\\=\\= > a {\n    color: #354AFF;\n}\n.i0LhKO1YMpzZVvSY4Ohf\\+g\\=\\= {\n    position: absolute;\n    right: 0;\n    height: 100%;\n    background-color: #354AFF;\n    padding: 0 20px;\n    text-align: center;\n    border-radius: 4px;\n    color: #ffffff;\n    font-weight: bold;\n    border: 0;\n    cursor: pointer;\n}\n.l91-A3AigEGf17TawoRHjQ\\=\\= {\n    background-color: #354AFF;\n    padding: 10px 20px;\n    text-align: center;\n    border-radius: 4px;\n    color: #ffffff;\n    font-weight: bold;\n    border: 0;\n    cursor: pointer;\n    width: -webkit-max-content;\n    width: -moz-max-content;\n    width: max-content;\n}\n.lTgnVSVsFcI-GOagzdMkrg\\=\\= {\n    border: 1px solid red !important;\n    color: red;\n}\n.Nra0fIp-zC0117QUr3vwZA\\=\\= {\n    color: red;\n}\n.UYVVcUAtwjsVa1N4VdfnKg\\=\\= {\n    font-weight: bold;\n    margin-bottom: 5px;\n    font-size: 14px;\n    color: red;\n}\n", ""]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"container": "nA1uh05XrRtJh9kDAEaUwQ==",
@@ -12380,6 +12396,7 @@ ___CSS_LOADER_EXPORT___.locals = {
 	"input": "hOMqrO6SdVx9IHSt-PwIIw==",
 	"registrySuggest": "aiFHBTUf3gQEJLktYoDd-Q==",
 	"button": "i0LhKO1YMpzZVvSY4Ohf+g==",
+	"resendButton": "l91-A3AigEGf17TawoRHjQ==",
 	"error": "lTgnVSVsFcI-GOagzdMkrg==",
 	"errorText": "Nra0fIp-zC0117QUr3vwZA==",
 	"errorLabel": "UYVVcUAtwjsVa1N4VdfnKg=="

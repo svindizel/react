@@ -98,11 +98,7 @@ class RegisterController extends Controller
     {
         $email = $request->input('email');
         
-        if (User::where('email', $email)->exists()) {
-            $url = str_replace('api/register/verify/resend','', URL::current()) . 'registration?token=' . $request->_token . '&stage=' . User::where('email', $email)->value('stage');
-        } else {
-            $url = str_replace('api/register/verify/resend','', URL::current()) . 'registration?token=' . $request->_token;
-        }
+        $url = str_replace('api/register/verify/resend','', URL::current()) . 'registration?token=' . $request->_token;
 
         if (EmailVerify::where('email', $email)->exists()) {
             EmailVerify::where('email', $email)
@@ -125,15 +121,11 @@ class RegisterController extends Controller
 
         $email = $request->input('email');
 
-        if (User::where('email', $email)->where('password', NULL)->exists() || EmailVerify::where('email', $email)->exists()) {
-
-            //$url = str_replace('api/register','', URL::current()) . 'registration?token=' . $request->_token . '&stage=' . User::where('email', $email)->value('stage');
-
-            return new JsonResponse(response()->json('incomplete'), 200);
-
-        } elseif (User::where('email', $email)->where('password', '!=', NULL)->where('stage', 3)->exists()) {
+        if (User::where('email', $email)->where('stage', 3)->exists()) {
             return new JsonResponse(response()->json(['error' => 'User exists']), 200);
-        }
+        } elseif (User::where('email', $email)->where('password', NULL)->exists() || EmailVerify::where('email', $email)->exists()) {
+            return new JsonResponse(response()->json('incomplete'), 200);
+        } 
 
         EmailVerify::create([
             'email' => $email,
