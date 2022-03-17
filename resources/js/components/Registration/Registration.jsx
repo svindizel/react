@@ -2,8 +2,8 @@ import React, {Component} from "react";
 import S from "./Registration.module.css";
 import FormData from "form-data";
 import Carousel from "./Carousel/Carousel";
-import axios from "axios";
 import NotFound from "../NotFound/NotFound";
+import axios from "axios";
 
 export default class Registration extends Component {
 
@@ -46,7 +46,8 @@ export default class Registration extends Component {
                 isPasswordsNotMatch: false,
                 isInnEmpty: false,
                 isTokenFalse: false
-            }
+            },
+            isRegistred: false
         }
     };
 
@@ -68,24 +69,40 @@ export default class Registration extends Component {
                 }
             })
         axios
+            .get("http://react/api/products")
+            .then((response) => {
+                if(response.data.auth) {
+                    window.location = "http://react/products"
+                }
+            })
+        axios
             .post("http://react/api/register/getData", {token: token})
             .then((response) => {
-                console.log(response.data.original[0]);
+                console.log(123, response.data.original[0]);
                 let data = response.data.original[0];
                 state.carouselPage = data.stage;
                 state.registryData.step_1.inn = data.inn;
                 state.registryData.step_1.companyName = data.name;
                 state.registryData.step_2.logo = "./storage/" + data.logo;
-                this.setState(state);
+                console.log(state.registryData.step_2.logo)
+
                 console.log(this.state)
+                if (state.carouselPage === 3) {
+                    state.isRegistred = true;
+                }
+                this.setState(state);
             })
     }
 
     getStage = () => {
         const queryString = window.location.search;
         const urlParams = new URLSearchParams(queryString);
+        const token = urlParams.get('token');
         let state = this.state;
         if (urlParams.get("stage")) {
+            if(parseInt(urlParams.get("stage")) === 3) {
+                window.location = "http://react/login"
+            }
             state.carouselPage = parseInt(urlParams.get("stage"));
             this.setState(state);
         } else {
@@ -96,7 +113,11 @@ export default class Registration extends Component {
             /*state.carouselPage = 1
             this.setState(state);*/
             axios
-                .post("http://react/api/register/verify")
+                .post("http://react/api/register/verify", {token: token})
+        }
+        if (parseInt(urlParams.get("stage")) === 3) {
+            state.isRegistred = true;
+            this.setState(state);
         }
     }
 
@@ -118,7 +139,6 @@ export default class Registration extends Component {
             .then(response => response.json())
             .then(suggestions => this.setState(suggestions))
             .catch(error => console.log("error", error));
-        console.log(this.state);
     };
 
     companySelectHandler = (e) => {
@@ -132,19 +152,19 @@ export default class Registration extends Component {
 
     onChangeHandler = (e) => {
         if (this.state.carouselPage === 1) {
-            let registryData = this.state.registryData;
-            registryData.step_1[e.target.name] = e.target.value;
-            this.setState({registryData});
+            let state = this.state;
+            state.registryData.step_1[e.target.name] = e.target.value;
+            this.setState(state);
         }
         if (this.state.carouselPage === 2) {
-            let registryData = this.state.registryData;
-            registryData.step_2[e.target.name] = e.target.value;
-            this.setState({registryData});
+            let state = this.state;
+            state.registryData.step_2[e.target.name] = e.target.value;
+            this.setState(state);
         }
         if (this.state.carouselPage === 3) {
-            let registryData = this.state.registryData;
-            registryData.step_3[e.target.name] = e.target.value;
-            this.setState({registryData});
+            let state = this.state;
+            state.registryData.step_3[e.target.name] = e.target.value;
+            this.setState(state);
         }
         if (e.target.id === "inn") {
             this.dadataCall(e, e.target.value)
@@ -156,17 +176,23 @@ export default class Registration extends Component {
         let state = this.state;
         if (state.carouselPage === 1) {
             if (this.validateData()) {
+                state.carouselPage = state.carouselPage + 1;
                 axios
                     .post("http://react/api/register/verify/1", this.state.registryData.step_1)
                     .then((response) => {
                         console.log(response)
                     })
+                this.setState(state);
             }
-        }
-        if (state.carouselPage === 2) {
+        } else if (state.carouselPage === 2) {
             let data = new FormData();
-            if(this.state.registryData.step_2.logo === "") {
-                data.append('logo', this.state.registryData.step_2.logo, this.state.registryData.step_2.logo.name)
+            console.log(168, typeof this.state.registryData.step_2.logo)
+            if (typeof this.state.registryData.step_2.logo === 'string') {
+                state.carouselPage = state.carouselPage + 1;
+                this.setState(state);
+                return
+            }
+            data.append('logo', this.state.registryData.step_2.logo, this.state.registryData.step_2.logo.name)
             data.append('token', this.state.registryData.step_2.token)
             let headers = {
                 'accept': 'application/json',
@@ -180,46 +206,40 @@ export default class Registration extends Component {
                 .then((response) => {
                     console.log(response)
                 })
-            } 
-        }
-        if (state.carouselPage === 3) {
-            if (this.validateData()) {
-                axios
-                    .post("http://react/api/register/verify/3", this.state.registryData.step_3)
-                    .then((response) => {
-                        if (response.status === 204 || response.status === 200) {
-                            window.location = "http://react/products";
-                        }
-                    })
-            }
-        }
-        if(state.carouselPage !== 3) {
-            let page = this.state.carouselPage + 1;
-            state.carouselPage = page;
+            state.carouselPage = state.carouselPage + 1;
             this.setState(state);
+        } else {
+            if (state.carouselPage === 3) {
+                if (this.validateData()) {
+                    axios
+                        .post("http://react/api/register/verify/3", this.state.registryData.step_3)
+                        .then((response) => {
+                            if (response.status === 204 || response.status === 200) {
+                                window.location = "http://react/products";
+                            }
+                        })
+                }
+            }
         }
     }
 
     previousPage = (e) => {
         e.preventDefault();
         let state = this.state;
-        let page = this.state.carouselPage - 1;
-        state.carouselPage = page;
+        state.carouselPage = state.carouselPage - 1;
         this.setState(state)
     }
     //-------------------------------------------------------------------------------
 
-    onClickHandler = (e) => {
+    /*onClickHandler = (e) => {
         e.preventDefault();
         let state = this.state;
         const action = e.target.getAttribute("data-action");
         if (action === "true") {
-            let page = this.state.carouselPage + 1;
-            state.carouselPage = page;
+            state.carouselPage = this.state.carouselPage + 1;
             this.setState(state)
         } else {
-            let page = this.state.carouselPage - 1;
-            state.carouselPage = page;
+            state.carouselPage = this.state.carouselPage - 1;
             this.setState(state)
         }
         if (this.state.carouselPage === 1) {
@@ -259,7 +279,7 @@ export default class Registration extends Component {
                     })
             }
         }
-    };
+    };*/
 
     clearErrors = (state) => {
         state.errors.isPasswordConfirmEmpty = false;
@@ -274,7 +294,6 @@ export default class Registration extends Component {
         this.clearErrors(state);
         if (state.carouselPage === 1) {
             if (state.registryData.step_1.inn === "") {
-                console.log(111)
                 state.errors.isInnEmpty = true
                 this.setState(state);
                 return false
@@ -314,11 +333,17 @@ export default class Registration extends Component {
     }
 
     handleFile = (uploadedFile) => {
-        console.log(uploadedFile);
-        let registryData = this.state.registryData;
-        registryData.step_2.logo = uploadedFile;
-        this.setState(registryData)
+        let state = this.state;
+        state.registryData.step_2.logo = uploadedFile;
+        state.logo = uploadedFile;
+        this.setState(state)
     };
+
+    handleFIleToRender = (file) => {
+        let state = this.state;
+        state.logo = file;
+        this.setState(state);
+    }
 
     onSubmitHandler = (e) => {
         e.preventDefault();
@@ -339,11 +364,15 @@ export default class Registration extends Component {
     };
 
     render() {
-        /*if (this.state.errors.isTokenFalse) {
+        console.log(this.state.isRegistred)
+        if (this.state.errors.isTokenFalse) {
             return (
-                <NotFound />
+                <NotFound/>
             )
-        } else {*/
+        } else if (this.state.isRegistred) {
+            window.location = "http://react/login"
+            console.log(this.state.isRegistred)
+        } else {
             return (
                 <div className={S.container}>
                     <div className={S.registration}>
@@ -360,6 +389,7 @@ export default class Registration extends Component {
                                 <form method="POST" onSubmit={this.onSubmitHandler}>
                                     <Carousel
                                         logo={this.state.registryData.step_2.logo}
+                                        handleFIleToRender={this.handleFIleToRender}
                                         previousPage={this.previousPage}
                                         errors={this.state.errors}
                                         registryData={this.state.registryData}
@@ -378,6 +408,6 @@ export default class Registration extends Component {
                     </div>
                 </div>
             )
-        //}
+        }
     }
 }

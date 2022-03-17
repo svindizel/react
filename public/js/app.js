@@ -6296,18 +6296,16 @@ var Carousel = /*#__PURE__*/function (_Component) {
   var _super = _createSuper(Carousel);
 
   function Carousel(props) {
-    var _this;
-
     _classCallCheck(this, Carousel);
 
-    _this = _super.call(this, props);
-    console.log(_this.props);
-    return _this;
+    return _super.call(this, props);
   }
 
   _createClass(Carousel, [{
     key: "render",
     value: function render() {
+      console.log("page: " + this.props.page);
+
       if (this.props.page === 1) {
         return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
           className: _Carousel_module_css__WEBPACK_IMPORTED_MODULE_0__["default"].carousel,
@@ -6353,7 +6351,8 @@ var Carousel = /*#__PURE__*/function (_Component) {
           children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_FileUploader_FileUploader__WEBPACK_IMPORTED_MODULE_1__["default"], {
             logo: this.props.logo,
             companyName: this.props.companyName,
-            handleFile: this.props.handleFile
+            handleFile: this.props.handleFile,
+            handleFIleToRender: this.props.handleFIleToRender
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
             className: _Carousel_module_css__WEBPACK_IMPORTED_MODULE_0__["default"].buttons,
             children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("button", {
@@ -6464,8 +6463,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -6486,25 +6483,142 @@ function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Re
 
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 
 
 
 
 
-var UploadButton = /*#__PURE__*/function (_Component) {
-  _inherits(UploadButton, _Component);
 
-  var _super = _createSuper(UploadButton);
+var FileUploader = /*#__PURE__*/function (_Component) {
+  _inherits(FileUploader, _Component);
+
+  var _super = _createSuper(FileUploader);
+
+  function FileUploader(props) {
+    var _this;
+
+    _classCallCheck(this, FileUploader);
+
+    _this = _super.call(this, props);
+
+    _defineProperty(_assertThisInitialized(_this), "onClickHandler", function (e) {
+      _this.hiddenFileInput.current.click();
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "onChangeHandler", function (e) {
+      var uploadedLogo = e.target.files[0];
+
+      _this.props.handleFile(uploadedLogo);
+
+      _this.renderLogo(uploadedLogo);
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "renderLogo", function (uploadedLogo) {
+      console.log(35, uploadedLogo);
+      var state = _this.state;
+      var reader = new FileReader();
+      var url = reader.readAsDataURL(uploadedLogo);
+
+      reader.onloadend = function (e) {
+        state.logoSrc = [reader.result];
+        state.ready = true;
+
+        _this.props.handleFIleToRender([reader.result]);
+
+        _this.setState(state);
+      };
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "setLogoSrc", function () {
+      var state = _this.state;
+
+      if (state.logoSrc === null) {
+        state.logoSrc = _this.props.logo;
+
+        _this.setState(state);
+      }
+    });
+
+    _this.hiddenFileInput = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_0__.createRef)();
+    _this.state = {
+      ready: false,
+      logoSrc: null
+    };
+    return _this;
+  }
+
+  _createClass(FileUploader, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.hiddenFileInput.current.focus();
+
+      if (this.state.logoSrc === null) {
+        var state = this.state;
+        state.logoSrc = this.props.logo;
+        this.setState(state);
+      }
+    }
+  }, {
+    key: "render",
+    value: //{/*className={() => {if (this.state.ready) {return S.hide}return S.thumb}}*/}
+    function render() {
+      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+        className: _FileUploader_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].fileUploader,
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+          className: _FileUploader_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].uploaderContent,
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+            className: _FileUploader_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].logoPreview,
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("img", {
+              className: {
+                /*this.state.ready ? S.hide : S.thumb*/
+              },
+              src: this.state.logoSrc === null ? this.props.logo : this.state.logoSrc,
+              alt: ""
+            })
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+              className: _FileUploader_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].companyName,
+              children: ["\u0420\u0415\u0421\u0422\u041E\u0420\u0410\u041D ", (0,lodash_string__WEBPACK_IMPORTED_MODULE_2__.toUpper)(this.props.companyName)]
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(UploadButton, {
+              onClickHandler: this.onClickHandler
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
+              ref: this.hiddenFileInput,
+              type: "file",
+              name: "logo",
+              style: {
+                display: 'none'
+              },
+              onChange: this.onChangeHandler
+            })]
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+          className: _FileUploader_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].attention,
+          children: "\u041B\u043E\u0433\u043E\u0442\u0438\u043F \u0431\u0443\u0434\u0435\u0442 \u0438\u0441\u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u044C\u0441\u044F \u0434\u043B\u044F \u0431\u0440\u0435\u043D\u0434\u0438\u0440\u043E\u0432\u0430\u043D\u0438\u044F \u0441\u0438\u0441\u0442\u0435\u043C\u044B. \u0412\u044B \u043C\u043E\u0436\u0435\u0442\u0435 \u043D\u0435 \u0437\u0430\u0433\u0440\u0443\u0436\u0430\u0442\u044C \u043B\u043E\u0433\u043E\u0442\u0438\u043F, \u043D\u043E \u0432 \u044D\u0442\u043E\u043C \u0441\u043B\u0443\u0447\u0430\u0435 \u0431\u0443\u0434\u0435\u0442 \u0438\u0441\u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u044C\u0441\u044F \u043B\u043E\u0433\u043E\u0442\u0438\u043F \u043F\u043E \u0443\u043C\u043E\u043B\u0447\u0430\u043D\u0438\u044E."
+        })]
+      });
+    }
+  }]);
+
+  return FileUploader;
+}(react__WEBPACK_IMPORTED_MODULE_0__.Component);
+
+
+
+var UploadButton = /*#__PURE__*/function (_Component2) {
+  _inherits(UploadButton, _Component2);
+
+  var _super2 = _createSuper(UploadButton);
 
   function UploadButton(props) {
-    var _this;
+    var _this2;
 
     _classCallCheck(this, UploadButton);
 
-    _this = _super.call(this, props);
-    _this.state = {};
-    return _this;
+    _this2 = _super2.call(this, props);
+    _this2.state = {};
+    return _this2;
   }
 
   _createClass(UploadButton, [{
@@ -6544,125 +6658,6 @@ var UploadButton = /*#__PURE__*/function (_Component) {
 
   return UploadButton;
 }(react__WEBPACK_IMPORTED_MODULE_0__.Component);
-
-var FileUploader = /*#__PURE__*/function (_Component2) {
-  _inherits(FileUploader, _Component2);
-
-  var _super2 = _createSuper(FileUploader);
-
-  function FileUploader(props) {
-    var _this2;
-
-    _classCallCheck(this, FileUploader);
-
-    _this2 = _super2.call(this, props);
-
-    _defineProperty(_assertThisInitialized(_this2), "onClickHandler", function (e) {
-      _this2.hiddenFileInput.current.click();
-
-      console.log("adasdasd");
-    });
-
-    _defineProperty(_assertThisInitialized(_this2), "onChangeHandler", function (e) {
-      var uploadedLogo = e.target.files[0];
-
-      _this2.props.handleFile(uploadedLogo);
-
-      _this2.renderLogo(uploadedLogo);
-    });
-
-    _defineProperty(_assertThisInitialized(_this2), "renderLogo", function (uploadedLogo) {
-      var state = _this2.state;
-      var reader = new FileReader();
-      var url = reader.readAsDataURL(uploadedLogo);
-
-      reader.onloadend = function (e) {
-        state.logoSrc = [reader.result];
-        state.ready = true;
-
-        _this2.setState(state);
-      };
-
-      console.log(_this2.state);
-    });
-
-    _defineProperty(_assertThisInitialized(_this2), "setLogoSrc", function () {
-      var state = _this2.state;
-
-      if (state.logoSrc === null) {
-        state.logoSrc = _this2.props.logo;
-
-        _this2.setState(state);
-
-        console.log(_this2.state);
-      }
-    });
-
-    _this2.hiddenFileInput = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_0__.createRef)();
-    _this2.state = {
-      ready: false,
-      logoSrc: null
-    };
-    return _this2;
-  }
-
-  _createClass(FileUploader, [{
-    key: "componentDidMount",
-    value: function componentDidMount() {
-      this.hiddenFileInput.current.focus();
-      console.log(this.props.logo);
-
-      if (this.state.logoSrc === null) {
-        var state = this.state;
-        state.logoSrc = this.props.logo;
-        console.log(this.props);
-        this.setState(state);
-      }
-    }
-  }, {
-    key: "render",
-    value: //{/*className={() => {if (this.state.ready) {return S.hide}return S.thumb}}*/}
-    function render() {
-      //this.setLogoSrc();
-      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
-        className: _FileUploader_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].fileUploader,
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
-          className: _FileUploader_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].uploaderContent,
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
-            className: _FileUploader_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].logoPreview,
-            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("img", {
-              className: _FileUploader_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].hide,
-              src: this.state.logoSrc,
-              alt: ""
-            })
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
-              className: _FileUploader_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].companyName,
-              children: ["\u0420\u0415\u0421\u0422\u041E\u0420\u0410\u041D ", (0,lodash_string__WEBPACK_IMPORTED_MODULE_2__.toUpper)(this.props.companyName)]
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(UploadButton, {
-              onClickHandler: this.onClickHandler
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
-              ref: this.hiddenFileInput,
-              type: "file",
-              name: "logo",
-              style: {
-                display: 'none'
-              },
-              onChange: this.onChangeHandler
-            })]
-          })]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
-          className: _FileUploader_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].attention,
-          children: "\u041B\u043E\u0433\u043E\u0442\u0438\u043F \u0431\u0443\u0434\u0435\u0442 \u0438\u0441\u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u044C\u0441\u044F \u0434\u043B\u044F \u0431\u0440\u0435\u043D\u0434\u0438\u0440\u043E\u0432\u0430\u043D\u0438\u044F \u0441\u0438\u0441\u0442\u0435\u043C\u044B. \u0412\u044B \u043C\u043E\u0436\u0435\u0442\u0435 \u043D\u0435 \u0437\u0430\u0433\u0440\u0443\u0436\u0430\u0442\u044C \u043B\u043E\u0433\u043E\u0442\u0438\u043F, \u043D\u043E \u0432 \u044D\u0442\u043E\u043C \u0441\u043B\u0443\u0447\u0430\u0435 \u0431\u0443\u0434\u0435\u0442 \u0438\u0441\u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u044C\u0441\u044F \u043B\u043E\u0433\u043E\u0442\u0438\u043F \u043F\u043E \u0443\u043C\u043E\u043B\u0447\u0430\u043D\u0438\u044E."
-        })]
-      });
-    }
-  }]);
-
-  return FileUploader;
-}(react__WEBPACK_IMPORTED_MODULE_0__.Component);
-
-
 
 /***/ }),
 
@@ -6806,9 +6801,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var form_data__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! form-data */ "./node_modules/form-data/lib/browser.js");
 /* harmony import */ var form_data__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(form_data__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _Carousel_Carousel__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Carousel/Carousel */ "./resources/js/components/Registration/Carousel/Carousel.jsx");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _NotFound_NotFound__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../NotFound/NotFound */ "./resources/js/components/NotFound/NotFound.jsx");
+/* harmony import */ var _NotFound_NotFound__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../NotFound/NotFound */ "./resources/js/components/NotFound/NotFound.jsx");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 
@@ -6860,7 +6855,7 @@ var Registration = /*#__PURE__*/function (_Component) {
       var urlParams = new URLSearchParams(queryString);
       var token = urlParams.get('token');
       var state = _this.state;
-      axios__WEBPACK_IMPORTED_MODULE_4___default().post("http://react/api/register/verify/token", {
+      axios__WEBPACK_IMPORTED_MODULE_5___default().post("http://react/api/register/verify/token", {
         token: token
       }).then(function (response) {
         console.log(response);
@@ -6874,28 +6869,42 @@ var Registration = /*#__PURE__*/function (_Component) {
           _this.setState(_state);
         }
       });
-      axios__WEBPACK_IMPORTED_MODULE_4___default().post("http://react/api/register/getData", {
+      axios__WEBPACK_IMPORTED_MODULE_5___default().get("http://react/api/products").then(function (response) {
+        if (response.data.auth) {
+          window.location = "http://react/products";
+        }
+      });
+      axios__WEBPACK_IMPORTED_MODULE_5___default().post("http://react/api/register/getData", {
         token: token
       }).then(function (response) {
-        console.log(response.data.original[0]);
+        console.log(123, response.data.original[0]);
         var data = response.data.original[0];
         state.carouselPage = data.stage;
         state.registryData.step_1.inn = data.inn;
         state.registryData.step_1.companyName = data.name;
         state.registryData.step_2.logo = "./storage/" + data.logo;
+        console.log(state.registryData.step_2.logo);
+        console.log(_this.state);
+
+        if (state.carouselPage === 3) {
+          state.isRegistred = true;
+        }
 
         _this.setState(state);
-
-        console.log(_this.state);
       });
     });
 
     _defineProperty(_assertThisInitialized(_this), "getStage", function () {
       var queryString = window.location.search;
       var urlParams = new URLSearchParams(queryString);
+      var token = urlParams.get('token');
       var state = _this.state;
 
       if (urlParams.get("stage")) {
+        if (parseInt(urlParams.get("stage")) === 3) {
+          window.location = "http://react/login";
+        }
+
         state.carouselPage = parseInt(urlParams.get("stage"));
 
         _this.setState(state);
@@ -6907,7 +6916,15 @@ var Registration = /*#__PURE__*/function (_Component) {
         /*state.carouselPage = 1
         this.setState(state);*/
 
-        axios__WEBPACK_IMPORTED_MODULE_4___default().post("http://react/api/register/verify");
+        axios__WEBPACK_IMPORTED_MODULE_5___default().post("http://react/api/register/verify", {
+          token: token
+        });
+      }
+
+      if (parseInt(urlParams.get("stage")) === 3) {
+        state.isRegistred = true;
+
+        _this.setState(state);
       }
     });
 
@@ -6933,7 +6950,6 @@ var Registration = /*#__PURE__*/function (_Component) {
       })["catch"](function (error) {
         return console.log("error", error);
       });
-      console.log(_this.state);
     });
 
     _defineProperty(_assertThisInitialized(_this), "companySelectHandler", function (e) {
@@ -6951,30 +6967,24 @@ var Registration = /*#__PURE__*/function (_Component) {
 
     _defineProperty(_assertThisInitialized(_this), "onChangeHandler", function (e) {
       if (_this.state.carouselPage === 1) {
-        var registryData = _this.state.registryData;
-        registryData.step_1[e.target.name] = e.target.value;
+        var state = _this.state;
+        state.registryData.step_1[e.target.name] = e.target.value;
 
-        _this.setState({
-          registryData: registryData
-        });
+        _this.setState(state);
       }
 
       if (_this.state.carouselPage === 2) {
-        var _registryData = _this.state.registryData;
-        _registryData.step_2[e.target.name] = e.target.value;
+        var _state2 = _this.state;
+        _state2.registryData.step_2[e.target.name] = e.target.value;
 
-        _this.setState({
-          registryData: _registryData
-        });
+        _this.setState(_state2);
       }
 
       if (_this.state.carouselPage === 3) {
-        var _registryData2 = _this.state.registryData;
-        _registryData2.step_3[e.target.name] = e.target.value;
+        var _state3 = _this.state;
+        _state3.registryData.step_3[e.target.name] = e.target.value;
 
-        _this.setState({
-          registryData: _registryData2
-        });
+        _this.setState(_state3);
       }
 
       if (e.target.id === "inn") {
@@ -6988,86 +6998,25 @@ var Registration = /*#__PURE__*/function (_Component) {
 
       if (state.carouselPage === 1) {
         if (_this.validateData()) {
-          axios__WEBPACK_IMPORTED_MODULE_4___default().post("http://react/api/register/verify/1", _this.state.registryData.step_1).then(function (response) {
+          state.carouselPage = state.carouselPage + 1;
+          axios__WEBPACK_IMPORTED_MODULE_5___default().post("http://react/api/register/verify/1", _this.state.registryData.step_1).then(function (response) {
             console.log(response);
           });
-        }
-      }
 
-      if (state.carouselPage === 2) {
+          _this.setState(state);
+        }
+      } else if (state.carouselPage === 2) {
         var data = new (form_data__WEBPACK_IMPORTED_MODULE_2___default())();
+        console.log(168, _typeof(_this.state.registryData.step_2.logo));
 
-        if (_this.state.registryData.step_2.logo === "") {
-          data.append('logo', _this.state.registryData.step_2.logo, _this.state.registryData.step_2.logo.name);
-          data.append('token', _this.state.registryData.step_2.token);
-          var headers = {
-            'accept': 'application/json',
-            'Accept-Language': 'en-US,en;q=0.8',
-            'Content-Type': "multipart/form-data; boundary=".concat(data._boundary)
-          };
-          axios__WEBPACK_IMPORTED_MODULE_4___default().post("http://react/api/register/verify/2", data, {
-            headers: headers
-          }).then(function (response) {
-            console.log(response);
-          });
+        if (typeof _this.state.registryData.step_2.logo === 'string') {
+          state.carouselPage = state.carouselPage + 1;
+
+          _this.setState(state);
+
+          return;
         }
-      }
 
-      if (state.carouselPage === 3) {
-        if (_this.validateData()) {
-          axios__WEBPACK_IMPORTED_MODULE_4___default().post("http://react/api/register/verify/3", _this.state.registryData.step_3).then(function (response) {
-            if (response.status === 204 || response.status === 200) {
-              window.location = "http://react/products";
-            }
-          });
-        }
-      }
-
-      if (state.carouselPage !== 3) {
-        var page = _this.state.carouselPage + 1;
-        state.carouselPage = page;
-
-        _this.setState(state);
-      }
-    });
-
-    _defineProperty(_assertThisInitialized(_this), "previousPage", function (e) {
-      e.preventDefault();
-      var state = _this.state;
-      var page = _this.state.carouselPage - 1;
-      state.carouselPage = page;
-
-      _this.setState(state);
-    });
-
-    _defineProperty(_assertThisInitialized(_this), "onClickHandler", function (e) {
-      e.preventDefault();
-      var state = _this.state;
-      var action = e.target.getAttribute("data-action");
-
-      if (action === "true") {
-        var page = _this.state.carouselPage + 1;
-        state.carouselPage = page;
-
-        _this.setState(state);
-      } else {
-        var _page = _this.state.carouselPage - 1;
-
-        state.carouselPage = _page;
-
-        _this.setState(state);
-      }
-
-      if (_this.state.carouselPage === 1) {
-        if (_this.validateData()) {
-          axios__WEBPACK_IMPORTED_MODULE_4___default().post("http://react/api/register/verify/1", _this.state.registryData.step_1).then(function (response) {
-            console.log(response);
-          });
-        }
-      }
-
-      if (_this.state.carouselPage === 2) {
-        var data = new (form_data__WEBPACK_IMPORTED_MODULE_2___default())();
         data.append('logo', _this.state.registryData.step_2.logo, _this.state.registryData.step_2.logo.name);
         data.append('token', _this.state.registryData.step_2.token);
         var headers = {
@@ -7075,22 +7024,33 @@ var Registration = /*#__PURE__*/function (_Component) {
           'Accept-Language': 'en-US,en;q=0.8',
           'Content-Type': "multipart/form-data; boundary=".concat(data._boundary)
         };
-        axios__WEBPACK_IMPORTED_MODULE_4___default().post("http://react/api/register/verify/2", data, {
+        axios__WEBPACK_IMPORTED_MODULE_5___default().post("http://react/api/register/verify/2", data, {
           headers: headers
         }).then(function (response) {
           console.log(response);
         });
-      }
+        state.carouselPage = state.carouselPage + 1;
 
-      if (_this.state.carouselPage === 3) {
-        if (_this.validateData()) {
-          axios__WEBPACK_IMPORTED_MODULE_4___default().post("http://react/api/register/verify/3", _this.state.registryData.step_3).then(function (response) {
-            if (response.status === 204 || response.status === 200) {
-              window.location = "http://react/products";
-            }
-          });
+        _this.setState(state);
+      } else {
+        if (state.carouselPage === 3) {
+          if (_this.validateData()) {
+            axios__WEBPACK_IMPORTED_MODULE_5___default().post("http://react/api/register/verify/3", _this.state.registryData.step_3).then(function (response) {
+              if (response.status === 204 || response.status === 200) {
+                window.location = "http://react/products";
+              }
+            });
+          }
         }
       }
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "previousPage", function (e) {
+      e.preventDefault();
+      var state = _this.state;
+      state.carouselPage = state.carouselPage - 1;
+
+      _this.setState(state);
     });
 
     _defineProperty(_assertThisInitialized(_this), "clearErrors", function (state) {
@@ -7109,7 +7069,6 @@ var Registration = /*#__PURE__*/function (_Component) {
 
       if (state.carouselPage === 1) {
         if (state.registryData.step_1.inn === "") {
-          console.log(111);
           state.errors.isInnEmpty = true;
 
           _this.setState(state);
@@ -7160,18 +7119,25 @@ var Registration = /*#__PURE__*/function (_Component) {
     });
 
     _defineProperty(_assertThisInitialized(_this), "handleFile", function (uploadedFile) {
-      console.log(uploadedFile);
-      var registryData = _this.state.registryData;
-      registryData.step_2.logo = uploadedFile;
+      var state = _this.state;
+      state.registryData.step_2.logo = uploadedFile;
+      state.logo = uploadedFile;
 
-      _this.setState(registryData);
+      _this.setState(state);
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "handleFIleToRender", function (file) {
+      var state = _this.state;
+      state.logo = file;
+
+      _this.setState(state);
     });
 
     _defineProperty(_assertThisInitialized(_this), "onSubmitHandler", function (e) {
       e.preventDefault();
 
       if (_this.validateData) {
-        axios__WEBPACK_IMPORTED_MODULE_4___default().post("http://react/register/verify", _this.state.registryData).then(function (response) {
+        axios__WEBPACK_IMPORTED_MODULE_5___default().post("http://react/register/verify", _this.state.registryData).then(function (response) {
           console.log(response);
 
           if (response.status === 204 || response.status === 200) {
@@ -7186,7 +7152,7 @@ var Registration = /*#__PURE__*/function (_Component) {
       }
     });
 
-    (axios__WEBPACK_IMPORTED_MODULE_4___default().defaults.headers.common["X-CSRF-TOKEN"]) = window.token;
+    (axios__WEBPACK_IMPORTED_MODULE_5___default().defaults.headers.common["X-CSRF-TOKEN"]) = window.token;
     var _queryString = window.location.search;
 
     var _urlParams = new URLSearchParams(_queryString);
@@ -7226,7 +7192,8 @@ var Registration = /*#__PURE__*/function (_Component) {
         isPasswordsNotMatch: false,
         isInnEmpty: false,
         isTokenFalse: false
-      }
+      },
+      isRegistred: false
     };
     return _this;
   }
@@ -7234,50 +7201,55 @@ var Registration = /*#__PURE__*/function (_Component) {
   _createClass(Registration, [{
     key: "render",
     value: function render() {
-      /*if (this.state.errors.isTokenFalse) {
-          return (
-              <NotFound />
-          )
-      } else {*/
-      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
-        className: _Registration_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].container,
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
-          className: _Registration_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].registration,
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
-            className: _Registration_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].registrationForm,
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
-              className: _Registration_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].formHeader,
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
-                className: _Registration_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].headerText,
-                children: "\u0420\u0435\u0433\u0438\u0441\u0442\u0440\u0430\u0446\u0438\u044F"
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
-                className: _Registration_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].pageNumber,
-                children: [this.state.carouselPage, " \u0438\u0437 3"]
-              })]
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
-              className: _Registration_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].formBody,
-              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("form", {
-                method: "POST",
-                onSubmit: this.onSubmitHandler,
-                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_Carousel_Carousel__WEBPACK_IMPORTED_MODULE_3__["default"], {
-                  logo: this.state.registryData.step_2.logo,
-                  previousPage: this.previousPage,
-                  errors: this.state.errors,
-                  registryData: this.state.registryData,
-                  onChangeHandler: this.onChangeHandler,
-                  nextPage: this.nextPage,
-                  onClickHandler: this.onClickHandler,
-                  companyName: this.state.registryData.step_1.companyName,
-                  handleFile: this.handleFile,
-                  page: this.state.carouselPage,
-                  suggestions: this.state.suggestions,
-                  companySelectHandler: this.companySelectHandler
+      console.log(this.state.isRegistred);
+
+      if (this.state.errors.isTokenFalse) {
+        return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_NotFound_NotFound__WEBPACK_IMPORTED_MODULE_4__["default"], {});
+      } else if (this.state.isRegistred) {
+        window.location = "http://react/login";
+        console.log(this.state.isRegistred);
+      } else {
+        return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
+          className: _Registration_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].container,
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
+            className: _Registration_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].registration,
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
+              className: _Registration_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].registrationForm,
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
+                className: _Registration_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].formHeader,
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
+                  className: _Registration_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].headerText,
+                  children: "\u0420\u0435\u0433\u0438\u0441\u0442\u0440\u0430\u0446\u0438\u044F"
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
+                  className: _Registration_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].pageNumber,
+                  children: [this.state.carouselPage, " \u0438\u0437 3"]
+                })]
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
+                className: _Registration_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].formBody,
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("form", {
+                  method: "POST",
+                  onSubmit: this.onSubmitHandler,
+                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_Carousel_Carousel__WEBPACK_IMPORTED_MODULE_3__["default"], {
+                    logo: this.state.registryData.step_2.logo,
+                    handleFIleToRender: this.handleFIleToRender,
+                    previousPage: this.previousPage,
+                    errors: this.state.errors,
+                    registryData: this.state.registryData,
+                    onChangeHandler: this.onChangeHandler,
+                    nextPage: this.nextPage,
+                    onClickHandler: this.onClickHandler,
+                    companyName: this.state.registryData.step_1.companyName,
+                    handleFile: this.handleFile,
+                    page: this.state.carouselPage,
+                    suggestions: this.state.suggestions,
+                    companySelectHandler: this.companySelectHandler
+                  })
                 })
-              })
-            })]
+              })]
+            })
           })
-        })
-      }); //}
+        });
+      }
     }
   }]);
 

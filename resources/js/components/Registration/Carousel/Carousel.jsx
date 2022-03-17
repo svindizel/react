@@ -6,10 +6,10 @@ import Suggestions from "./Suggestions/Suggestions";
 export default class Carousel extends Component {
     constructor(props) {
         super(props);
-        console.log(this.props);
     }
 
     render() {
+        console.log("page: " + this.props.page)
         if (this.props.page === 1) {
             return (
                 <div className={S.carousel}>
@@ -54,7 +54,7 @@ export default class Carousel extends Component {
             return (
                 <div className={S.carousel}>
 
-                    <FileUploader logo={this.props.logo} companyName={this.props.companyName} handleFile={this.props.handleFile}/>
+                    <FileUploader logo={this.props.logo} companyName={this.props.companyName} handleFile={this.props.handleFile} handleFIleToRender={this.props.handleFIleToRender}/>
                     <div className={S.buttons}>
                         <button
                             style={{backgroundColor: "#E8E8E8", color: "#969696"}}

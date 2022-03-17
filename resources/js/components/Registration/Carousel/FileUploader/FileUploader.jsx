@@ -2,6 +2,89 @@ import React, {Component, createRef} from "react";
 import S from "./FileUploader.module.css";
 import {toUpper} from "lodash/string";
 
+export default class FileUploader extends Component {
+    constructor(props) {
+        super(props);
+        this.hiddenFileInput = createRef();
+        this.state = {
+            ready: false,
+            logoSrc: null
+        };
+    };
+
+    onClickHandler = (e) => {
+        this.hiddenFileInput.current.click();
+    };
+
+    componentDidMount() {
+        this.hiddenFileInput.current.focus();
+        if(this.state.logoSrc === null) {
+            let state = this.state;
+            state.logoSrc = this.props.logo;
+            this.setState(state)
+        }
+    };
+
+    onChangeHandler = (e) => {
+        const uploadedLogo = e.target.files[0];
+        this.props.handleFile(uploadedLogo);
+        this.renderLogo(uploadedLogo);
+    }
+
+    renderLogo = (uploadedLogo) => {
+        console.log(35, uploadedLogo)
+        let state = this.state;
+        let reader = new FileReader();
+        let url = reader.readAsDataURL(uploadedLogo);
+        reader.onloadend = (e) => {
+            state.logoSrc = [reader.result];
+            state.ready = true;
+            this.props.handleFIleToRender([reader.result])
+            this.setState(state);
+        }
+    }
+
+    setLogoSrc = () => {
+        let state = this.state;
+        if (state.logoSrc === null) {
+            state.logoSrc = this.props.logo;
+            this.setState(state);
+        }
+    }
+
+    //{/*className={() => {if (this.state.ready) {return S.hide}return S.thumb}}*/}
+    render() {
+        return (
+            <div className={S.fileUploader}>
+                <div className={S.uploaderContent}>
+                    <div className={S.logoPreview}>
+                        <img
+                            className={{/*this.state.ready ? S.hide : S.thumb*/}}
+                            src={this.state.logoSrc === null ? this.props.logo : this.state.logoSrc}
+                            alt=""
+                        />
+                    </div>
+                    <div>
+                        <div className={S.companyName}>РЕСТОРАН {toUpper(this.props.companyName)}</div>
+                        <UploadButton onClickHandler={this.onClickHandler}/>
+                        <input
+                            ref={this.hiddenFileInput}
+                            type="file"
+                            name="logo"
+                            style={{display: 'none'}}
+                            onChange={this.onChangeHandler}
+                        />
+                    </div>
+                </div>
+                <div className={S.attention}>
+                    Логотип будет использоваться для брендирования системы. Вы можете не загружать логотип, но в этом
+                    случае будет использоваться логотип по умолчанию.
+                </div>
+            </div>
+        )
+    }
+}
+
 class UploadButton extends Component {
     constructor(props) {
         super(props);
@@ -26,93 +109,6 @@ class UploadButton extends Component {
                 <div className={S.buttonText}>
                     <div className={S.buttonHeader}>Загрузить логотип</div>
                     <div className={S.buttonBody}>Разрешение {'<'} 300x300 и размер {'<'} 3Мб</div>
-                </div>
-            </div>
-        )
-    }
-}
-
-export default class FileUploader extends Component {
-    constructor(props) {
-        super(props);
-        this.hiddenFileInput = createRef();
-        this.state = {
-            ready: false,
-            logoSrc: null
-        };
-    };
-
-    onClickHandler = (e) => {
-        this.hiddenFileInput.current.click();
-        console.log("adasdasd")
-    };
-
-    componentDidMount() {
-        this.hiddenFileInput.current.focus();
-        console.log(this.props.logo);
-        if(this.state.logoSrc === null) {
-            let state = this.state;
-            state.logoSrc = this.props.logo;
-            console.log(this.props)
-            this.setState(state)
-        }
-    };
-
-    onChangeHandler = (e) => {
-        const uploadedLogo = e.target.files[0];
-        this.props.handleFile(uploadedLogo);
-        this.renderLogo(uploadedLogo);
-    }
-
-    renderLogo = (uploadedLogo) => {
-        let state = this.state;
-        let reader = new FileReader();
-        let url = reader.readAsDataURL(uploadedLogo);
-        reader.onloadend = (e) => {
-            state.logoSrc = [reader.result];
-            state.ready = true;
-            this.setState(state);
-        }
-        console.log(this.state)
-    }
-
-    setLogoSrc = () => {
-        let state = this.state;
-        if (state.logoSrc === null) {
-            state.logoSrc = this.props.logo;
-            this.setState(state);
-            console.log(this.state)
-        }
-    }
-
-    //{/*className={() => {if (this.state.ready) {return S.hide}return S.thumb}}*/}
-    render() {
-        //this.setLogoSrc();
-        return (
-            <div className={S.fileUploader}>
-                <div className={S.uploaderContent}>
-                    <div className={S.logoPreview}>
-                        <img
-                            className={S.hide}
-                            src={this.state.logoSrc}
-                            alt=""
-                        />
-                    </div>
-                    <div>
-                        <div className={S.companyName}>РЕСТОРАН {toUpper(this.props.companyName)}</div>
-                        <UploadButton onClickHandler={this.onClickHandler}/>
-                        <input
-                            ref={this.hiddenFileInput}
-                            type="file"
-                            name="logo"
-                            style={{display: 'none'}}
-                            onChange={this.onChangeHandler}
-                        />
-                    </div>
-                </div>
-                <div className={S.attention}>
-                    Логотип будет использоваться для брендирования системы. Вы можете не загружать логотип, но в этом
-                    случае будет использоваться логотип по умолчанию.
                 </div>
             </div>
         )
