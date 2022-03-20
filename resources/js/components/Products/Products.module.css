@@ -1,3 +1,96 @@
+.container {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 15px 50px;
+}
 .products {
+    background-color: white;
+    border-radius: 4px;
+    width: 100%;
+    height: 100%;
+    padding: 10px;
+}
+.productsHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.headerText {
+    font-weight: bold;
+    font-size: 20px;
+}
+.headerSearch > input {
+    border: 0;
+    background-color: #f2f2f2;
+    border-radius: 4px;
+    padding: 5px 10px;
+}
+.productsBody {
+    display: flex;
+}
+.productsCategories {
+    width: 20%;
+    display: flex;
+    align-items: center;
+}
+.productsCategory {
 
+}
+.productsTable {
+
+}
+.bodyContent {
+    width: 80%;
+}
+.bodyHeader {
+    display: flex;
+    align-items: center;
+}
+.bodyHeaderText {
+    padding-right: 10px;
+    font-size: 18px;
+    font-weight: bold;
+}
+.button {
+    background-color: #354AFF;
+    color: #fff;
+    font-weight: bold;
+    padding: 5px 10px;
+    text-align: center;
+    display: flex;
+    cursor: pointer;
+    border-radius: 4px;
+}
+.tableHeader {
+    display: flex;
+}
+.tableBody {
+    display: flex;
+    flex-direction: column;
+}
+.tableRow {
+    display: flex;
+}
+.productName {
+    width: 150px;
+}
+.productPrice {
+    width: 50px;
+}
+.productMeasureItems {
+    width: 30px;
+}
+.productArticul {
+    width: 40px;
+}
+.productSale {
+    width: 65px;
+}
+.productIngredients {
+    width: 250px;
+}
+.productStop {
+    width: 90px;
 }

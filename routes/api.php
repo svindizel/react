@@ -43,6 +43,9 @@ Route::group([
 
     Route::middleware(['auth'])->group(function () {
         Route::post('logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');
+
+        Route::get('products/all', [App\Http\Controllers\ProductController::class, 'getProducts']);
+        Route::get('products/addictions', [App\Http\Controllers\ProductController::class, 'getAddictions']);
     });
 
 
