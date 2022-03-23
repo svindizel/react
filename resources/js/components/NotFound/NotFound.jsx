@@ -12,10 +12,10 @@ export default class NotFound extends Component {
                 <div className={S.notFound}>
                     <div className={S.message}>
                         <div className={S.error}>
-                            404&nbsp;
+                            404
                         </div>
                         <div className={S.text}>
-                            | Запрашиваемая страница не существует
+                            Запрашиваемая страница не существует
                         </div>
                     </div>
                 </div>

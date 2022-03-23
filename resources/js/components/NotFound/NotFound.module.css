@@ -50,5 +50,11 @@ body {
     align-items: center;
 }
 .error {
+    height: 100%;
     color: red;
+    border-right: 1px solid red;
+    padding-right: 1%;
+}
+.text {
+    width: 100%;
 }

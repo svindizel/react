@@ -46,6 +46,9 @@ Route::group([
 
         Route::get('products/all', [App\Http\Controllers\ProductController::class, 'getProducts']);
         Route::get('products/addictions', [App\Http\Controllers\ProductController::class, 'getAddictions']);
+        Route::post('addProduct', [App\Http\Controllers\ProductController::class, 'create']);
+        Route::post('editProduct', [App\Http\Controllers\ProductController::class, 'update']);
+        Route::post('deleteProduct', [App\Http\Controllers\ProductController::class, 'delete']);
     });
 
 

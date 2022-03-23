@@ -7,6 +7,7 @@ import Authorization from "./Authorization/Authorization";
 import EmailConfirm from "./EmailConfirm/EmailConfirm";
 import Registration from "./Registration/Registration";
 import Products from "./Products/Products";
+import Orders from "./Header/Header";
 
 export default class App extends Component {
     constructor(props) {
@@ -38,17 +39,24 @@ export default class App extends Component {
                         path="/products"
                         element={<Products/>}
                     />
+                    <Route
+                        path="/orders"
+                        element={<Orders/>}
+                    />
                 </Routes>
+
             </BrowserRouter>
         );
     }
 }
 
 if (document.getElementById('root')) {
-    if(!localStorage.getItem('loggedIn')) {
+    if (!localStorage.getItem('loggedIn')) {
         localStorage.setItem("loggedIn", "false")
     }
     const assetPath = document.getElementById("root").getAttribute("assetPath");
-    ReactDOM.render(<App assetPath={assetPath}/>,
-        document.getElementById('root'));
+    ReactDOM.render(
+        <App assetPath={assetPath}/>,
+        document.getElementById('root')
+    );
 }

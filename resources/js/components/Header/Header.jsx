@@ -1,13 +1,21 @@
 import React, {Component} from "react";
 import S from "./Header.module.css";
+import HeaderItem from "./HeaderItem/HeaderItem";
 
 export default class Header extends Component {
     constructor(props) {
         axios.defaults.headers.common['X-CSRF-TOKEN'] = window.token;
         super(props);
+        this.state = {
+            navigationItems: [
+                {id: 1, item: "Заказы", path: "/orders"},
+                {id: 2, item: "Товары", path: "/products"}
+            ]
+        }
+
     };
 
-    onClickHandler = (e) => {
+    onLogOut = (e) => {
         axios
             .post("http://react/api/logout")
             .then((response) => {
@@ -17,12 +25,24 @@ export default class Header extends Component {
             })
     }
 
+    renderHeaderItems = () => {
+        let navigation = this.state.navigationItems;
+        return navigation.map(navigationItem =>
+            <HeaderItem
+                key={navigationItem.id}
+                item={navigationItem.item}
+                path={navigationItem.path}
+            />
+        )
+    }
+
     render() {
         return (
             <div className={S.header}>
-                <div>Заказы</div>
-                <div>Товары</div>
-                <div className={S.button} onClick={this.onClickHandler}>Log Out</div>
+                <div className={S.navigation}>
+                    {this.renderHeaderItems()}
+                </div>
+                <div className={S.button} onClick={this.onLogOut}>Log Out</div>
             </div>
         )
     }

@@ -1,15 +1,39 @@
 .header {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 0 50px;
+    background-color: #354AFF;
+    box-shadow: 0 5px 5px 0 #a2a2a2;
 }
 .button {
-    background-color: #354AFF;
-    color: #fff;
+    background-color: #fff;
+    color: #354AFF;
     font-weight: bold;
-    padding: 10px 15px;
-    text-align: center;
+    padding: 5px 10px;
     display: flex;
-    align-items: center;
     cursor: pointer;
     border-radius: 4px;
+    height: max-content;
+}
+.navigation {
+    display: flex;
+}
+.navigationItem {
+    padding: 10px 10px;
+    text-decoration: none;
+    color: white
+}
+.navigationItem:hover {
+    text-decoration: none;
+    background-color: white;
+    color: #354AFF;
+    padding: 10px 10px;
+}
+.active {
+    text-decoration: none;
+    background-color: white;
+    color: #354AFF;
+    padding: 10px 10px;
 }

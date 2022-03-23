@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Products;
+use App\Models\Articles;
+use App\Models\ProductDescription;
 use App\Post;
 use Illuminate\Support\Arr;
 use Illuminate\Http\JsonResponse;
@@ -21,8 +23,6 @@ class ProductController extends Controller
             'art' => ['required', 'string', 'max:255'],
             'price' => ['required', 'string', 'max:255'],
             'description' => ['string', 'max:255'],
-            'is_over' => ['required', 'string', 'max:1'],
-            'status' => ['required', 'string', 'max:1'],
         ]);
     }
 
@@ -39,7 +39,7 @@ class ProductController extends Controller
         ]), 200);
     }
 
-    public function getProducts(Request $request)
+    public function getProducts()
     {
         $products = Products::all()->toArray();
 
@@ -88,28 +88,36 @@ class ProductController extends Controller
                 ->value('name')
             );
         }
+        /*dd(DB::table('products')
+        ->join('articles', 'products.art_id', '=', 'articles.id')
+        ->join('product_descriptions', 'products.id', '=', 'product_descriptions.product_id')
+        ->join('category_to_products', 'products.id', '=', 'category_to_products.product_id')
+        ->join('units', 'products.unit_id', '=', 'units.id')
+        ->join('categories', 'category_to_products.category_id', '=', 'categories.id')
+        ->select('products.id', 'products.price', 'products.is_over', 'product_descriptions.name', 'articles.art', 'product_descriptions.description', 'category_to_products.id', 'categories.name', 'units.name', 'categories.id', 'units.id')
+        ->get());*/
 
         return new JsonResponse(response()->json($products), 200);
     }
 
     public function create(Request $request)
     {
-        //$this->validateFields($request->all())->validate();
+        $this->validateFields($request->all())->validate();
 
-        if (Articles::where('art', $request->articul)->exists()) {
+        if (Articles::where('art', $request->art)->exists()) {
             return new JsonResponse(response()->json('article is exists'), 200);
         }
 
-        Articles::create(['art' => $request->articul]);
+        Articles::create(['art' => $request->art]);
 
-        $art_id = DB::table('articles')->select('id')->where('art', $request->articul)->value('id');
+        $art_id = DB::table('articles')->select('id')->where('art', $request->art)->value('id');
     
         $product_id = Products::create([
             'price' => $request->price,
             'art_id' => $art_id,
             'is_over' => 0,
             'status' => 0,
-            'unit_id' => $request->units
+            'unit_id' => 1
         ])->id;
 
         ProductDescription::create([
@@ -123,15 +131,16 @@ class ProductController extends Controller
             'category_id' => $request->category
         ]);
 
-        return new JsonResponse(response()->json($products), 200);
+        return $this->getProducts();
     }
 
     public function update(Request $request)
     {
-        //$this->validateFields($request->all())->validate();
+        $this->validateFields($request->all())->validate();
+        
         $product_id = $request->id;
 
-        if (Articles::where('art', $request->articul)->exists()) {
+        if (Articles::where('art', $request->art)->exists()) {
             return new JsonResponse(response()->json('article is exists'), 200);
         }
         
@@ -143,7 +152,7 @@ class ProductController extends Controller
         )
         ->select('art')
         ->update([
-            'art' => $request->articul
+            'art' => $request->art
         ]);
 
         Products::where('id', $request->id)
@@ -165,11 +174,26 @@ class ProductController extends Controller
             'category_id' => $request->category
         ]);
         
-        return new JsonResponse(response()->json($products), 200);
+        return $this->getProducts();
     }
 
     public function delete(Request $request)
     {
-        
+        $art_id = Products::where('id', $request->id)->value('art_id');
+            
+        ProductDescription::where('product_id', $request->id)
+            ->delete();
+
+        DB::table('category_to_products')
+            ->where('product_id', $request->id)
+            ->delete();
+
+        Products::where('id', $request->id)
+            ->delete();
+
+        Articles::where('id', $art_id)
+            ->delete();
+            
+        return $this->getProducts();
     }
 }
