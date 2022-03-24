@@ -22,7 +22,6 @@ class ProductController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'art' => ['required', 'string', 'max:255'],
             'price' => ['required', 'string', 'max:255'],
-            'description' => ['string', 'max:255'],
         ]);
     }
 
@@ -45,7 +44,6 @@ class ProductController extends Controller
 
         for ($i = 0; $i < count($products); $i++)
         {
-
             $products[$i] = Arr::add($products[$i], 'category', DB::table('categories')
                 ->select('name')
                 ->where('id', DB::table('category_to_products')
@@ -105,7 +103,7 @@ class ProductController extends Controller
         $this->validateFields($request->all())->validate();
 
         if (Articles::where('art', $request->art)->exists()) {
-            return new JsonResponse(response()->json('article is exists'), 200);
+            return new JsonResponse(response()->json('Article is exists'), 422);
         }
 
         Articles::create(['art' => $request->art]);
@@ -138,19 +136,16 @@ class ProductController extends Controller
     {
         $this->validateFields($request->all())->validate();
         
-        $product_id = $request->id;
-
+/*
         if (Articles::where('art', $request->art)->exists()) {
-            return new JsonResponse(response()->json('article is exists'), 200);
-        }
+            return new JsonResponse(response()->json('Article is exists'), 200);
+        }*/
+       // $art_id = Products::where('id', $request->id)
+       //     ->value('art_id');
         
-        Articles::where(
-            'id', Products::where(
-                'id', $request->id
-            )
-            ->select('art_id')
+        Articles::where('id', Products::where('id', $request->id)
+            ->value('art_id')
         )
-        ->select('art')
         ->update([
             'art' => $request->art
         ]);
@@ -158,9 +153,8 @@ class ProductController extends Controller
         Products::where('id', $request->id)
         ->update([
             'price' => $request->price,
-            'status' => $request->status,
             'unit_id' => $request->units
-        ])->id;
+        ]);
         
         ProductDescription::where('product_id', $request->id)
         ->update([
@@ -193,7 +187,7 @@ class ProductController extends Controller
 
         Articles::where('id', $art_id)
             ->delete();
-            
+
         return $this->getProducts();
     }
 }
