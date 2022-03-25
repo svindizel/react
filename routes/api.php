@@ -52,6 +52,9 @@ Route::group([
         Route::post('deleteProduct', [App\Http\Controllers\ProductController::class, 'delete']);
 
         Route::get('categories/all', [App\Http\Controllers\CategoryController::class, 'getCategories']);
+        Route::post('addCategory', [App\Http\Controllers\ProductController::class, 'create']);
+        Route::post('editCategory', [App\Http\Controllers\ProductController::class, 'update']);
+        Route::post('deleteCategory', [App\Http\Controllers\ProductController::class, 'delete']);
     });
 
 
