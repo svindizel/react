@@ -45,6 +45,7 @@ Route::group([
         Route::post('logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');
 
         Route::get('products/all', [App\Http\Controllers\ProductController::class, 'getProducts']);
+        Route::post('products/all', [App\Http\Controllers\ProductController::class, 'getProducts']);
         Route::get('products/addictions', [App\Http\Controllers\ProductController::class, 'getAddictions']);
         Route::post('addProduct', [App\Http\Controllers\ProductController::class, 'create']);
         Route::post('editProduct', [App\Http\Controllers\ProductController::class, 'update']);

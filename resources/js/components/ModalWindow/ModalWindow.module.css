@@ -68,6 +68,13 @@
     display: flex;
     flex-direction: column;
 }
+.input {
+    border-radius: 4px;
+    padding: 5px 10px;
+    border: 0;
+    background-color: #f2f2f2;
+    margin-bottom: 10px;
+}
 .button {
     background-color: #354AFF;
     width: 100%;
@@ -78,4 +85,17 @@
     font-weight: bold;
     border: 0;
     cursor: pointer;
+}
+.error {
+    border: 1px solid red !important;
+    color: red;
+}
+.errorText {
+    color: red;
+}
+.errorLabel {
+    font-weight: bold;
+    margin-bottom: 5px;
+    font-size: 14px;
+    color: red;
 }

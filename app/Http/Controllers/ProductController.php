@@ -44,14 +44,23 @@ class ProductController extends Controller
 
         for ($i = 0; $i < count($products); $i++)
         {
-            $products[$i] = Arr::add($products[$i], 'category', DB::table('categories')
-                ->select('name')
+            $products[$i] = Arr::add($products[$i], 'category_id', DB::table('categories')
+                ->select('id')
                 ->where('id', DB::table('category_to_products')
                 ->select('category_id')
                 ->where('product_id', $products[$i]['id'])
                 ->value('id'))
                 ->value('product_id')
             );
+
+            $products[$i] = Arr::add($products[$i], 'category', DB::table('categories')
+            ->select('name')
+            ->where('id', DB::table('category_to_products')
+            ->select('category_id')
+            ->where('product_id', $products[$i]['id'])
+            ->value('id'))
+            ->value('product_id')
+        );
 
             $products[$i] = Arr::add($products[$i], 'art', DB::table('articles')
                 ->select('art')
@@ -115,7 +124,7 @@ class ProductController extends Controller
             'art_id' => $art_id,
             'is_over' => 0,
             'status' => 0,
-            'unit_id' => 1
+            'unit_id' => $request->unit_id
         ])->id;
 
         ProductDescription::create([
@@ -126,7 +135,7 @@ class ProductController extends Controller
 
         DB::table('category_to_products')->insert([
             'product_id' => $product_id,
-            'category_id' => $request->category
+            'category_id' => $request->category_id
         ]);
 
         return $this->getProducts();
@@ -140,9 +149,7 @@ class ProductController extends Controller
         if (Articles::where('art', $request->art)->exists()) {
             return new JsonResponse(response()->json('Article is exists'), 200);
         }*/
-       // $art_id = Products::where('id', $request->id)
-       //     ->value('art_id');
-        
+
         Articles::where('id', Products::where('id', $request->id)
             ->value('art_id')
         )
@@ -153,7 +160,7 @@ class ProductController extends Controller
         Products::where('id', $request->id)
         ->update([
             'price' => $request->price,
-            'unit_id' => $request->units
+            'unit_id' => $request->unit_id
         ]);
         
         ProductDescription::where('product_id', $request->id)
@@ -165,7 +172,7 @@ class ProductController extends Controller
         DB::table('category_to_products')
         ->where('product_id', $request->id)
         ->update([
-            'category_id' => $request->category
+            'category_id' => $request->category_id
         ]);
         
         return $this->getProducts();

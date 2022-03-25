@@ -1,0 +1,22 @@
+.input {
+    border-radius: 4px;
+    padding: 5px 10px;
+    border: 0;
+    background-color: #f2f2f2;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.category {
+
+}
+.categoryList {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+.hidden {
+    display: none;
+}

@@ -29,8 +29,10 @@ export default class ProductsTable extends Component {
             let currentProducts = products.filter(productsItem => {
                 return productsItem.category === currentCategory
             })
+            console.log(currentProducts)
             return currentProducts.map(productsItem =>
                 <TableRow
+                    isOver={productsItem.isOver}
                     editProduct={this.props.editProduct}
                     deleteProduct={this.props.deleteProduct}
                     key={productsItem.id}
@@ -40,7 +42,10 @@ export default class ProductsTable extends Component {
                     name={productsItem.name}
                     price={productsItem.price}
                     unit={productsItem.unit}
+                    unit_id={productsItem.unit_id}
                     description={productsItem.description}
+                    category={productsItem.category}
+                    category_id={productsItem.category_id}
                 />
             )
         } else {

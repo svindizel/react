@@ -6210,8 +6210,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ModalWindow_module_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ModalWindow.module.css */ "./resources/js/components/ModalWindow/ModalWindow.module.css");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var _ModalWindowDropdown_ModalWindowDropdown__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./ModalWindowDropdown/ModalWindowDropdown */ "./resources/js/components/ModalWindow/ModalWindowDropdown/ModalWindowDropdown.jsx");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -6242,6 +6247,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 
+
 var ModalWindow = /*#__PURE__*/function (_Component) {
   _inherits(ModalWindow, _Component);
 
@@ -6255,13 +6261,35 @@ var ModalWindow = /*#__PURE__*/function (_Component) {
     (axios__WEBPACK_IMPORTED_MODULE_2___default().defaults.headers.common["X-CSRF-TOKEN"]) = window.token;
     _this = _super.call(this, props);
 
-    _defineProperty(_assertThisInitialized(_this), "onChangeHandler", function (e) {
-      var submitData = _this.state.submitData;
+    _defineProperty(_assertThisInitialized(_this), "onAddChangeHandler", function (e) {
+      var submitData = _objectSpread({}, _this.state.submitData);
+
       submitData[e.target.name] = e.target.value;
 
       _this.setState({
         submitData: submitData
       });
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "onEditChangeHandler", function (e) {
+      var submitData = _objectSpread({}, _this.state.submitData);
+
+      if (_this.state.isValueEdited) {
+        submitData[e.target.name] = e.target.value;
+
+        _this.setState({
+          submitData: submitData
+        });
+
+        console.log(50, submitData);
+      } else {
+        submitData = _this.props.editProductData;
+        _this.state.isValueEdited = true;
+
+        _this.setState({
+          submitData: submitData
+        });
+      }
     });
 
     _defineProperty(_assertThisInitialized(_this), "onSubmitHandler", function (e) {
@@ -6271,56 +6299,93 @@ var ModalWindow = /*#__PURE__*/function (_Component) {
       });
     });
 
-    _defineProperty(_assertThisInitialized(_this), "addProductSubmit", function (e) {
-      e.preventDefault();
-      axios__WEBPACK_IMPORTED_MODULE_2___default().post("http://react/api/addProduct", _this.state.submitData).then(function (response) {
-        console.log(response);
-      });
-
-      _this.props.modalClose();
-    });
-
     _defineProperty(_assertThisInitialized(_this), "editProductSubmit", function (event) {
-      console.log(event);
-      console.log(event.target.elements);
+      event.preventDefault();
       var name = event.target.elements.name.value;
-      var category = event.target.elements.category.value;
+      var category_id = _this.state.submitData.category_id;
       var art = event.target.elements.art.value;
       var description = event.target.elements.description.value;
       var price = event.target.elements.price.value;
+      var unit = _this.state.submitData.unit;
+      var unit_id = _this.state.submitData.unit_id;
       var id = _this.props.editProductData.id;
       var submitData = {
         name: name,
-        category: category,
+        category_id: category_id,
         art: art,
         description: description,
         price: price,
-        id: id
+        id: id,
+        unit: unit,
+        unit_id: unit_id
       };
-      event.preventDefault();
-      axios__WEBPACK_IMPORTED_MODULE_2___default().post("http://react/api/editProduct", submitData).then(function (response) {
-        console.log(response);
-      });
 
-      _this.props.modalClose();
+      _this.props.editProductSubmit(event, submitData);
     });
 
+    _defineProperty(_assertThisInitialized(_this), "addProductSubmit", function (e) {
+      console.log("addproduct");
+      e.preventDefault();
+
+      _this.props.addProductSubmit(e, _this.state.submitData);
+
+      state.submitData.name = "";
+      state.submitData.price = "";
+      state.submitData.art = "";
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "chooseCategory", function (category, id) {
+      var state = _this.state;
+      state.submitData.category = category;
+      state.submitData.category_id = id;
+
+      _this.setState(state);
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "chooseUnit", function (unit, id) {
+      var state = _this.state;
+      state.submitData.unit_id = id;
+      state.submitData.unit = unit;
+
+      _this.setState(state);
+    });
+
+    console.log(10, props);
     _this.state = {
       action: "",
       submitData: {
         _token: window.token,
         name: "",
-        category: "",
+        category: _this.props.currentCategory,
+        category_id: _this.props.currentCategoryId,
         price: "",
-        description: ""
-      }
+        description: "",
+        unit: _this.props.currentUnit,
+        unit_id: _this.props.currentUnitId,
+        art: ""
+      },
+      isValueEdited: false
     };
     return _this;
   }
+  /*componentDidMount() {
+      let state = this.state;
+      console.log(this.props)
+      state.submitData.unit = this.props.units[0].name;
+      state.submitData.unit_id = this.props.units[0].id;
+      this.setState(state);
+      if(this.props.action == "EDIT-PRODUCT") {
+           state.submitData = this.props.editProductData;
+          this.setState(state);
+          console.log(111)
+      }
+  }*/
+
 
   _createClass(ModalWindow, [{
     key: "render",
     value: function render() {
+      console.log(this.props.units);
       var ADD_PRODUCT = "ADD-PRODUCT";
       var EDIT_PRODUCT = "EDIT-PRODUCT";
       var DELETE_PRODUCT = "DELETE-PRODUCT";
@@ -6328,51 +6393,72 @@ var ModalWindow = /*#__PURE__*/function (_Component) {
       switch (this.props.action) {
         case ADD_PRODUCT:
           {
-            return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+            return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
               className: _ModalWindow_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].modal,
-              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
                 className: _ModalWindow_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].modalContent,
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
                   className: _ModalWindow_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].modalHeader,
-                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
                     className: _ModalWindow_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].headerText,
                     children: "\u041D\u043E\u0432\u044B\u0439 \u0442\u043E\u0432\u0430\u0440"
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
                     className: _ModalWindow_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].modalClose,
                     onClick: this.props.modalClose,
                     children: "x"
                   })]
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
                   className: _ModalWindow_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].modalBody,
-                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("form", {
+                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("form", {
                     method: "POST",
                     onSubmit: this.addProductSubmit,
-                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
-                      onChange: this.onChangeHandler,
+                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("input", {
+                      className: "".concat(this.props.errors.isNameEmpty ? _ModalWindow_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].error : _ModalWindow_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].input),
+                      onChange: this.onAddChangeHandler,
                       name: "name",
                       type: "text",
                       placeholder: "\u041D\u0430\u0437\u0432\u0430\u043D\u0438\u0435 \u0442\u043E\u0432\u0430\u0440\u0430"
-                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
-                      onChange: this.onChangeHandler,
+                    }), this.props.errors.isNameEmpty ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+                      className: _ModalWindow_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].errorText,
+                      children: "\u0417\u0430\u043F\u043E\u043B\u043D\u0438\u0442\u0435 \u044D\u0442\u043E \u043F\u043E\u043B\u0435"
+                    }) : null, /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("input", {
+                      className: "".concat(this.props.errors.isArtEmpty ? _ModalWindow_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].error : _ModalWindow_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].input),
+                      onChange: this.onAddChangeHandler,
                       name: "art",
                       type: "text",
                       placeholder: "\u0410\u0440\u0442\u0438\u043A\u0443\u043B"
-                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
-                      onChange: this.onChangeHandler,
-                      name: "category",
-                      type: "text",
-                      placeholder: "\u041A\u0430\u0442\u0435\u0433\u043E\u0440\u0438\u044F"
-                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
-                      onChange: this.onChangeHandler,
+                    }), this.props.errors.isArtEmpty ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+                      className: _ModalWindow_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].errorText,
+                      children: "\u0417\u0430\u043F\u043E\u043B\u043D\u0438\u0442\u0435 \u044D\u0442\u043E \u043F\u043E\u043B\u0435"
+                    }) : null, /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_ModalWindowDropdown_ModalWindowDropdown__WEBPACK_IMPORTED_MODULE_3__["default"], {
+                      isCategory: true,
+                      chooseCategory: this.chooseCategory,
+                      currentCategory: this.props.currentCategory,
+                      categories: this.props.categories
+                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_ModalWindowDropdown_ModalWindowDropdown__WEBPACK_IMPORTED_MODULE_3__["default"], {
+                      isCategory: false,
+                      chooseUnit: this.chooseUnit,
+                      units: this.props.units,
+                      currentUnit: this.props.units[0].name
+                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("input", {
+                      className: "".concat(this.props.errors.isPriceEmpty || this.props.errors.isPriceIncorrect ? _ModalWindow_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].error : _ModalWindow_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].input),
+                      onChange: this.onAddChangeHandler,
                       name: "price",
                       type: "text",
                       placeholder: "\u0426\u0435\u043D\u0430"
-                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
-                      onChange: this.onChangeHandler,
+                    }), this.props.errors.isPriceEmpty ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+                      className: _ModalWindow_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].errorText,
+                      children: "\u0417\u0430\u043F\u043E\u043B\u043D\u0438\u0442\u0435 \u044D\u0442\u043E \u043F\u043E\u043B\u0435"
+                    }) : null, this.props.errors.isPriceIncorrect ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+                      className: _ModalWindow_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].errorText,
+                      children: "\u0412\u0432\u0435\u0434\u0438\u0442\u0435 \u043A\u043E\u0440\u0440\u0435\u043A\u0442\u043D\u043E\u0435 \u0437\u043D\u0430\u0447\u0435\u043D\u0438\u0435"
+                    }) : null, /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("input", {
+                      className: _ModalWindow_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].input,
+                      onChange: this.onAddChangeHandler,
                       name: "description",
                       type: "text",
                       placeholder: "\u041E\u043F\u0438\u0441\u0430\u043D\u0438\u0435"
-                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("button", {
+                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("button", {
                       className: _ModalWindow_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].button,
                       type: "submit",
                       children: "\u0414\u043E\u0431\u0430\u0432\u0438\u0442\u044C"
@@ -6385,57 +6471,64 @@ var ModalWindow = /*#__PURE__*/function (_Component) {
 
         case EDIT_PRODUCT:
           {
-            var editProductData = this.props.editProductData;
-            return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+            return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
               className: _ModalWindow_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].modal,
-              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
                 className: _ModalWindow_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].modalContent,
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
                   className: _ModalWindow_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].modalHeader,
-                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
                     className: _ModalWindow_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].headerText,
                     children: "\u041D\u043E\u0432\u044B\u0439 \u0442\u043E\u0432\u0430\u0440"
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
                     className: _ModalWindow_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].modalClose,
                     onClick: this.props.modalClose,
                     children: "x"
                   })]
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
                   className: _ModalWindow_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].modalBody,
-                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("form", {
+                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("form", {
                     method: "POST",
                     onSubmit: this.editProductSubmit,
-                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
-                      onChange: this.onChangeHandler,
-                      value: editProductData.name,
+                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("input", {
+                      className: _ModalWindow_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].input,
+                      onChange: this.onEditChangeHandler,
+                      value: this.state.isValueEdited ? this.state.submitData.name : this.props.editProductData.name,
                       name: "name",
                       type: "text",
                       placeholder: "\u041D\u0430\u0437\u0432\u0430\u043D\u0438\u0435 \u0442\u043E\u0432\u0430\u0440\u0430"
-                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
-                      onChange: this.onChangeHandler,
-                      value: editProductData.art,
+                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("input", {
+                      className: _ModalWindow_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].input,
+                      onChange: this.onEditChangeHandler,
+                      value: this.state.isValueEdited ? this.state.submitData.art : this.props.editProductData.art,
                       name: "art",
                       type: "text",
                       placeholder: "\u0410\u0440\u0442\u0438\u043A\u0443\u043B"
-                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
-                      onChange: this.onChangeHandler,
-                      value: this.props.currentCategory,
-                      name: "category",
-                      type: "text",
-                      placeholder: "\u041A\u0430\u0442\u0435\u0433\u043E\u0440\u0438\u044F"
-                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
-                      onChange: this.onChangeHandler,
-                      value: editProductData.price,
+                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_ModalWindowDropdown_ModalWindowDropdown__WEBPACK_IMPORTED_MODULE_3__["default"], {
+                      isCategory: true,
+                      chooseCategory: this.chooseCategory,
+                      currentCategory: this.props.currentCategory,
+                      categories: this.props.categories
+                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_ModalWindowDropdown_ModalWindowDropdown__WEBPACK_IMPORTED_MODULE_3__["default"], {
+                      isCategory: false,
+                      currentUnit: this.props.editProductData.unit,
+                      chooseUnit: this.chooseUnit,
+                      units: this.props.units
+                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("input", {
+                      className: _ModalWindow_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].input,
+                      onChange: this.onEditChangeHandler,
+                      value: this.state.isValueEdited ? this.state.submitData.price : this.props.editProductData.price,
                       name: "price",
                       type: "text",
                       placeholder: "\u0426\u0435\u043D\u0430"
-                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
-                      onChange: this.onChangeHandler,
-                      value: editProductData.description,
+                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("input", {
+                      className: _ModalWindow_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].input,
+                      onChange: this.onEditChangeHandler,
+                      value: this.state.isValueEdited ? this.state.submitData.description : this.props.editProductData.description,
                       name: "description",
                       type: "text",
                       placeholder: "\u041E\u043F\u0438\u0441\u0430\u043D\u0438\u0435"
-                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("button", {
+                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("button", {
                       className: _ModalWindow_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].button,
                       type: "submit",
                       children: "\u0418\u0437\u043C\u0435\u043D\u0438\u0442\u044C"
@@ -6447,7 +6540,7 @@ var ModalWindow = /*#__PURE__*/function (_Component) {
           }
 
         default:
-          return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.Fragment, {});
+          return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.Fragment, {});
       }
     }
   }]);
@@ -6456,6 +6549,241 @@ var ModalWindow = /*#__PURE__*/function (_Component) {
 }(react__WEBPACK_IMPORTED_MODULE_0__.Component);
 
 
+
+/***/ }),
+
+/***/ "./resources/js/components/ModalWindow/ModalWindowDropdown/ModalWindowDropdown.jsx":
+/*!*****************************************************************************************!*\
+  !*** ./resources/js/components/ModalWindow/ModalWindowDropdown/ModalWindowDropdown.jsx ***!
+  \*****************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ ModalWindowDropdown)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var _ModalWindowDropdown_module_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ModalWindowDropdown.module.css */ "./resources/js/components/ModalWindow/ModalWindowDropdown/ModalWindowDropdown.module.css");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); Object.defineProperty(subClass, "prototype", { writable: false }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } else if (call !== void 0) { throw new TypeError("Derived constructors may only return object or undefined"); } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+
+
+
+
+
+var ModalWindowDropdown = /*#__PURE__*/function (_Component) {
+  _inherits(ModalWindowDropdown, _Component);
+
+  var _super = _createSuper(ModalWindowDropdown);
+
+  function ModalWindowDropdown(props) {
+    var _this;
+
+    _classCallCheck(this, ModalWindowDropdown);
+
+    _this = _super.call(this, props);
+
+    _defineProperty(_assertThisInitialized(_this), "showDropdown", function () {
+      var state = _this.state;
+
+      if (state.isDropdownActive) {
+        state.isDropdownActive = false;
+      } else {
+        state.isDropdownActive = true;
+      }
+
+      _this.setState(state);
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "changeUnit", function (unit) {
+      var state = _this.state;
+      state.isUnitChanged = true;
+      state.newUnit = unit;
+
+      _this.setState(state);
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "renderUnitList", function () {
+      console.log(_this.props.units);
+
+      var units = _this.props.units.map(function (unit) {
+        return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(UnitsItem, {
+          showDropdown: _this.showDropdown,
+          changeUnit: _this.changeUnit,
+          chooseUnit: _this.props.chooseUnit,
+          name: unit.name,
+          id: unit.id
+        }, unit.id);
+      });
+
+      return units;
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "changeCategory", function (category) {
+      var state = _this.state;
+      state.isCategoryChanged = true;
+      state.newCategory = category;
+
+      _this.setState(state);
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "renderCategoryList", function () {
+      var categories = _this.props.categories.map(function (category) {
+        return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(CategoryItem, {
+          showDropdown: _this.showDropdown,
+          changeCategory: _this.changeCategory,
+          chooseCategory: _this.props.chooseCategory,
+          name: category.name,
+          id: category.id
+        }, category.id);
+      });
+
+      return categories;
+    });
+
+    _this.state = {
+      isDropdownActive: false,
+      isCategoryChanged: false,
+      isUnitChanged: false,
+      newUnit: null,
+      newCategory: null
+    };
+    return _this;
+  }
+
+  _createClass(ModalWindowDropdown, [{
+    key: "render",
+    value: function render() {
+      console.log(this.props);
+
+      if (this.props.isCategory) {
+        return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.Fragment, {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+            className: _ModalWindowDropdown_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].input,
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+              children: this.state.isCategoryChanged ? this.state.newCategory : this.props.currentCategory
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+              onClick: this.showDropdown,
+              children: "->"
+            })]
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+            className: this.state.isDropdownActive ? _ModalWindowDropdown_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].categoryList : _ModalWindowDropdown_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].hidden,
+            children: this.renderCategoryList()
+          })]
+        });
+      } else {
+        return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.Fragment, {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+            className: _ModalWindowDropdown_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].input,
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+              children: this.state.isUnitChanged ? this.state.newUnit : this.props.currentUnit
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+              onClick: this.showDropdown,
+              children: "->"
+            })]
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+            className: this.state.isDropdownActive ? _ModalWindowDropdown_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].categoryList : _ModalWindowDropdown_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].hidden,
+            children: this.renderUnitList()
+          })]
+        });
+      }
+    }
+  }]);
+
+  return ModalWindowDropdown;
+}(react__WEBPACK_IMPORTED_MODULE_0__.Component);
+
+
+
+var CategoryItem = /*#__PURE__*/function (_Component2) {
+  _inherits(CategoryItem, _Component2);
+
+  var _super2 = _createSuper(CategoryItem);
+
+  function CategoryItem(props) {
+    _classCallCheck(this, CategoryItem);
+
+    return _super2.call(this, props);
+  }
+
+  _createClass(CategoryItem, [{
+    key: "render",
+    value: function render() {
+      var _this2 = this;
+
+      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+        onClick: function onClick() {
+          _this2.props.chooseCategory(_this2.props.name, _this2.props.id);
+
+          _this2.props.showDropdown();
+
+          _this2.props.changeCategory(_this2.props.name);
+        },
+        children: this.props.name
+      });
+    }
+  }]);
+
+  return CategoryItem;
+}(react__WEBPACK_IMPORTED_MODULE_0__.Component);
+
+var UnitsItem = /*#__PURE__*/function (_Component3) {
+  _inherits(UnitsItem, _Component3);
+
+  var _super3 = _createSuper(UnitsItem);
+
+  function UnitsItem(props) {
+    _classCallCheck(this, UnitsItem);
+
+    return _super3.call(this, props);
+  }
+
+  _createClass(UnitsItem, [{
+    key: "render",
+    value: function render() {
+      var _this3 = this;
+
+      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+        category_id: this.props.id,
+        onClick: function onClick() {
+          _this3.props.chooseUnit(_this3.props.name, _this3.props.id);
+
+          _this3.props.showDropdown();
+
+          _this3.props.changeUnit(_this3.props.name);
+        },
+        children: this.props.name
+      });
+    }
+  }]);
+
+  return UnitsItem;
+}(react__WEBPACK_IMPORTED_MODULE_0__.Component);
 
 /***/ }),
 
@@ -6557,7 +6885,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ProductsCategories_ProductsCategories__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./ProductsCategories/ProductsCategories */ "./resources/js/components/Products/ProductsCategories/ProductsCategories.jsx");
 /* harmony import */ var _ProductsBodyContent_ProductsBodyContent__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./ProductsBodyContent/ProductsBodyContent */ "./resources/js/components/Products/ProductsBodyContent/ProductsBodyContent.jsx");
 /* harmony import */ var _ModalWindow_ModalWindow__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../ModalWindow/ModalWindow */ "./resources/js/components/ModalWindow/ModalWindow.jsx");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -6592,6 +6922,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 
+
 var Products = /*#__PURE__*/function (_Component) {
   _inherits(Products, _Component);
 
@@ -6606,7 +6937,7 @@ var Products = /*#__PURE__*/function (_Component) {
 
     _defineProperty(_assertThisInitialized(_this), "componentDidMount", function () {
       var state = _this.state;
-      axios.get("http://react/api/products").then(function (response) {
+      axios__WEBPACK_IMPORTED_MODULE_6___default().get("http://react/api/products").then(function (response) {
         if (!response.data.auth) {
           window.location = "http://react/login";
         } else {
@@ -6615,18 +6946,22 @@ var Products = /*#__PURE__*/function (_Component) {
           _this.setState(state);
         }
       });
-      axios.get("http://react/api/products/all").then(function (response) {
+      axios__WEBPACK_IMPORTED_MODULE_6___default().get("http://react/api/products/all").then(function (response) {
         state.products = response.data.original;
-        console.log(response);
 
         _this.setState(state);
       });
-      axios.get("http://react/api/products/addictions").then(function (response) {
+      axios__WEBPACK_IMPORTED_MODULE_6___default().get("http://react/api/products/addictions").then(function (response) {
         state.categories = response.data.original.categories;
         state.currentCategory = response.data.original.categories[0].name;
+        state.currentCategoryId = response.data.original.categories[0].id;
+        state.units = response.data.original.units;
+        state.currentUnit = response.data.original.units[0].name;
+        state.currentUnitId = response.data.original.units[0].id;
 
         _this.setState(state);
       });
+      console.log(_this.state);
     });
 
     _defineProperty(_assertThisInitialized(_this), "changeCategory", function (e) {
@@ -6635,11 +6970,11 @@ var Products = /*#__PURE__*/function (_Component) {
 
       if (newCategory === state.currentCategory) {
         return;
+      } else {
+        state.currentCategory = newCategory;
+
+        _this.setState(state);
       }
-
-      state.currentCategory = newCategory;
-
-      _this.setState(state);
     });
 
     _defineProperty(_assertThisInitialized(_this), "addProduct", function () {
@@ -6660,12 +6995,11 @@ var Products = /*#__PURE__*/function (_Component) {
     });
 
     _defineProperty(_assertThisInitialized(_this), "deleteProduct", function (id) {
-      axios.post("http://react/api/deleteProduct", {
+      axios__WEBPACK_IMPORTED_MODULE_6___default().post("http://react/api/deleteProduct", {
         id: id
       }).then(function (response) {
         console.log(response);
       });
-      console.log(data);
     });
 
     _defineProperty(_assertThisInitialized(_this), "modalClose", function () {
@@ -6675,13 +7009,98 @@ var Products = /*#__PURE__*/function (_Component) {
       _this.setState(state);
     });
 
+    _defineProperty(_assertThisInitialized(_this), "validateData", function (data, action) {
+      var state = _this.state;
+
+      _this.clearErrors(state);
+
+      var addProduct = "add";
+      var editProduct = "edit";
+      var numbers = /^[0-9]+$/;
+
+      if (action === addProduct) {
+        if (data.name === "" || data.art === "" || data.price === "") {
+          if (data.name === "") {
+            state.errors.isNameEmpty = true;
+          }
+
+          if (data.art === "") {
+            state.errors.isArtEmpty = true;
+          }
+
+          if (data.price === "") {
+            state.errors.isPriceEmpty = true;
+          }
+
+          _this.setState(state);
+
+          return false;
+        } else if (!data.price.match(numbers)) {
+          state.errors.isPriceIncorrect = true;
+
+          _this.setState(state);
+
+          return false;
+        } else {
+          return true;
+        }
+      }
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "clearErrors", function (state) {
+      state.errors.isNameEmpty = false;
+      state.errors.isArtEmpty = false;
+      state.errors.isPriceEmpty = false;
+      state.errors.isArtIncorrect = false;
+      state.errors.isPriceIncorrect = false;
+
+      _this.setState(state);
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "addProductSubmit", function (e, data) {
+      console.log("addproduct");
+      e.preventDefault();
+      var state = _this.state;
+
+      if (_this.validateData(data, "add")) {
+        axios__WEBPACK_IMPORTED_MODULE_6___default().post("http://react/api/addProduct", data).then(function (response) {
+          console.log(response);
+          state.products = response.data.original;
+
+          _this.setState(state);
+        });
+
+        _this.modalClose();
+      } else return false;
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "editProductSubmit", function (event, submitData) {
+      event.preventDefault();
+      axios__WEBPACK_IMPORTED_MODULE_6___default().post("http://react/api/editProduct", submitData).then(function (response) {
+        console.log(response);
+      });
+
+      _this.modalClose();
+    });
+
     _this.state = {
       isAuth: false,
       modalAction: null,
       products: {},
       categories: {},
+      units: {},
       currentCategory: "",
-      editProductData: null
+      currentCategoryId: "",
+      currentUnit: "",
+      currentUnitId: "",
+      editProductData: null,
+      errors: {
+        isNameEmpty: false,
+        isArtEmpty: false,
+        isPriceEmpty: false,
+        isArtIncorrect: false,
+        isPriceIncorrect: false
+      }
     };
     return _this;
   }
@@ -6689,50 +7108,58 @@ var Products = /*#__PURE__*/function (_Component) {
   _createClass(Products, [{
     key: "render",
     value: function render() {
+      console.log(this.state.units);
+
       if (this.state.isAuth) {
-        return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.Fragment, {
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_Header_Header__WEBPACK_IMPORTED_MODULE_2__["default"], {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
-              className: _Products_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].container,
-              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
-                className: _Products_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].products,
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
-                  className: _Products_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].productsHeader,
-                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
-                    className: _Products_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].headerText,
-                    children: "\u0422\u043E\u0432\u0430\u0440\u044B"
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
-                    className: _Products_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].headerSearch,
-                    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("input", {
-                      type: "text",
-                      placeholder: "\u041F\u043E\u0438\u0441\u043A"
-                    })
-                  })]
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
-                  className: _Products_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].productsBody,
-                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_ProductsCategories_ProductsCategories__WEBPACK_IMPORTED_MODULE_3__["default"], {
-                    changeCategory: this.changeCategory,
-                    currentCategory: this.state.currentCategory,
-                    categories: this.state.categories
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_ProductsBodyContent_ProductsBodyContent__WEBPACK_IMPORTED_MODULE_4__["default"], {
-                    currentCategory: this.state.currentCategory,
-                    products: this.state.products,
-                    addProduct: this.addProduct,
-                    editProduct: this.editProduct,
-                    deleteProduct: this.deleteProduct
-                  })]
+        return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.Fragment, {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_Header_Header__WEBPACK_IMPORTED_MODULE_2__["default"], {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
+            className: _Products_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].container,
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
+              className: _Products_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].products,
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
+                className: _Products_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].productsHeader,
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
+                  className: _Products_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].headerText,
+                  children: "\u0422\u043E\u0432\u0430\u0440\u044B"
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
+                  className: _Products_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].headerSearch,
+                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("input", {
+                    type: "text",
+                    placeholder: "\u041F\u043E\u0438\u0441\u043A"
+                  })
                 })]
-              })
-            })]
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_ModalWindow_ModalWindow__WEBPACK_IMPORTED_MODULE_5__["default"], {
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
+                className: _Products_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].productsBody,
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_ProductsCategories_ProductsCategories__WEBPACK_IMPORTED_MODULE_3__["default"], {
+                  changeCategory: this.changeCategory,
+                  currentCategory: this.state.currentCategory,
+                  categories: this.state.categories
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_ProductsBodyContent_ProductsBodyContent__WEBPACK_IMPORTED_MODULE_4__["default"], {
+                  currentCategory: this.state.currentCategory,
+                  products: this.state.products,
+                  addProduct: this.addProduct,
+                  editProduct: this.editProduct,
+                  deleteProduct: this.deleteProduct
+                })]
+              })]
+            })
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_ModalWindow_ModalWindow__WEBPACK_IMPORTED_MODULE_5__["default"], {
+            errors: this.state.errors,
+            addProductSubmit: this.addProductSubmit,
+            editProductSubmit: this.editProductSubmit,
             modalClose: this.modalClose,
             action: this.state.modalAction,
             editProductData: this.state.editProductData,
-            currentCategory: this.state.currentCategory
+            currentCategory: this.state.currentCategory,
+            currentCategoryId: this.state.currentCategoryId,
+            currentUnit: this.state.currentUnit,
+            currentUnitId: this.state.currentUnitId,
+            categories: this.state.categories,
+            units: this.state.units
           })]
         });
       } else {
-        return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.Fragment, {});
+        return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.Fragment, {});
       }
     }
   }]);
@@ -6919,8 +7346,12 @@ var ProductsTable = /*#__PURE__*/function (_Component) {
         var currentProducts = products.filter(function (productsItem) {
           return productsItem.category === currentCategory;
         });
+        console.log(currentProducts);
         return currentProducts.map(function (productsItem) {
-          return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_TableRow_TableRow__WEBPACK_IMPORTED_MODULE_2__["default"], _defineProperty({
+          var _jsx2;
+
+          return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_TableRow_TableRow__WEBPACK_IMPORTED_MODULE_2__["default"], (_jsx2 = {
+            isOver: productsItem.isOver,
             editProduct: _this.props.editProduct,
             deleteProduct: _this.props.deleteProduct,
             id: productsItem.id,
@@ -6928,8 +7359,9 @@ var ProductsTable = /*#__PURE__*/function (_Component) {
             description: productsItem.description,
             name: productsItem.name,
             price: productsItem.price,
-            unit: productsItem.unit
-          }, "description", productsItem.description), productsItem.id);
+            unit: productsItem.unit,
+            unit_id: productsItem.unit_id
+          }, _defineProperty(_jsx2, "description", productsItem.description), _defineProperty(_jsx2, "category", productsItem.category), _defineProperty(_jsx2, "category_id", productsItem.category_id), _jsx2), productsItem.id);
         });
       } else {
         return;
@@ -7093,7 +7525,8 @@ var TableRow = /*#__PURE__*/function (_Component) {
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
             className: _Products_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].productStop,
             children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("input", {
-              type: "checkbox"
+              type: "checkbox",
+              value: this.props.isOver
             }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
               onClick: function onClick() {
                 return _this.props.editProduct(_this.props);
@@ -13329,7 +13762,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "@media screen and (max-width: 1920px) {\n    .container{\n        width: 1600px;\n    }\n}\n@media screen and (max-width: 1600px) {\n    .container{\n        width: 1400px;\n    }\n}\n@media screen and (max-width: 1366px) {\n    .container{\n        width: 1200px;\n    }\n}\n@media screen and (max-width: 1040px) {\n    .container {\n        width: 940px;\n    }\n}\n@media screen and (max-width: 800px) {\n    .container {\n        width: 700px;\n    }\n}\n* {\n    font-family: 'Nunito', sans-serif;\n}\nbody {\n    background-color: #F6F7FB;;\n}\n.container {\n    height: 100vh;\n    display: flex;\n    align-items: center;\n    margin-left: auto;\n    margin-right: auto;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "@media screen and (max-width: 1920px) {\n    .container {\n        width: 1600px;\n    }\n}\n\n@media screen and (max-width: 1600px) {\n    .container {\n        width: 1400px;\n    }\n}\n\n@media screen and (max-width: 1366px) {\n    .container {\n        width: 1200px;\n    }\n}\n\n@media screen and (max-width: 1040px) {\n    .container {\n        width: 940px;\n    }\n}\n\n@media screen and (max-width: 800px) {\n    .container {\n        width: 700px;\n    }\n}\n\n::-webkit-scrollbar {\n    width: 5px;\n    height: 5px;\n}\n\n::-webkit-scrollbar-button {\n    width: 0px;\n    height: 0px;\n}\n\n::-webkit-scrollbar-thumb {\n    background: #c1c1c1;\n    border: 0;\n    border-radius: 50px;\n}\n\n::-webkit-scrollbar-track {\n    background: #f2f2f2;\n    border: 0px none #ffffff;\n    border-radius: 50px;\n}\n\n::-webkit-scrollbar-track:hover {\n    background: #f2f2f2;\n}\n\n::-webkit-scrollbar-track:active {\n    background: #f2f2f2;\n}\n\n::-webkit-scrollbar-corner {\n    background: transparent;\n}\n\n* {\n    font-family: 'Nunito', sans-serif;\n}\n\nbody {\n    background-color: #F6F7FB;;\n}\n\n.container {\n    height: 100vh;\n    display: flex;\n    align-items: center;\n    margin-left: auto;\n    margin-right: auto;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -13463,7 +13896,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "@-webkit-keyframes Qtz\\+qvZcyAEmPBVb\\+27aSA\\=\\= {\n    0% {\n        transform: translateX(100%);\n        visibility: visible;\n    }\n    100% {\n        transform: translateX(0);\n    }\n}\n@keyframes Qtz\\+qvZcyAEmPBVb\\+27aSA\\=\\= {\n    0% {\n        transform: translateX(100%);\n        visibility: visible;\n    }\n    100% {\n        transform: translateX(0);\n    }\n}\n.gn3mgEe7-cwchME\\+e6ey1Q\\=\\= {\n    position: absolute;\n    top: 0;\n    height: 100%;\n    width: 100%;\n    -webkit-backdrop-filter: blur(2px);\n            backdrop-filter: blur(2px);\n    display: flex;\n}\n.eOJCUk\\+0RoK5fheCuDvbuw\\=\\= {\n    cursor: pointer;\n}\n.FChiNyaL3fSPXtiv83WEqw\\=\\= {\n    position: absolute;\n    top: 0;\n    right: 0;\n    width: 40%;\n    height: 100%;\n    background-color: white;\n    -webkit-animation-name: Qtz\\+qvZcyAEmPBVb\\+27aSA\\=\\=;\n            animation-name: Qtz\\+qvZcyAEmPBVb\\+27aSA\\=\\=;\n    -webkit-animation-duration: 0.8s;\n    animation-duration: 0.8s;\n    -webkit-animation-fill-mode: both;\n    animation-fill-mode: both;\n}\n.\\+9ZjBpJfczQ0U1ZvDz9\\+Wg\\=\\= {\n    display: flex;\n    padding: 10px;\n    align-items: center;\n    justify-content: space-between;\n}\n.YNE2BMD1F1ruJ3x\\+s0noYQ\\=\\= {\n    font-size: 20px;\n    font-weight: bold;\n}\n.QDhtM8FRspZXRw9eVL8NSw\\=\\= {\n    padding: 10px;\n    font-size: 18px;\n}\n.QDhtM8FRspZXRw9eVL8NSw\\=\\= > input {\n    border: 1px solid #E8E8E8;\n    border-radius: 4px;\n    line-height: 40px;\n    align-items: center;\n}\n.QDhtM8FRspZXRw9eVL8NSw\\=\\= > form {\n    display: flex;\n    flex-direction: column;\n}\n.lvmO34zC6mLeurOvAYcONA\\=\\= {\n    background-color: #354AFF;\n    width: 100%;\n    padding: 5px 10px;\n    text-align: center;\n    border-radius: 4px;\n    color: #ffffff;\n    font-weight: bold;\n    border: 0;\n    cursor: pointer;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "@-webkit-keyframes Qtz\\+qvZcyAEmPBVb\\+27aSA\\=\\= {\n    0% {\n        transform: translateX(100%);\n        visibility: visible;\n    }\n    100% {\n        transform: translateX(0);\n    }\n}\n@keyframes Qtz\\+qvZcyAEmPBVb\\+27aSA\\=\\= {\n    0% {\n        transform: translateX(100%);\n        visibility: visible;\n    }\n    100% {\n        transform: translateX(0);\n    }\n}\n.gn3mgEe7-cwchME\\+e6ey1Q\\=\\= {\n    position: absolute;\n    top: 0;\n    height: 100%;\n    width: 100%;\n    -webkit-backdrop-filter: blur(2px);\n            backdrop-filter: blur(2px);\n    display: flex;\n}\n.eOJCUk\\+0RoK5fheCuDvbuw\\=\\= {\n    cursor: pointer;\n}\n.FChiNyaL3fSPXtiv83WEqw\\=\\= {\n    position: absolute;\n    top: 0;\n    right: 0;\n    width: 40%;\n    height: 100%;\n    background-color: white;\n    -webkit-animation-name: Qtz\\+qvZcyAEmPBVb\\+27aSA\\=\\=;\n            animation-name: Qtz\\+qvZcyAEmPBVb\\+27aSA\\=\\=;\n    -webkit-animation-duration: 0.8s;\n    animation-duration: 0.8s;\n    -webkit-animation-fill-mode: both;\n    animation-fill-mode: both;\n}\n.\\+9ZjBpJfczQ0U1ZvDz9\\+Wg\\=\\= {\n    display: flex;\n    padding: 10px;\n    align-items: center;\n    justify-content: space-between;\n}\n.YNE2BMD1F1ruJ3x\\+s0noYQ\\=\\= {\n    font-size: 20px;\n    font-weight: bold;\n}\n.QDhtM8FRspZXRw9eVL8NSw\\=\\= {\n    padding: 10px;\n    font-size: 18px;\n}\n.QDhtM8FRspZXRw9eVL8NSw\\=\\= > input {\n    border: 1px solid #E8E8E8;\n    border-radius: 4px;\n    line-height: 40px;\n    align-items: center;\n}\n.QDhtM8FRspZXRw9eVL8NSw\\=\\= > form {\n    display: flex;\n    flex-direction: column;\n}\n.CJffIlK6LJaCncQpXTKPgQ\\=\\= {\n    border-radius: 4px;\n    padding: 5px 10px;\n    border: 0;\n    background-color: #f2f2f2;\n    margin-bottom: 10px;\n}\n.lvmO34zC6mLeurOvAYcONA\\=\\= {\n    background-color: #354AFF;\n    width: 100%;\n    padding: 5px 10px;\n    text-align: center;\n    border-radius: 4px;\n    color: #ffffff;\n    font-weight: bold;\n    border: 0;\n    cursor: pointer;\n}\n.bLF6rOD5CDdGbcxg6gk2Yw\\=\\= {\n    border: 1px solid red !important;\n    color: red;\n}\n.yCH1URRVqdhP2oZCMIpn8g\\=\\= {\n    color: red;\n}\n.EjA6XOLARqEnsqyh5pH04g\\=\\= {\n    font-weight: bold;\n    margin-bottom: 5px;\n    font-size: 14px;\n    color: red;\n}\n", ""]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"modal": "gn3mgEe7-cwchME+e6ey1Q==",
@@ -13473,7 +13906,41 @@ ___CSS_LOADER_EXPORT___.locals = {
 	"modalHeader": "+9ZjBpJfczQ0U1ZvDz9+Wg==",
 	"headerText": "YNE2BMD1F1ruJ3x+s0noYQ==",
 	"modalBody": "QDhtM8FRspZXRw9eVL8NSw==",
-	"button": "lvmO34zC6mLeurOvAYcONA=="
+	"input": "CJffIlK6LJaCncQpXTKPgQ==",
+	"button": "lvmO34zC6mLeurOvAYcONA==",
+	"error": "bLF6rOD5CDdGbcxg6gk2Yw==",
+	"errorText": "yCH1URRVqdhP2oZCMIpn8g==",
+	"errorLabel": "EjA6XOLARqEnsqyh5pH04g=="
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[6].oneOf[1].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[6].oneOf[1].use[2]!./resources/js/components/ModalWindow/ModalWindowDropdown/ModalWindowDropdown.module.css":
+/*!**********************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[6].oneOf[1].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[6].oneOf[1].use[2]!./resources/js/components/ModalWindow/ModalWindowDropdown/ModalWindowDropdown.module.css ***!
+  \**********************************************************************************************************************************************************************************************************************************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__);
+// Imports
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, ".skSgfDVtTVEawfd2-Kqo2Q\\=\\= {\n    border-radius: 4px;\n    padding: 5px 10px;\n    border: 0;\n    background-color: #f2f2f2;\n    margin-bottom: 10px;\n    display: flex;\n    align-items: center;\n    justify-content: space-between;\n}\n.PlCg7Il9cPEAXXO8x8k6aQ\\=\\= {\n\n}\n.ljwPuLy\\+rjPDoi1OE6qgIA\\=\\= {\n    display: flex;\n    flex-direction: column;\n    justify-content: space-around;\n    align-items: center;\n}\n._0fqCUdpZ9ZqKdI4kZ1f8vg\\=\\= {\n    display: none;\n}\n", ""]);
+// Exports
+___CSS_LOADER_EXPORT___.locals = {
+	"input": "skSgfDVtTVEawfd2-Kqo2Q==",
+	"category": "PlCg7Il9cPEAXXO8x8k6aQ==",
+	"categoryList": "ljwPuLy+rjPDoi1OE6qgIA==",
+	"hidden": "_0fqCUdpZ9ZqKdI4kZ1f8vg=="
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -13528,11 +13995,10 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".dXK7d5rBtFrbHtUDJc0mCQ\\=\\= {\n    display: flex;\n    align-items: center;\n    margin-left: auto;\n    margin-right: auto;\n    padding: 15px 50px;\n    -webkit-animation-name: \\+SWW0VUGs0j8Vfbe4ENotg\\=\\=;\n\n\n}\n\n.lgvCZEOkP\\+qe4cIAc-ufBQ\\=\\= {\n    background-color: white;\n    border-radius: 4px;\n    width: 100%;\n    height: 100%;\n    box-shadow: 0 5px 5px 0 #e9eaee;\n}\n.uHQdgRQcMoaMmhbAGJPAgw\\=\\= {\n    display: flex;\n    justify-content: space-between;\n    align-items: center;\n    border-bottom: 2px solid #F6F7FB;\n    padding: 10px;\n}\n.CmAsRwS4wNIhoiffjrtbCw\\=\\= {\n    font-weight: bold;\n    font-size: 20px;\n}\n.gQixLz7oC-QeYleT0izvuw\\=\\= > input {\n    border: 0;\n    background-color: #f2f2f2;\n    border-radius: 4px;\n    padding: 5px 10px;\n}\n._706rW5Kbnud4Gtuv9bEizg\\=\\= {\n    display: flex;\n    width: 100%;\n}\n.SpASq3mM8WBFOdqNeacmKQ\\=\\= {\n    width: 15%;\n    display: flex;\n    flex-direction: column;\n    border-right: 2px solid #F6F7FB;\n    padding: 5px 0 5px 10px;\n}\n.M1gRRVy1C5ar2Z6NDP5r9g\\=\\= {\n    cursor: pointer;\n    display: flex;\n    align-items: center;\n}\n._08oFpyi5c7\\+yDwbyYuNuxQ\\=\\= {\n    cursor: pointer;\n    display: flex;\n    align-items: center;\n}\n._1doG3IIotozeROkYm72UqA\\=\\= {\n    background-color: #f2f2f2;\n    border-radius: 4px;\n}\n._74lVY\\+WLDzcTBW173Y-Byg\\=\\= {\n    width: 85%;\n    padding: 0 5px 5px 5px;\n}\n._5SUsWFn5n1bBm4XuJr3nPQ\\=\\= {\n    display: flex;\n    align-items: center;\n    padding: 5px 0;\n\n}\n.Ton5aN8SiSDsDD1sfvKqzA\\=\\= {\n    padding-right: 10px;\n    font-size: 18px;\n    font-weight: bold;\n}\n._59zY6szMAJlP5bbhyQ\\+PDg\\=\\= {\n    background-color: #354AFF;\n    color: #fff;\n    font-weight: bold;\n    padding: 5px 10px;\n    text-align: center;\n    display: flex;\n    cursor: pointer;\n    border-radius: 4px;\n}\n.BYykNyTbU1tlwgG-ED364A\\=\\= {\n    display: flex;\n    border-radius: 4px;\n    background-color: #e7e7e7;\n    padding: 5px;\n    justify-content: space-between;\n    width: 100%;\n}\n.fFaqIzueFGcYx8jFWvVEeA\\=\\= {\n    display: flex;\n    flex-direction: column;\n    padding: 5px;\n    background-color: #f2f2f2;\n    border-radius: 4px;\n}\n.Cr4sNdRNXiifZaOwwVlN3Q\\=\\= {\n    display: flex;\n    justify-content: space-between;\n}\n.si0Q12GMLD\\+KKTaVwUS2Uw\\=\\= {\n    width: 150px;\n}\n.KSL5yytdBMaD57QEEHAopw\\=\\= {\n    width: 50px;\n}\n.cqko-Cb0BlVLW1Luwul4Ug\\=\\= {\n    width: 30px;\n}\n.PBOcPh2l8T3FZJlKCAulAw\\=\\= {\n    width: 40px;\n}\n.sV\\+uPnLNPa-mTdYIxnglVA\\=\\= {\n    width: 65px;\n}\n.T8hX9Iqq\\+i5cBlWbmQ\\+8VA\\=\\= {\n    width: 250px;\n}\n._4FM3isMo8wdQeI2wTcBz8w\\=\\= {\n    width: 90px;\n    text-align: center;\n}\n.jmr4y5Syz2YLhWinCkxc3w\\=\\= {\n\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".dXK7d5rBtFrbHtUDJc0mCQ\\=\\= {\n    display: flex;\n    align-items: center;\n    margin-left: auto;\n    margin-right: auto;\n    padding: 15px 50px;\n}\n.lgvCZEOkP\\+qe4cIAc-ufBQ\\=\\= {\n    background-color: white;\n    border-radius: 4px;\n    width: 100%;\n    height: 100%;\n    box-shadow: 0 5px 5px 0 #e9eaee;\n}\n.uHQdgRQcMoaMmhbAGJPAgw\\=\\= {\n    display: flex;\n    justify-content: space-between;\n    align-items: center;\n    border-bottom: 2px solid #F6F7FB;\n    padding: 10px;\n}\n.CmAsRwS4wNIhoiffjrtbCw\\=\\= {\n    font-weight: bold;\n    font-size: 20px;\n}\n.gQixLz7oC-QeYleT0izvuw\\=\\= > input {\n    border: 0;\n    background-color: #f2f2f2;\n    border-radius: 4px;\n    padding: 5px 10px;\n}\n._706rW5Kbnud4Gtuv9bEizg\\=\\= {\n    display: flex;\n    width: 100%;\n    height: 100%;\n}\n.SpASq3mM8WBFOdqNeacmKQ\\=\\= {\n    width: 15%;\n    display: flex;\n    flex-direction: column;\n    border-right: 2px solid #F6F7FB;\n    padding: 5px 0 5px 10px;\n}\n.M1gRRVy1C5ar2Z6NDP5r9g\\=\\= {\n    cursor: pointer;\n    display: flex;\n    align-items: center;\n}\n._08oFpyi5c7\\+yDwbyYuNuxQ\\=\\= {\n    cursor: pointer;\n    display: flex;\n    align-items: center;\n}\n._1doG3IIotozeROkYm72UqA\\=\\= {\n    background-color: #f2f2f2;\n    border-radius: 4px;\n    height: 100%;\n    overflow-y: auto;\n    max-height: 70vh;\n}\n._74lVY\\+WLDzcTBW173Y-Byg\\=\\= {\n    height: 100%;\n    width: 85%;\n    padding: 0 5px 5px 5px;\n}\n._5SUsWFn5n1bBm4XuJr3nPQ\\=\\= {\n    display: flex;\n    align-items: center;\n    padding: 5px 0;\n}\n.Ton5aN8SiSDsDD1sfvKqzA\\=\\= {\n    padding-right: 10px;\n    font-size: 18px;\n    font-weight: bold;\n}\n._59zY6szMAJlP5bbhyQ\\+PDg\\=\\= {\n    background-color: #354AFF;\n    color: #fff;\n    font-weight: bold;\n    padding: 5px 10px;\n    text-align: center;\n    display: flex;\n    cursor: pointer;\n    border-radius: 4px;\n}\n.BYykNyTbU1tlwgG-ED364A\\=\\= {\n    display: flex;\n    border-radius: 4px;\n    background-color: #e7e7e7;\n    padding: 5px;\n    justify-content: space-between;\n    width: 100%;\n}\n.fFaqIzueFGcYx8jFWvVEeA\\=\\= {\n    display: flex;\n    flex-direction: column;\n    padding: 5px;\n    background-color: #f2f2f2;\n    border-radius: 4px;\n}\n.Cr4sNdRNXiifZaOwwVlN3Q\\=\\= {\n    display: flex;\n    justify-content: space-between;\n}\n.si0Q12GMLD\\+KKTaVwUS2Uw\\=\\= {\n    width: 150px;\n}\n.KSL5yytdBMaD57QEEHAopw\\=\\= {\n    width: 50px;\n}\n.cqko-Cb0BlVLW1Luwul4Ug\\=\\= {\n    width: 30px;\n}\n.PBOcPh2l8T3FZJlKCAulAw\\=\\= {\n    width: 40px;\n}\n.sV\\+uPnLNPa-mTdYIxnglVA\\=\\= {\n    width: 65px;\n}\n.T8hX9Iqq\\+i5cBlWbmQ\\+8VA\\=\\= {\n    width: 250px;\n}\n._4FM3isMo8wdQeI2wTcBz8w\\=\\= {\n    width: 90px;\n    text-align: center;\n}\n.jmr4y5Syz2YLhWinCkxc3w\\=\\= {\n\n}\n", ""]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"container": "dXK7d5rBtFrbHtUDJc0mCQ==",
-	"slideInRight": "+SWW0VUGs0j8Vfbe4ENotg==",
 	"products": "lgvCZEOkP+qe4cIAc-ufBQ==",
 	"productsHeader": "uHQdgRQcMoaMmhbAGJPAgw==",
 	"headerText": "CmAsRwS4wNIhoiffjrtbCw==",
@@ -71230,6 +71696,36 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_6_oneOf_1_use_1_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_6_oneOf_1_use_2_ModalWindow_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].locals || {});
+
+/***/ }),
+
+/***/ "./resources/js/components/ModalWindow/ModalWindowDropdown/ModalWindowDropdown.module.css":
+/*!************************************************************************************************!*\
+  !*** ./resources/js/components/ModalWindow/ModalWindowDropdown/ModalWindowDropdown.module.css ***!
+  \************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_6_oneOf_1_use_1_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_6_oneOf_1_use_2_ModalWindowDropdown_module_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !!../../../../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[6].oneOf[1].use[1]!../../../../../node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[6].oneOf[1].use[2]!./ModalWindowDropdown.module.css */ "./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[6].oneOf[1].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[6].oneOf[1].use[2]!./resources/js/components/ModalWindow/ModalWindowDropdown/ModalWindowDropdown.module.css");
+
+            
+
+var options = {};
+
+options.insert = "head";
+options.singleton = false;
+
+var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_6_oneOf_1_use_1_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_6_oneOf_1_use_2_ModalWindowDropdown_module_css__WEBPACK_IMPORTED_MODULE_1__["default"], options);
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_6_oneOf_1_use_1_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_6_oneOf_1_use_2_ModalWindowDropdown_module_css__WEBPACK_IMPORTED_MODULE_1__["default"].locals || {});
 
 /***/ }),
 

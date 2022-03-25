@@ -1,34 +1,75 @@
 @media screen and (max-width: 1920px) {
-    .container{
+    .container {
         width: 1600px;
     }
 }
+
 @media screen and (max-width: 1600px) {
-    .container{
+    .container {
         width: 1400px;
     }
 }
+
 @media screen and (max-width: 1366px) {
-    .container{
+    .container {
         width: 1200px;
     }
 }
+
 @media screen and (max-width: 1040px) {
     .container {
         width: 940px;
     }
 }
+
 @media screen and (max-width: 800px) {
     .container {
         width: 700px;
     }
 }
+
+::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+}
+
+::-webkit-scrollbar-button {
+    width: 0px;
+    height: 0px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border: 0;
+    border-radius: 50px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f2f2f2;
+    border: 0px none #ffffff;
+    border-radius: 50px;
+}
+
+::-webkit-scrollbar-track:hover {
+    background: #f2f2f2;
+}
+
+::-webkit-scrollbar-track:active {
+    background: #f2f2f2;
+}
+
+::-webkit-scrollbar-corner {
+    background: transparent;
+}
+
 * {
     font-family: 'Nunito', sans-serif;
 }
+
 body {
     background-color: #F6F7FB;;
 }
+
 .container {
     height: 100vh;
     display: flex;

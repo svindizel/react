@@ -4,6 +4,7 @@ import Header from "../Header/Header";
 import ProductsCategories from "./ProductsCategories/ProductsCategories";
 import ProductsBodyContent from "./ProductsBodyContent/ProductsBodyContent";
 import ModalWindow from "../ModalWindow/ModalWindow";
+import axios from "axios";
 
 export default class Products extends Component {
     constructor(props) {
@@ -11,14 +12,24 @@ export default class Products extends Component {
         this.state = {
             isAuth: false,
             modalAction: null,
-            products: {
-            },
-            categories: {
-            },
+            products: {},
+            categories: {},
+            units: {},
             currentCategory: "",
-            editProductData: null
+            currentCategoryId: "",
+            currentUnit: "",
+            currentUnitId: "",
+            editProductData: null,
+            errors: {
+                isNameEmpty: false,
+                isArtEmpty: false,
+                isPriceEmpty: false,
+                isArtIncorrect: false,
+                isPriceIncorrect: false
+            }
         }
     };
+
     componentDidMount = () => {
         let state = this.state;
         axios
@@ -35,7 +46,6 @@ export default class Products extends Component {
             .get("http://react/api/products/all")
             .then((response) => {
                 state.products = response.data.original;
-                console.log(response);
                 this.setState(state);
             })
         axios
@@ -43,18 +53,25 @@ export default class Products extends Component {
             .then((response) => {
                 state.categories = response.data.original.categories;
                 state.currentCategory = response.data.original.categories[0].name;
+                state.currentCategoryId = response.data.original.categories[0].id;
+                state.units = response.data.original.units;
+                state.currentUnit = response.data.original.units[0].name;
+                state.currentUnitId = response.data.original.units[0].id;
                 this.setState(state)
             })
+        console.log(this.state)
     }
 
     changeCategory = (e) => {
         let newCategory = e.target.innerHTML;
         let state = this.state;
-        if(newCategory === state.currentCategory) {
+        if (newCategory === state.currentCategory) {
             return
+        } else {
+            state.currentCategory = newCategory;
+            this.setState(state);
         }
-        state.currentCategory = newCategory;
-        this.setState(state);
+
     }
 
     addProduct = () => {
@@ -77,7 +94,6 @@ export default class Products extends Component {
             .then((response) => {
                 console.log(response)
             })
-        console.log(data)
     }
 
     modalClose = () => {
@@ -86,42 +102,116 @@ export default class Products extends Component {
         this.setState(state);
     }
 
+    validateData = (data, action) => {
+        let state = this.state;
+        this.clearErrors(state);
+        const addProduct = "add";
+        const editProduct = "edit";
+        let numbers = /^[0-9]+$/;
+        if (action === addProduct) {
+            if (data.name === "" || data.art === "" || data.price === "") {
+                if (data.name === "") {
+                    state.errors.isNameEmpty = true
+                }
+                if (data.art === "") {
+                    state.errors.isArtEmpty = true
+                }
+                if (data.price === "") {
+                    state.errors.isPriceEmpty = true
+                }
+                this.setState(state);
+                return false
+            } else if (!data.price.match(numbers)) {
+                state.errors.isPriceIncorrect = true;
+                this.setState(state);
+                return false
+            } else {
+                return true
+            }
+
+        }
+    }
+
+    clearErrors = (state) => {
+        state.errors.isNameEmpty = false;
+        state.errors.isArtEmpty = false;
+        state.errors.isPriceEmpty = false;
+        state.errors.isArtIncorrect = false;
+        state.errors.isPriceIncorrect = false;
+        this.setState(state);
+    }
+
+    addProductSubmit = (e, data) => {
+        console.log("addproduct")
+        e.preventDefault();
+        let state = this.state;
+        if (this.validateData(data, "add")) {
+            axios
+                .post("http://react/api/addProduct", data)
+                .then((response) => {
+                    console.log(response)
+                    state.products = response.data.original;
+                    this.setState(state);
+                })
+            this.modalClose();
+        } else return false
+    }
+
+    editProductSubmit = (event, submitData) => {
+        event.preventDefault();
+        axios
+            .post("http://react/api/editProduct", submitData)
+            .then((response) => {
+                console.log(response)
+            })
+        this.modalClose();
+
+    }
+
     render() {
+        console.log(this.state.units)
         if (this.state.isAuth) {
             return (
                 <>
-                    <div>
-                        <Header/>
-                        <div className={S.container}>
-                            <div className={S.products}>
-                                <div className={S.productsHeader}>
-                                    <div className={S.headerText}>Товары</div>
-                                    <div className={S.headerSearch}>
-                                        <input type="text" placeholder="Поиск"/>
-                                    </div>
+                    <Header/>
+                    <div className={S.container}>
+                        <div className={S.products}>
+                            <div className={S.productsHeader}>
+                                <div className={S.headerText}>Товары</div>
+                                <div className={S.headerSearch}>
+                                    <input type="text" placeholder="Поиск"/>
                                 </div>
-                                <div className={S.productsBody}>
-                                    <ProductsCategories
-                                        changeCategory={this.changeCategory}
-                                        currentCategory={this.state.currentCategory}
-                                        categories={this.state.categories}
-                                    />
-                                    <ProductsBodyContent
-                                        currentCategory={this.state.currentCategory}
-                                        products={this.state.products}
-                                        addProduct={this.addProduct}
-                                        editProduct={this.editProduct}
-                                        deleteProduct={this.deleteProduct}
-                                    />
-                                </div>
+                            </div>
+                            <div className={S.productsBody}>
+                                <ProductsCategories
+                                    changeCategory={this.changeCategory}
+                                    currentCategory={this.state.currentCategory}
+                                    categories={this.state.categories}
+                                />
+                                <ProductsBodyContent
+                                    currentCategory={this.state.currentCategory}
+                                    products={this.state.products}
+                                    addProduct={this.addProduct}
+                                    editProduct={this.editProduct}
+                                    deleteProduct={this.deleteProduct}
+                                />
                             </div>
                         </div>
                     </div>
+
                     <ModalWindow
+                        errors={this.state.errors}
+                        addProductSubmit={this.addProductSubmit}
+                        editProductSubmit={this.editProductSubmit}
                         modalClose={this.modalClose}
                         action={this.state.modalAction}
                         editProductData={this.state.editProductData}
                         currentCategory={this.state.currentCategory}
+                        currentCategoryId={this.state.currentCategoryId}
+                        currentUnit={this.state.currentUnit}
+                        currentUnitId={this.state.currentUnitId}
+                        categories={this.state.categories}
+                        units={this.state.units}
                     />
                 </>
             )
