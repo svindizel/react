@@ -69,7 +69,7 @@ export default class ModalWindow extends Component {
 
     editProductSubmit = (event) => {
         event.preventDefault();
-        let name = event.target.elements.name.value;
+        /*let name = event.target.elements.name.value;
         let category_id = this.state.submitData.category_id;
         let art = event.target.elements.art.value;
         let description = event.target.elements.description.value;
@@ -86,12 +86,16 @@ export default class ModalWindow extends Component {
             id: id,
             unit: unit,
             unit_id: unit_id
-        }
-        this.props.editProductSubmit(event, submitData)
+        }*/
+        let submitData = this.state.submitData;
+
+        this.props.editProductSubmit(event, this.state.submitData)
+        state.submitData.name = "";
+        state.submitData.price = "";
+        state.submitData.art = "";
     }
 
     addProductSubmit = (e) => {
-        console.log("addproduct")
         e.preventDefault();
         this.props.addProductSubmit(e, this.state.submitData);
         state.submitData.name = "";
@@ -139,8 +143,18 @@ export default class ModalWindow extends Component {
                                     <input className={`${this.props.errors.isArtEmpty ? S.error : S.input}`} onChange={this.onAddChangeHandler} name="art" type="text" placeholder="Артикул"/>
                                     {this.props.errors.isArtEmpty ?
                                         <div className={S.errorText}>Заполните это поле</div> : null}
-                                    <ModalWindowDropdown isCategory={true} chooseCategory={this.chooseCategory} currentCategory={this.props.currentCategory} categories={this.props.categories}/>
-                                    <ModalWindowDropdown isCategory={false} chooseUnit={this.chooseUnit} units={this.props.units} currentUnit={this.props.units[0].name}/>
+                                    <ModalWindowDropdown
+                                        isCategory={true}
+                                        chooseCategory={this.chooseCategory}
+                                        currentCategory={this.props.currentCategory}
+                                        categories={this.props.categories}
+                                    />
+                                    <ModalWindowDropdown
+                                        isCategory={false}
+                                        chooseUnit={this.chooseUnit}
+                                        units={this.props.units}
+                                        currentUnit={this.props.units[0].name}
+                                    />
                                     <input className={`${this.props.errors.isPriceEmpty || this.props.errors.isPriceIncorrect ? S.error : S.input}`} onChange={this.onAddChangeHandler} name="price" type="text" placeholder="Цена"/>
                                     {this.props.errors.isPriceEmpty ?
                                         <div className={S.errorText}>Заполните это поле</div> : null}

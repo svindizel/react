@@ -6301,30 +6301,35 @@ var ModalWindow = /*#__PURE__*/function (_Component) {
 
     _defineProperty(_assertThisInitialized(_this), "editProductSubmit", function (event) {
       event.preventDefault();
-      var name = event.target.elements.name.value;
-      var category_id = _this.state.submitData.category_id;
-      var art = event.target.elements.art.value;
-      var description = event.target.elements.description.value;
-      var price = event.target.elements.price.value;
-      var unit = _this.state.submitData.unit;
-      var unit_id = _this.state.submitData.unit_id;
-      var id = _this.props.editProductData.id;
-      var submitData = {
-        name: name,
-        category_id: category_id,
-        art: art,
-        description: description,
-        price: price,
-        id: id,
-        unit: unit,
-        unit_id: unit_id
-      };
+      /*let name = event.target.elements.name.value;
+      let category_id = this.state.submitData.category_id;
+      let art = event.target.elements.art.value;
+      let description = event.target.elements.description.value;
+      let price = event.target.elements.price.value;
+      let unit = this.state.submitData.unit;
+      let unit_id = this.state.submitData.unit_id;
+      let id = this.props.editProductData.id;
+      let submitData = {
+          name: name,
+          category_id: category_id,
+          art: art,
+          description: description,
+          price: price,
+          id: id,
+          unit: unit,
+          unit_id: unit_id
+      }*/
 
-      _this.props.editProductSubmit(event, submitData);
+      var submitData = _this.state.submitData;
+
+      _this.props.editProductSubmit(event, _this.state.submitData);
+
+      state.submitData.name = "";
+      state.submitData.price = "";
+      state.submitData.art = "";
     });
 
     _defineProperty(_assertThisInitialized(_this), "addProductSubmit", function (e) {
-      console.log("addproduct");
       e.preventDefault();
 
       _this.props.addProductSubmit(e, _this.state.submitData);
@@ -6998,7 +7003,11 @@ var Products = /*#__PURE__*/function (_Component) {
       axios__WEBPACK_IMPORTED_MODULE_6___default().post("http://react/api/deleteProduct", {
         id: id
       }).then(function (response) {
-        console.log(response);
+        console.log(95, response);
+        var state = _this.state;
+        state.products = response.data.original;
+
+        _this.setState(state);
       });
     });
 
@@ -7058,7 +7067,6 @@ var Products = /*#__PURE__*/function (_Component) {
     });
 
     _defineProperty(_assertThisInitialized(_this), "addProductSubmit", function (e, data) {
-      console.log("addproduct");
       e.preventDefault();
       var state = _this.state;
 
@@ -7076,8 +7084,13 @@ var Products = /*#__PURE__*/function (_Component) {
 
     _defineProperty(_assertThisInitialized(_this), "editProductSubmit", function (event, submitData) {
       event.preventDefault();
+      console.log(161, submitData);
+      var state = _this.state;
       axios__WEBPACK_IMPORTED_MODULE_6___default().post("http://react/api/editProduct", submitData).then(function (response) {
         console.log(response);
+        state.products = response.data.original;
+
+        _this.setState(state);
       });
 
       _this.modalClose();

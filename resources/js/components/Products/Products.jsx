@@ -92,7 +92,10 @@ export default class Products extends Component {
         axios
             .post("http://react/api/deleteProduct", {id: id})
             .then((response) => {
-                console.log(response)
+                console.log(95, response)
+                let state = this.state;
+                state.products = response.data.original;
+                this.setState(state);
             })
     }
 
@@ -142,7 +145,6 @@ export default class Products extends Component {
     }
 
     addProductSubmit = (e, data) => {
-        console.log("addproduct")
         e.preventDefault();
         let state = this.state;
         if (this.validateData(data, "add")) {
@@ -159,13 +161,16 @@ export default class Products extends Component {
 
     editProductSubmit = (event, submitData) => {
         event.preventDefault();
+        console.log(161, submitData)
+        let state = this.state;
         axios
             .post("http://react/api/editProduct", submitData)
             .then((response) => {
                 console.log(response)
+                state.products = response.data.original;
+                this.setState(state);
             })
         this.modalClose();
-
     }
 
     render() {

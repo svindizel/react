@@ -21,7 +21,7 @@ class ProductController extends Controller
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
             'art' => ['required', 'string', 'max:255'],
-            'price' => ['required', 'string', 'max:255'],
+            'price' => ['required', 'max:255'],
         ]);
     }
 
