@@ -284,4 +284,83 @@ class ProductController extends Controller
 
         return $sorted;
     }
+
+    public function search (Request $request)
+    {
+        $products_id = DB::table('product_descriptions')
+        ->select('name', 'product_id')
+        ->where('name', 'like', '%Кал%')
+        ->get()
+        ->toArray();
+
+        $products = ProductDescription::where('product_descriptions.name', 'like', '%Кал%')
+            ->join(
+                'category_to_products', 
+                'category_to_products.product_id', 
+                '=', 
+                'product_descriptions.product_id'
+            )
+            ->join(
+                'products', 
+                'products.id', 
+                '=', 
+                'product_descriptions.product_id'
+            )
+            ->join(
+                'articles', 
+                'articles.id', 
+                '=', 
+                'products.art_id'
+            )
+            ->join(
+                'categories', 
+                'categories.id', 
+                '=', 
+                'category_to_products.category_id'
+            )
+            ->join(
+                'units', 
+                'units.id', 
+                '=', 
+                'products.unit_id'
+            )
+            ->join(
+                'product_quantity',
+                'product_quantity.product_id',
+                '=',
+                'products.id'
+            )
+            ->select(
+                'product_descriptions.name', 
+                'products.*', 'articles.art', 
+                'category_to_products.category_id', 
+                'categories.name as category', 
+                'units.name as unit', 
+                'product_descriptions.description',
+                'product_quantity.quantity',
+            )
+            ->where('category_to_products.category_id', '=', 1)
+            ->get()
+            ->toArray();
+
+            for ($i = 0; $i < count($products); $i++)
+            {
+                $products[$i] = Arr::add($products[$i], 'products', DB::table('product_descriptions')
+                    ->select('product_id', 'name')
+                    ->where('product_id', DB::table('product_to_product')
+                    ->select('relation_product_id')
+                    ->where('product_id', $products[$i]['id'])
+                    ->value('relation_product_id'))
+                    ->get()->toArray()
+                );
+
+                $products[$i] = Arr::add($products[$i], 'nutritional value', DB::table('product_nutritional_value')
+                    ->select('calories', 'squirrels', 'fats', 'carbohydrates')
+                    ->where('product_id', $products[$i]['id'])
+                    ->get()->toArray()
+                );
+            }
+
+        return response()->json(['products' => $products, 'total' => count($products)]);
+    }
 }

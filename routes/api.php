@@ -50,6 +50,8 @@ Route::group([
         Route::post('addProduct', [App\Http\Controllers\ProductController::class, 'create']);
         Route::post('editProduct', [App\Http\Controllers\ProductController::class, 'update']);
         Route::post('deleteProduct', [App\Http\Controllers\ProductController::class, 'delete']);
+        Route::get('searchProducts', [App\Http\Controllers\ProductController::class, 'search']);
+        Route::post('searchProducts', [App\Http\Controllers\ProductController::class, 'search']);
 
         Route::get('categories/all', [App\Http\Controllers\CategoryController::class, 'getCategories']);
         Route::post('addCategory', [App\Http\Controllers\CategoryController::class, 'create']);
