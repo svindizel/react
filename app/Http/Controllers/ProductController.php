@@ -94,7 +94,7 @@ class ProductController extends Controller
                 ->value('name')
             );
         }*/
-        $category_id = $request->category_id;
+        $category_id = 1;
         $products_id = CategoryToProducts::where('category_id', $category_id)->select('product_id')->get()->toArray();
         
         for ($i = 0; $i < count ($products_id); $i++)
@@ -270,20 +270,17 @@ class ProductController extends Controller
 
     public function productsSort ($products, $sortField = '', $sortBy = '')
     {
-        $products = collect($products);
 
+        $products = collect($products);
+        
         if ($sortBy = 'asc') 
         {
-           $sorted = $products->sortBy($sortField);
-           $sorted->values()->all();
+           $sorted = $products->sortBy($sortField)->values()->all();
         } 
-        else 
+        elseif ($sortBy = 'desc')
         {
-            $sorted = $products->sortByDesc($sortField);
-            $sorted->values()->all();
+            $sorted = $products->sortByDesc($sortField)->values()->all();
         }
-
-        $sorted = $sorted->reverse()->values();
 
         return $sorted;
     }
