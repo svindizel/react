@@ -16,8 +16,7 @@ export default class TableRow extends Component {
                     <div className={S.productArticul}>{this.props.art}</div>
                     <div className={S.productSale}></div>
                     <div className={S.productIngredients}>{this.props.description}</div>
-                    <div className={S.productStop}>
-                        <input type="checkbox" value={this.props.isOver}/>
+                    <div className={S.productActions}>
                         <div onClick={() => this.props.editProduct(this.props)}>
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24">
                                 <path

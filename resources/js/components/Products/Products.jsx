@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import S from "./Products.module.css";
 import Header from "../Header/Header";
 import ProductsCategories from "./ProductsCategories/ProductsCategories";
+import CategoriesContainer from "./ProductsCategories/CategoriesContainer";
 import ProductsBodyContent from "./ProductsBodyContent/ProductsBodyContent";
 import ModalWindow from "../ModalWindow/ModalWindow";
 import axios from "axios";
@@ -20,6 +21,7 @@ export default class Products extends Component {
             currentUnit: "",
             currentUnitId: "",
             editProductData: null,
+            editCategoryData: null,
             errors: {
                 isNameEmpty: false,
                 isArtEmpty: false,
@@ -86,6 +88,37 @@ export default class Products extends Component {
         state.editProductData = data;
         this.setState(state);
         console.log(data)
+    }
+
+    editCategories = () => {
+        let state = this.state;
+        state.modalAction = "EDIT-CATEGORIES";
+        this.setState(state);
+    }
+
+    editCategory = (id, name) => {
+        let state = this.state;
+        console.log("id:"+id);
+        state.editCategoryData = {id: id, name: name};
+        state.modalAction = "EDIT-CATEGORY";
+        this.setState(state);
+    }
+
+    addCategory = () => {
+        let state = this.state;
+        state.modalAction = "ADD-CATEGORY";
+        this.setState(state);
+    }
+
+    deleteCategory = (id) => {
+        axios
+            .post("http://react/api/deleteCategory", {id: id})
+            .then((response) => {
+                console.log("category delete", response)
+                let state = this.state;
+                state.categories = response.data.original;
+                this.setState(state);
+            })
     }
 
     deleteProduct = (id) => {
@@ -161,14 +194,38 @@ export default class Products extends Component {
 
     editProductSubmit = (event, submitData) => {
         event.preventDefault();
-        console.log(161, submitData)
         let state = this.state;
         axios
             .post("http://react/api/editProduct", submitData)
             .then((response) => {
-                console.log(response)
                 state.products = response.data.original;
                 this.setState(state);
+            })
+        this.modalClose();
+    }
+
+    editCategorySubmit = (e, submitData) => {
+        e.preventDefault();
+        axios
+            .post("http://react/api/editCategory", submitData)
+            .then((response) => {
+                let state = this.state;
+                state.categories = response.data.original;
+                state.currentCategory = response.data.original[state.currentCategoryId].name;
+                this.setState(state)
+            })
+        this.modalClose();
+    }
+
+    addCategorySubmit = (e, submitData) => {
+        e.preventDefault();
+        axios
+            .post("http://react/api/addCategory", {name: submitData})
+            .then((response) => {
+                let state = this.state;
+                state.categories = response.data.original;
+                state.currentCategory = response.data.original[state.currentCategoryId].name;
+                this.setState(state)
             })
         this.modalClose();
     }
@@ -188,11 +245,16 @@ export default class Products extends Component {
                                 </div>
                             </div>
                             <div className={S.productsBody}>
-                                <ProductsCategories
+                                {/*<ProductsCategories
                                     changeCategory={this.changeCategory}
                                     currentCategory={this.state.currentCategory}
                                     categories={this.state.categories}
-                                />
+                                    editCategories={this.editCategories}
+                                    editCategory={this.editCategory}
+                                    addCategory={this.addCategory}
+                                    deleteCategory={this.deleteCategory}
+                                />*/}
+                                <CategoriesContainer />
                                 <ProductsBodyContent
                                     currentCategory={this.state.currentCategory}
                                     products={this.state.products}
@@ -206,8 +268,13 @@ export default class Products extends Component {
 
                     <ModalWindow
                         errors={this.state.errors}
+                        addCategory={this.addCategory}
+                        addCategorySubmit={this.addCategorySubmit}
                         addProductSubmit={this.addProductSubmit}
                         editProductSubmit={this.editProductSubmit}
+                        editCategoryData={this.state.editCategoryData}
+                        editCategorySubmit={this.editCategorySubmit}
+                        deleteCategory={this.deleteCategory}
                         modalClose={this.modalClose}
                         action={this.state.modalAction}
                         editProductData={this.state.editProductData}

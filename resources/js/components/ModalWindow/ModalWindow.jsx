@@ -2,12 +2,20 @@ import React, {Component} from "react";
 import S from "./ModalWindow.module.css";
 import axios from "axios";
 import ModalWindowDropdown from "./ModalWindowDropdown/ModalWindowDropdown";
+import ModalDragAndDrop from "./ModalDragAndDrop/ModalDragAndDrop";
+import {useSelector} from "react-redux";
+import store from "../store";
 
+console.log("store=", store)
+let state = store.getState();
+let action = state.modal.action;
+console.log(action)
+console.log(state);
 export default class ModalWindow extends Component {
     constructor(props) {
         axios.defaults.headers.common['X-CSRF-TOKEN'] = window.token;
         super(props);
-        console.log(10, props)
+        console.log(this.props)
         this.state = {
             action: "",
             submitData: {
@@ -20,6 +28,8 @@ export default class ModalWindow extends Component {
                 unit: this.props.currentUnit,
                 unit_id: this.props.currentUnitId,
                 art: ""
+            },
+            editCategoriesSubmitData: {
             },
             isValueEdited: false,
         }
@@ -45,6 +55,12 @@ export default class ModalWindow extends Component {
         this.setState({submitData});
     }
 
+    onAddCategoryChangeHandler = (e) => {
+        let state = this.state;
+        state.addCategoryName = e.target.value;
+        this.setState(state);
+    }
+
     onEditChangeHandler = (e) => {
         let submitData = {...this.state.submitData};
         if(this.state.isValueEdited) {
@@ -55,6 +71,17 @@ export default class ModalWindow extends Component {
             submitData = this.props.editProductData;
             this.state.isValueEdited = true;
             this.setState({submitData});
+        }
+    }
+
+    onEditCategoryChangeHandler = (e) => {
+        let state = this.state;
+        if(this.state.isValueEdited) {
+            state.editCategoryName = e.target.value;
+            this.setState(state);
+        } else {
+            this.state.isValueEdited = true;
+            this.setState(state);
         }
     }
 
@@ -95,6 +122,26 @@ export default class ModalWindow extends Component {
         state.submitData.art = "";
     }
 
+    editCategorySubmit = (e) => {
+        e.preventDefault();
+        console.log(e);
+        let submitData = {id: this.props.editCategoryData.id, name: this.state.editCategoryName};
+        let state = this.state;
+        state.editCategoryName = "";
+        state.isValueEdited = false;
+        this.setState(state)
+        this.props.editCategorySubmit(e, submitData);
+    }
+
+    addCategorySubmit = (e) => {
+        e.preventDefault();
+        let state = this.state;
+        debugger
+        this.props.addCategorySubmit(e, this.state.addCategoryName);
+        state.addCategoryName = "";
+        this.setState(state);
+    }
+
     addProductSubmit = (e) => {
         e.preventDefault();
         this.props.addProductSubmit(e, this.state.submitData);
@@ -117,14 +164,21 @@ export default class ModalWindow extends Component {
         this.setState(state);
     }
 
-
+    renderCategoriesToEdit = () => {
+        let categories = this.props.categories;
+        return categories.map(category =>
+            <input key={category.id} id={category.id} type="text" value={category.name} onChange={this.onEditCategoryChangeHandler}/>
+        )
+    }
 
     render() {
         console.log(this.props.units)
         const ADD_PRODUCT = "ADD-PRODUCT";
         const EDIT_PRODUCT = "EDIT-PRODUCT";
-        const DELETE_PRODUCT = "DELETE-PRODUCT";
-        switch (this.props.action) {
+        const EDIT_CATEGORIES = "EDIT-CATEGORIES";
+        const EDIT_CATEGORY = "EDIT-CATEGORY";
+        const ADD_CATEGORY = "ADD-CATEGORY";
+        switch (action) {
             case ADD_PRODUCT: {
                 return(
                     <div className={S.modal}>
@@ -174,7 +228,7 @@ export default class ModalWindow extends Component {
                         <div className={S.modalContent}>
                             <div className={S.modalHeader}>
                                 <div className={S.headerText}>
-                                    Новый товар
+                                    Редактировать товар
                                 </div>
                                 <div className={S.modalClose} onClick={this.props.modalClose}>x</div>
                             </div>
@@ -231,6 +285,66 @@ export default class ModalWindow extends Component {
                     </div>
                 )
             }
+            case EDIT_CATEGORIES:
+                return(
+                    <div className={S.modal}>
+                        <div className={S.modalContent}>
+                            <div className={S.modalHeader}>
+                                <div className={S.headerText}>
+                                    Редактировать категории
+                                </div>
+                                <div className={S.modalClose} onClick={this.props.modalClose}>x</div>
+                            </div>
+                            <div className={S.modalBody}>
+                                <form method="POST" onSubmit={this.editProductSubmit}>
+                                    <ModalDragAndDrop categories={this.props.categories}/>
+                                    {this.renderCategoriesToEdit()}
+                                    <button className={S.button} type="submit">Изменить</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                )
+            case EDIT_CATEGORY:
+                return (
+                    <div className={S.modal}>
+                        <div className={S.modalContent}>
+                            <div className={S.modalHeader}>
+                                <div className={S.headerText}>
+                                    Редактировать категории
+                                </div>
+                                <div className={S.modalClose} onClick={this.props.modalClose}>x</div>
+                            </div>
+                            <div className={S.modalBody}>
+                                <form method="POST" onSubmit={this.editCategorySubmit}>
+                                    {/*<ModalDragAndDrop categories={this.props.categories}/>*/}
+                                    {/*this.renderCategoriesToEdit()*/}
+                                    <input onChange={this.onEditCategoryChangeHandler} type="text" id={this.props.editCategoryData.id} value={this.state.isValueEdited ? this.state.editCategoryName : this.props.editCategoryData.name}/>
+                                    <button className={S.button} type="submit">Изменить</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                )
+            case ADD_CATEGORY:
+                return (
+                    <div className={S.modal}>
+                        <div className={S.modalContent}>
+                            <div className={S.modalHeader}>
+                                <div className={S.headerText}>
+                                    Добавить категорию
+                                </div>
+                                <div className={S.modalClose} onClick={this.props.modalClose}>x</div>
+                            </div>
+                            <div className={S.modalBody}>
+                                <form method="POST" onSubmit={this.addCategorySubmit}>
+                                    <input onChange={this.onAddCategoryChangeHandler} type="text"/>
+                                    <button className={S.button} type="submit">Изменить</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                )
             default: return <></>
         }
     }

@@ -64,7 +64,6 @@ export default class ProductsTable extends Component {
                             <div className={S.productArticul}>Арт.</div>
                             <div className={S.productSale}>Скидка</div>
                             <div className={S.productIngredients}>Состав</div>
-                            <div className={S.productStop}>Стоп-лист</div>
                         </div>
                         {this.renderProducts(this.props.currentCategory)}
                     </div>

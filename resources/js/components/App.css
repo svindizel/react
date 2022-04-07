@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+3');
+
 @media screen and (max-width: 1920px) {
     .container {
         width: 1600px;
@@ -63,7 +65,7 @@
 }
 
 * {
-    font-family: 'Nunito', sans-serif;
+    font-family: 'Source Sans 3', sans-serif !important;
 }
 
 body {

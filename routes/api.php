@@ -44,17 +44,19 @@ Route::group([
     Route::middleware(['auth'])->group(function () {
         Route::post('logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');
 
-        Route::get('products/all', [App\Http\Controllers\ProductController::class, 'getProducts']);
-        Route::post('products/all', [App\Http\Controllers\ProductController::class, 'getProducts']);
+        Route::get('getProducts', [App\Http\Controllers\ProductController::class, 'getProducts']);
+        Route::post('getProducts', [App\Http\Controllers\ProductController::class, 'getProducts']);
         Route::get('products/addictions', [App\Http\Controllers\ProductController::class, 'getAddictions']);
         Route::post('addProduct', [App\Http\Controllers\ProductController::class, 'create']);
         Route::post('editProduct', [App\Http\Controllers\ProductController::class, 'update']);
         Route::post('deleteProduct', [App\Http\Controllers\ProductController::class, 'delete']);
 
         Route::get('categories/all', [App\Http\Controllers\CategoryController::class, 'getCategories']);
-        Route::post('addCategory', [App\Http\Controllers\ProductController::class, 'create']);
-        Route::post('editCategory', [App\Http\Controllers\ProductController::class, 'update']);
-        Route::post('deleteCategory', [App\Http\Controllers\ProductController::class, 'delete']);
+        Route::post('addCategory', [App\Http\Controllers\CategoryController::class, 'create']);
+        Route::post('editCategory', [App\Http\Controllers\CategoryController::class, 'update']);
+        Route::post('deleteCategory', [App\Http\Controllers\CategoryController::class, 'delete']);
+
+        Route::get('orders/all', [App\Http\Controllers\OrderController::class, 'getOrders']);
     });
 
 

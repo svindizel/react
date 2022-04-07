@@ -7,21 +7,21 @@ import Authorization from "./Authorization/Authorization";
 import EmailConfirm from "./EmailConfirm/EmailConfirm";
 import Registration from "./Registration/Registration";
 import Products from "./Products/Products";
-import Orders from "./Header/Header";
+import Orders from "./Orders/Orders";
+import store from "./store";
+import {Provider, useDispatch} from "react-redux";
+import ProductsContainer from "./Products/ProductsContainer";
+import getProducts from "./reducers/productsReducer";
+import TestComponent from "./TestComponent";
 
-export default class App extends Component {
-    constructor(props) {
-        super(props);
-        console.log(this.props.assetPath)
-    };
-
-    render() {
+export default function App(props) {
         return (
             <BrowserRouter>
+                <TestComponent/>
                 <Routes>
                     <Route
                         path="/login"
-                        element={<Authorization assetPath={this.props.assetPath}/>}
+                        element={<Authorization assetPath={props.assetPath}/>}
                     />
                     <Route
                         exact path="/"
@@ -47,7 +47,6 @@ export default class App extends Component {
 
             </BrowserRouter>
         );
-    }
 }
 
 if (document.getElementById('root')) {
@@ -56,7 +55,9 @@ if (document.getElementById('root')) {
     }
     const assetPath = document.getElementById("root").getAttribute("assetPath");
     ReactDOM.render(
-        <App assetPath={assetPath}/>,
+        <Provider store={store}>
+            <App assetPath={assetPath}/>
+        </Provider>,
         document.getElementById('root')
     );
 }

@@ -15,7 +15,7 @@ class CategoryController extends Controller
     public function getCategories()
     {
         return new JsonResponse(response()->json(
-            DB::table('categories')->select('id', 'name')
+            DB::table('categories')->select('id', 'name', 'parent_id')
                 ->get()
                 ->toArray()
         ), 200);
@@ -29,7 +29,7 @@ class CategoryController extends Controller
                 'description' => $request->description
         ]);
 
-        $this->getCategories();
+        return $this->getCategories();
     }
 
     public function update(Request $request)
@@ -41,7 +41,7 @@ class CategoryController extends Controller
                 'description' => $request->description
         ]);
 
-        $this->getCategories();
+        return $this->getCategories();
     }
 
     public function delete(Request $request)
@@ -50,6 +50,6 @@ class CategoryController extends Controller
             ->where('id', $request->id)
             ->delete();
 
-        $this->getCategories();
+        return  $this->getCategories();
     }
 }

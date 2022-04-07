@@ -1,0 +1,10 @@
+.dragNdrop {
+    display: flex;
+    flex-direction: column;
+}
+
+.category {
+    display: flex;
+    align-items: center;
+    cursor: grab;
+}

@@ -1,21 +1,45 @@
 import React, {Component} from "react";
 import S from "../Products.module.css";
+import {useDispatch} from "react-redux";
+import store from "../../store";
 
-export default class ProductsCategories extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            isStateReady: false,
-        }
+export default function ProductsCategories(props) {
+    const dispatch = useDispatch();
+    const state = store.getState();
+    const categories = state.categories;
+
+    if(!categories.categories.length > 0) {
+        props.getCategories();
     }
 
-    renderCategoryItems = () => {
-        let categories = this.state.categories;
+    let categoryItems = () => {
+        return state.categories.categories.map(categoryItem =>
+            <div key={categoryItem.id} className={S.categoryItem} onClick={() => {props.getCategoryProducts(categoryItem.id)}}>
+                {categoryItem.name}
+            </div>
+        )
+    }
+
+
+
+    return (
+        <>
+            <div className={S.productsCategories}>
+                {categoryItems()}
+                <div className={S.button}>Добавить категорию</div>
+            </div>
+        </>
+    )
+    /*renderCategoryItems = () => {
+        let categories = this.props.categories;
         return categories.map(categoryItem =>
             <CategoryItem
+                editCategory={this.props.editCategory}
+                deleteCategory={this.props.deleteCategory}
                 changeCategory={this.props.changeCategory}
                 name={categoryItem.name}
-                key={categoryItem.id}
+                key={categoryItem.name}
+                id={categoryItem.id}
             />
         )
     }
@@ -25,7 +49,7 @@ export default class ProductsCategories extends Component {
             .get("http://react/api/products/addictions")
             .then((response) => {
                 let state = this.state;
-                state.categories = response.data.original.categories;
+                state.categories = this.props.categories;
                 state.isStateReady = true;
                 this.setState(state);
             })
@@ -38,7 +62,9 @@ export default class ProductsCategories extends Component {
                 <>
                     <div className={S.productsCategories}>
                         {this.renderCategoryItems()}
+                        <div className={S.button} onClick={this.props.addCategory}>Добавить категорию</div>
                     </div>
+
                 </>
             )
         } else {
@@ -51,19 +77,21 @@ export default class ProductsCategories extends Component {
             )
         }
 
-    }
+    }*/
 }
 
-class CategoryItem extends Component {
+/*class CategoryItem extends Component {
     constructor(props) {
         super(props);
     }
     render() {
-        let name = this.props.name
         return (
-            <div onClick={this.props.changeCategory}>
-                {this.props.name}
-            </div>
+            <>
+                <div className={S.categoryItem} onClick={this.props.changeCategory}>
+                    {this.props.name}
+                </div>
+            </>
+
         )
     }
-}
+}*/
