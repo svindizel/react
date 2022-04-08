@@ -41,142 +41,87 @@ class ProductController extends Controller
 
     public function getProducts(Request $request)
     {
-        /*
-        $products = Products::paginate(2)->toArray();
-
-        for ($i = 0; $i < count($products['data']); $i++)
-        {
-            $products['data'][$i] = Arr::add($products['data'][$i], 'category_id', DB::table('categories')
-                ->select('id')
-                ->where('id', DB::table('category_to_products')
-                ->select('category_id')
-                ->where('product_id', $products['data'][$i]['id'])
-                ->value('id'))
-                ->value('product_id')
-            );
-            
-            $products['data'][$i] = Arr::add($products['data'][$i], 'category', DB::table('categories')
-                ->select('name')
-                ->where('id', DB::table('category_to_products')
-                ->select('category_id')
-                ->where('product_id', $products['data'][$i]['id'])
-                ->value('id'))
-                ->value('product_id')
-            );
-
-            $products['data'][$i] = Arr::add($products['data'][$i], 'art', DB::table('articles')
-                ->select('art')
-                ->where('id', DB::table('products')
-                ->select('art_id')
-                ->where('id', $products['data'][$i]['id'])
-                ->value('art_id'))
-                ->value('art')
-            );
-            
-            $products['data'][$i] = Arr::add($products['data'][$i], 'name', DB::table('product_descriptions')
-                ->select('name')
-                ->where('product_id', $products['data'][$i]['id'])
-                ->value('name')
-            );
-
-            $products['data'][$i] = Arr::add($products['data'][$i], 'description', DB::table('product_descriptions')
-                ->select('description')
-                ->where('product_id', DB::table('products')
-                ->select('id')
-                ->where('id', $products['data'][$i]['id'])
-                ->value('id'))
-                ->value('description')
-            );
-
-            $products['data'][$i] = Arr::add($products['data'][$i], 'unit', DB::table('units')
-                ->select('name')
-                ->where('id', $products['data'][$i]['unit_id'])
-                ->value('name')
-            );
-        }*/
+        /**
+         * ДОДЕЛАТЬ category_id
+         */
         $category_id = 1;
-        $products_id = CategoryToProducts::where('category_id', $category_id)->select('product_id')->get()->toArray();
-        
-        for ($i = 0; $i < count ($products_id); $i++)
-        {
-            $products[] = Products::where('id', $products_id[$i])->get()->toArray();
+        $products = ProductDescription::where('category_to_products.category_id', '=', $category_id)
+            ->join(
+                'category_to_products', 
+                'category_to_products.product_id', 
+                '=', 
+                'product_descriptions.product_id'
+            )
+            ->join(
+                'products', 
+                'products.id', 
+                '=', 
+                'product_descriptions.product_id'
+            )
+            ->join(
+                'articles', 
+                'articles.id', 
+                '=', 
+                'products.art_id'
+            )
+            ->join(
+                'categories', 
+                'categories.id', 
+                '=', 
+                'category_to_products.category_id'
+            )
+            ->join(
+                'units', 
+                'units.id', 
+                '=', 
+                'products.unit_id'
+            )
+            ->join(
+                'product_quantity',
+                'product_quantity.product_id',
+                '=',
+                'products.id'
+            )
+            ->select(
+                'product_descriptions.name', 
+                'products.*', 'articles.art', 
+                'category_to_products.category_id', 
+                'categories.name as category', 
+                'units.name as unit', 
+                'product_descriptions.description',
+                'product_quantity.quantity',
+            )
+            ->get()
+            ->toArray();
+            
+            for ($i = 0; $i < count($products); $i++)
+            {
+                $products[$i] = Arr::add($products[$i], 'products', DB::table('product_descriptions')
+                    ->select('product_id', 'name')
+                    ->where('product_id', DB::table('product_to_product')
+                    ->select('relation_product_id')
+                    ->where('product_id', $products[$i]['id'])
+                    ->value('relation_product_id'))
+                    ->get()->toArray()
+                );
 
-            $products[$i][0] = Arr::add($products[$i][0], 'name', DB::table('product_descriptions')
-                ->select('name')
-                ->where('product_id',  $products_id[$i])
-                ->value('name')
-            );
+                $products[$i] = Arr::add($products[$i], 'nutritional value', DB::table('product_nutritional_value')
+                    ->select('calories', 'squirrels', 'fats', 'carbohydrates')
+                    ->where('product_id', $products[$i]['id'])
+                    ->get()->toArray()
+                );
+            }
 
-            $products[$i][0] = Arr::add($products[$i][0], 'art', DB::table('articles')
-                ->select('art')
-                ->where('id', DB::table('products')
-                ->select('art_id')
-                ->where('id',  $products_id[$i])
-                ->value('art_id'))
-                ->value('art')
-            );
-
-            $products[$i][0] = Arr::add($products[$i][0], 'category_id', DB::table('categories')
-                ->select('id')
-                ->where('id', DB::table('category_to_products')
-                ->select('category_id')
-                ->where('product_id',  $products_id[$i])
-                ->value('id'))
-                ->value('product_id')
-            );
-
-            $products[$i][0] = Arr::add($products[$i][0], 'category', DB::table('categories')
-                ->select('name')
-                ->where('id', DB::table('category_to_products')
-                ->select('category_id')
-                ->where('product_id',  $products_id[$i])
-                ->value('id'))
-                ->value('product_id')
-            );
-
-            $products[$i][0] = Arr::add($products[$i][0], 'unit', DB::table('units')
-                ->select('name')
-                ->where('id',  $products[$i][0]['unit_id'])
-                ->value('name')
-            );
- 
-            $products[$i][0] = Arr::add($products[$i][0], 'description', DB::table('product_descriptions')
-                ->select('description')
-                ->where('product_id', $products_id[$i])
-                ->value('description')
-            );
-
-            $products[$i][0] = Arr::add($products[$i][0], 'quantity', DB::table('product_quantity')
-                ->select('quantity')
-                ->where('product_id', $products_id[$i])
-                ->value('description')
-            );
-
-            $products[$i][0] = Arr::add($products[$i][0], 'products', DB::table('product_descriptions')
-                ->select('product_id', 'name')
-                ->where('product_id', DB::table('product_to_product')
-                ->select('relation_product_id')
-                ->where('product_id', $products_id[$i])
-                ->value('relation_product_id'))
-                ->get()->toArray()
-            );
-
-            $products[$i][0] = Arr::add($products[$i][0], 'nutritional value', DB::table('product_nutritional_value')
-                ->select('calories', 'squirrels', 'fats', 'carbohydrates')
-                ->where('product_id', $products_id[$i])
-                ->get()->toArray()
-            );
-        }
-
-        $products = Arr::collapse($products);
-
-        $products = $this->productsSort($products, 'price', 'desc');
+        $products = $this->productsSort($products, 'id', 'asc');
         
         return response()->json(['products' => $products, 'total' => count($products)]);
     }
 
     public function create(Request $request)
     {
+        /**
+         * ПОЛУЧАТЬ  quantity, relation_product_id calories, squirrels, fats, carbohydrates
+         */
         $this->validateFields($request->all())->validate();
 
         if (Articles::where('art', $request->art)->exists()) {
@@ -186,7 +131,9 @@ class ProductController extends Controller
         Articles::create(['art' => $request->art]);
 
         $art_id = DB::table('articles')->select('id')->where('art', $request->art)->value('id');
-    
+        /**
+         * Цена, артикул, стоп-лист
+         */
         $product_id = Products::create([
             'price' => $request->price,
             'art_id' => $art_id,
@@ -195,25 +142,59 @@ class ProductController extends Controller
             'unit_id' => $request->unit_id,
             'created_at' => date("Y-m-d H:i:s"),
         ])->id;
-
+        /**
+         * Описание, название
+         */
         ProductDescription::create([
             'name' => $request->name,
             'description' => $request->description,
             'product_id' => $product_id,
             'created_at' => date("Y-m-d H:i:s"),
         ]);
-
+        /**
+         * Категория
+         */
         DB::table('category_to_products')->insert([
             'product_id' => $product_id,
             'category_id' => $request->category_id,
             'created_at' => date("Y-m-d H:i:s"),
         ]);
+        /**
+         * КБЖУ
+         */
+        DB::table('product_nutritional_value')->insert([
+            'product_id' => $product_id,
+            'calories' => 123,
+            'squirrels' => 3,
+            'fats' => 2,
+            'carbohydrates' => 1,
+            'created_at' => date("Y-m-d H:i:s"),
+        ]);
+        /**
+         * связи с другими продуктами
+         */
+        DB::table('product_to_product')->insert([
+            'product_id' => $product_id,
+            'relation_product_id' => 47,
+            'created_at' => date("Y-m-d H:i:s"),
+        ]);
+        /**
+         * количество продукта
+         */
+        DB::table('product_quantity')->insert([
+            'product_id' => $product_id,
+            'quantity' => 1000,
+            'created_at' => date("Y-m-d H:i:s"),
+        ]); 
 
         return $this->getProducts();
     }
 
     public function update(Request $request)
     {
+        /**
+         * ПОЛУЧАТЬ  quantity, relation_product_id calories, squirrels, fats, carbohydrates
+         */
         $this->validateFields($request->all())->validate();
 
         Articles::where('id', Products::where('id', $request->id)
@@ -244,7 +225,35 @@ class ProductController extends Controller
             'category_id' => $request->category_id,
             'updated_at' => date("Y-m-d H:i:s"),
         ]);
-        
+
+        /**
+         * КБЖУ
+        */
+        DB::table('product_nutritional_value')->where('product_id', $product_id)
+        ->update([
+            'calories' => 321,
+            'squirrels' => 1,
+            'fats' => 3,
+            'carbohydrates' => 2,
+            'updated_at' => date("Y-m-d H:i:s")
+        ]);
+        /**
+         * связи с другими продуктами
+         */
+        DB::table('product_to_product')->where('product_id',$product_id)
+        ->update([
+            'relation_product_id' => 46,
+            'updated_at' => date("Y-m-d H:i:s")
+        ]);
+        /**
+         * количество продукта
+         */
+        DB::table('product_quantity')->where('product_id',$product_id)
+        ->update([
+            'quantity' => 999,
+            'updated_at' => date("Y-m-d H:i:s")
+        ]); 
+
         return $this->getProducts();
     }
 
@@ -270,7 +279,6 @@ class ProductController extends Controller
 
     public function productsSort ($products, $sortField = '', $sortBy = '')
     {
-
         $products = collect($products);
         
         if ($sortBy = 'asc') 
@@ -287,13 +295,10 @@ class ProductController extends Controller
 
     public function search (Request $request)
     {
-        $products_id = DB::table('product_descriptions')
-        ->select('name', 'product_id')
-        ->where('name', 'like', '%Кал%')
-        ->get()
-        ->toArray();
-
-        $products = ProductDescription::where('product_descriptions.name', 'like', '%Кал%')
+        /**
+         * ПОЛУЧАТЬ category_id И search_field
+         */
+        $products = ProductDescription::where('product_descriptions.name', 'like', '%кан%')
             ->join(
                 'category_to_products', 
                 'category_to_products.product_id', 
